@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 预测智能体</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Forecast Agent v1</p>
+        <h1>用 ReAct + Map-Reduce 运行可追踪的预测智能体</h1>
+        <p class="lede">输入一个待揭晓问题和日期，系统会并行拆解证据、聚合概率分布，并保留可审阅的摘要轨迹。</p>
+      </div>
+      <div class="hero-card">
+        <form id="question-form">
+          <label>问题类别
+            <input name="category" value="经济与金融" required>
+          </label>
+          <label>预测问题
+            <textarea name="question" rows="4" required>截至 2026 年 3 月 31 日美东时间收盘，哪家公司将成为全球市值最大的公司？</textarea>
+          </label>
+          <label>揭晓日期
+            <input type="date" name="resolution_date" required>
+          </label>
+          <label>时区
+            <input name="timezone" value="America/New_York" required>
+          </label>
+          <label>候选项（每行一个）
+            <textarea name="candidate_options" rows="5" required>英伟达（NVIDIA）
+苹果（Apple）
+微软（Microsoft）
+Alphabet</textarea>
+          </label>
+          <button type="submit">创建问题并启动预测</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>运行状态</h2>
+        <p id="status-text">提交问题后会在这里展示智能体运行进度。</p>
+      </div>
+      <div class="status-grid">
+        <article class="card">
+          <h3>轨迹摘要</h3>
+          <div id="trace-list" class="trace-list"></div>
+        </article>
+        <article class="card">
+          <h3>结果预览</h3>
+          <div id="result-preview" class="result-preview"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>已创建问题</h2>
+        <p>可查看问题状态、最新结果与已结算评分。</p>
+      </div>
+      <div id="question-list" class="question-list"></div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById("question-form");
+    const statusText = document.getElementById("status-text");
+    const traceList = document.getElementById("trace-list");
+    const resultPreview = document.getElementById("result-preview");
+    const questionList = document.getElementById("question-list");
+    let activeRunId = null;
+    let activeQuestionId = null;
+    let pollHandle = null;
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    async function api(path, options = {}) {
+      const response = await fetch(path, {
+        headers: { "Content-Type": "application/json" },
+        ...options
+      });
+      if (!response.ok) {
+        const detail = await response.text();
+        throw new Error(detail);
+      }
+      return response.json();
+    }
+
+    function renderTrace(trace) {
+      traceList.innerHTML = "";
+      trace.forEach(item => {
+        const el = document.createElement("div");
+        el.className = "trace-item";
+        el.innerHTML = `
+          <div class="trace-meta">第 ${item.round_index + 1} 轮 · ${escapeHtml(item.role)}</div>
+          <div class="trace-thought">${escapeHtml(item.thought_summary)}</div>
+          <div class="trace-obs">${escapeHtml(item.observation_summary)}</div>
+        `;
+        traceList.appendChild(el);
+      });
+    }
+
+    function renderProbabilities(probabilities) {
+      return probabilities.map(item => `
+        <div class="prob-row">
+          <span>${escapeHtml(item.option)}</span>
+          <strong>${(item.probability * 100).toFixed(1)}%</strong>
+        </div>
+      `).join("");
+    }
+
+    async function loadResult(questionId) {
+      try {
+        const result = await api(`/api/questions/${questionId}/result`);
+        resultPreview.innerHTML = `
+          <div class="result-head">${escapeHtml(result.direct_answer)} <span class="pill">${escapeHtml(result.confidence_level)}</span></div>
+          <p>${escapeHtml(result.confidence_rationale)}</p>
+          <p><strong>证据依据：</strong>${escapeHtml(result.evidence_basis)}</p>
+          <p><strong>反事实脆弱性：</strong>${escapeHtml(result.counterfactual_fragility)}</p>
+          <p><strong>冲突说明：</strong>${escapeHtml(result.conflict_summary)}</p>
+          <div class="prob-list">${renderProbabilities(result.candidate_probabilities)}</div>
+        `;
+      } catch (error) {
+        resultPreview.innerHTML = `<p class="muted">${escapeHtml(error.message)}</p>`;
+      }
+    }
+
+    async function pollRun() {
+      if (!activeRunId || !activeQuestionId) return;
+      const run = await api(`/api/runs/${activeRunId}`);
+      statusText.textContent = `当前状态：${run.run_status} / ${run.progress_stage}`;
+      renderTrace(run.trace_summary);
+      if (run.latest_probabilities.length) {
+        resultPreview.innerHTML = `
+          <p><strong>阶段证据摘要：</strong>${escapeHtml(run.latest_evidence_summary || "聚合中")}</p>
+          <div class="prob-list">${renderProbabilities(run.latest_probabilities)}</div>
+        `;
+      }
+      if (run.run_status === "completed") {
+        clearInterval(pollHandle);
+        await loadResult(activeQuestionId);
+        await loadQuestions();
+      }
+      if (run.run_status === "failed") {
+        clearInterval(pollHandle);
+        resultPreview.innerHTML = `<p class="muted">运行失败：${escapeHtml(run.error || "未知错误")}</p>`;
+      }
+    }
+
+    async function loadQuestions() {
+      const questions = await api("/api/questions");
+      questionList.innerHTML = "";
+      for (const question of questions) {
+        let resultHtml = `<p class="muted">暂无结果。</p>`;
+        try {
+          const result = await api(`/api/questions/${question.id}/result`);
+          resultHtml = `
+            <p><strong>最新预测：</strong>${escapeHtml(result.direct_answer)} <span class="pill">${escapeHtml(result.confidence_level)}</span></p>
+            <div class="prob-list compact">${renderProbabilities(result.candidate_probabilities)}</div>
+          `;
+        } catch (error) {
+          void error;
+        }
+
+        let evaluationHtml = "";
+        try {
+          const evaluation = await api(`/api/questions/${question.id}/evaluation`);
+          evaluationHtml = `
+            <p><strong>真实答案：</strong>${escapeHtml(evaluation.resolved_answer)}</p>
+            <p><strong>Accuracy：</strong>${evaluation.scoring_metrics.accuracy}</p>
+            <p><strong>Brier Score：</strong>${evaluation.scoring_metrics.brier_score}</p>
+          `;
+        } catch (error) {
+          void error;
+        }
+
+        const card = document.createElement("article");
+        card.className = "question-card";
+        card.innerHTML = `
+          <div class="question-card-head">
+            <h3>${escapeHtml(question.question_text)}</h3>
+            <span class="pill">${escapeHtml(question.status)}</span>
+          </div>
+          <p>${escapeHtml(question.category)} · 揭晓日期 ${escapeHtml(question.resolution_date)}</p>
+          <p class="muted">候选项：${escapeHtml(question.candidate_options.join(" / "))}</p>
+          ${resultHtml}
+          ${evaluationHtml}
+        `;
+        questionList.appendChild(card);
+      }
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const payload = {
+        category: formData.get("category"),
+        question: formData.get("question"),
+        resolution_date: formData.get("resolution_date"),
+        timezone: formData.get("timezone"),
+        candidate_options: formData.get("candidate_options").split("\n").map(v => v.trim()).filter(Boolean)
+      };
+      const created = await api("/api/questions", {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+      const run = await api(`/api/questions/${created.question_id}/forecast`, { method: "POST" });
+      activeRunId = run.run_id;
+      activeQuestionId = created.question_id;
+      statusText.textContent = `问题已创建，任务 ${run.run_id} 正在运行。`;
+      traceList.innerHTML = "";
+      resultPreview.innerHTML = "<p class='muted'>智能体正在生成首轮搜索与证据聚合。</p>";
+      if (pollHandle) clearInterval(pollHandle);
+      pollHandle = setInterval(pollRun, 1200);
+      await loadQuestions();
+      await pollRun();
+    });
+
+    const today = new Date().toISOString().split("T")[0];
+    document.querySelector("input[name='resolution_date']").value = today;
+    loadQuestions();
+  </script>
+</body>
+</html>

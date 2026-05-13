@@ -1,0 +1,18 @@
+{
+  "bypassPermissions": {
+    "allow": [
+      "Grep"
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash(sqlite3:*)"
+    ]
+  }
+}
