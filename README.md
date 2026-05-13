@@ -42,8 +42,18 @@ uvicorn app.main:app --reload
 - `SearchProvider.search(...)` 和 `PageReader.fetch(...)` 是本地可运行的 synthetic adapter，用于保证没有 API key、没有联网时仍能完成整条链路。
 - Map 阶段采用单服务内并发任务，不依赖外部队列。
 
-## 测试
 
-```bash
-pytest -q
+## 使用示例（PowerShell）
+
+在启动服务前配置 API key；若不配置，将使用本地占位实现（无需联网也可跑通流程）。
+
+```powershell
+$env:LLM_PROVIDER="deepseek"
+$env:DEEPSEEK_API_KEY="你的_deepseek_key"
+$env:DEEPSEEK_BASE_URL="https://api.deepseek.com"
+$env:DEEPSEEK_MODEL="deepseek-chat"
+
+$env:FORECAST_SEARCH_PROVIDER="exa"
+$env:FORECAST_CONTENT_PROVIDER="exa"
+$env:EXA_API_KEY="你的_exa_key"
 ```
