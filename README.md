@@ -25,20 +25,20 @@ uvicorn app.main:app --reload
 
 3. 可选：配置环境变量（PowerShell），若不配置，将使用本地占位实现（无需联网也可跑通流程）。
 
-	```powershell
-	$env:LLM_PROVIDER="deepseek"
-	$env:DEEPSEEK_API_KEY="你的_deepseek_key"
-	$env:DEEPSEEK_BASE_URL="https://api.deepseek.com"
-	$env:DEEPSEEK_MODEL="deepseek-chat"
+```powershell
+$env:LLM_PROVIDER="deepseek"
+$env:DEEPSEEK_API_KEY="你的_deepseek_key"
+$env:DEEPSEEK_BASE_URL="https://api.deepseek.com"
+$env:DEEPSEEK_MODEL="deepseek-chat"
 
-	$env:FORECAST_SEARCH_PROVIDER="exa"
-	$env:FORECAST_CONTENT_PROVIDER="exa"
-	$env:EXA_API_KEY="你的_exa_key"
-	```
+$env:FORECAST_SEARCH_PROVIDER="exa"
+$env:FORECAST_CONTENT_PROVIDER="exa"
+$env:EXA_API_KEY="你的_exa_key"
+```
 
 4. 打开浏览器
 
-访问 `http://127.0.0.1:8000`
+	访问 `http://127.0.0.1:8000`
 
 
 ## API
