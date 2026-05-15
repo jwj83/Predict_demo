@@ -1,0 +1,40 @@
+[
+  {
+    "id": "bm_66c91d4b536f",
+    "domain": "international",
+    "source": "google_news_international",
+    "source_url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5CLTc1cEZ0c2l0Q0JUN24xaHdaX05wczVYMVNLc2R6blJfMFdZbGpfZ3pFczQtYTl0WTI3ekxfZ1VpU2dMbXB6UUtKVW44TjNaeDYxSVlmUFZyaU9SQ1VOdDY5SUZNUdIBa0FVX3lxTFBoQlFiU0hrNXFjck1LaU15aUZIZURSWWc1SUIzeWFCNnJLYTJnbHJBVnlIc2k1TFRoTko2M1hqcU1EVEpuSi1pVXBUVDlMYzFYYjRPUjBDOUxOYndtUnZ4bUdHV2NCSkhaZndJ?oc=5",
+    "question": "2026年5月15日之前，美国与伊朗是否达成了终战协议？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-15",
+    "resolution_rule": "以联合国、美国政府、伊朗政府官方公告或BBC等主流媒体明确报道为准。若报道确认双方签署或宣布终战协议，则答案为“是”。",
+    "event_type": "ceasefire",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 75.0,
+    "created_at": "2026-05-15T13:21:18.896702+00:00"
+  },
+  {
+    "id": "bm_3cdb573d2275",
+    "domain": "international",
+    "source": "google_news_international",
+    "source_url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFA1U3FfQ2RuVVowZ0VGakV3ZVJGSHJDZWYzSXJkSzZ5Nmxxb05tWUFpNzFzOFVZZWRzM2Y1YTZ3MlpWLUtsRy1oYVZZZDgwUG5xaU5Wai1xS2REak1Bc1o1YVJwM2w3ZzhJV1BWOVR3SXgxaGItWHc?oc=5",
+    "question": "中国是否在2026年5月担任联合国安理会轮值主席？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-31",
+    "resolution_rule": "以联合国安理会官方公告或BBC、路透社等主流媒体报道为准。若联合国安理会官方确认中国在2026年5月担任轮值主席，则结算为“是”；否则为“否”。",
+    "event_type": "diplomatic_visit",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 75.0,
+    "created_at": "2026-05-15T13:21:22.469877+00:00"
+  }
+]

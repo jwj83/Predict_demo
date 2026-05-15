@@ -1,0 +1,40 @@
+[
+  {
+    "id": "bm_794480f138e7",
+    "domain": "weather",
+    "source": "google_news_weather",
+    "source_url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBqNk1mQl9sd2xmNXNlY2p1a1h1U092VHprRjE0NkQ0SWtLdm1md2ppYWllUEJ3eVB3V3MtcHRzQlAyOGFPaUhLRnhPYU1UbUo1RHNUR3hUWXg5TVFB?oc=5",
+    "question": "2026年5月16日，中国是否出现全国性降雨过程（即当日全国范围内有超过50%的省级行政区出现降雨）？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-17",
+    "resolution_rule": "以中国气象局（CMA）在2026年5月16日发布的全国降雨实况图或官方降雨统计报告为准。若当日全国31个省级行政区（省、自治区、直辖市）中，有16个及以上出现降雨（降雨量≥0.1mm），则答案为“是”；否则为“否”。",
+    "event_type": "rain_warning",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 75.0,
+    "created_at": "2026-05-15T13:23:25.885930+00:00"
+  },
+  {
+    "id": "bm_8ef80155e8e2",
+    "domain": "weather",
+    "source": "google_news_weather",
+    "source_url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE96d3BFTkFlV21TOTRxSElhc0dxcDRvZFlnWmZEaUw3Q2lxTTNlQWFiSnU2ZTlXOTRuTWJXc2FaR2NSYnZPd3JLeDlBRFNDVlRGam9Iak5ySTdXWmo5WnVNN0ZINHp1ZzZTUHVGNm9ndmVfRlY4MTJ0RkRheWpFYlU?oc=5",
+    "question": "2026年5月19日，中国江南或华南地区是否有气象部门发布的较强降雨预警？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-19",
+    "resolution_rule": "以中国气象局（CMA）或相关省级气象台在2026年5月19日当天发布的官方预警信息为准。若在江南或华南任一区域（包括但不限于湖南、江西、浙江、福建、广东、广西等）有“暴雨”或“强降雨”预警（黄色及以上级别），则答案为“是”；否则为“否”。",
+    "event_type": "rain_warning",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 75.0,
+    "created_at": "2026-05-15T13:23:40.134728+00:00"
+  }
+]

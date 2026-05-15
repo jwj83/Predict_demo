@@ -1,0 +1,40 @@
+[
+  {
+    "id": "bm_2ae12168a73a",
+    "domain": "economy",
+    "source": "google_news_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5oX3lrZHVKX2RWR19wZzVmNHFyMmJqYlhKbzB2eXhwc1NocHhrdEtfMGxrM3ZrSjFfT2xyaTNwZVc3X25FLU13UWpwdGJFTnJ2WkxkWGVIR2tHMC1vVS1FcmZDWm90enhsWkNSQ2xYQQ?oc=5",
+    "question": "中国2026年4月CPI同比涨幅是否达到1.2%？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-11",
+    "resolution_rule": "以国家统计局（stats.gov.cn）首次发布的2026年4月CPI同比数据为准。若官方公布值为1.2%，则答案为“是”；否则为“否”。",
+    "event_type": "cpi",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "国家统计局于2026-05-11发布的数据显示同比上涨1.2%。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-15T13:20:53.262991+00:00"
+  },
+  {
+    "id": "bm_3d27c0393549",
+    "domain": "economy",
+    "source": "google_news_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1UTWc4Z3NJUkNIODEzRVBvcmo2SWNUQUF5aV9qcHM0WWl2OGpHWkl3RW4xR3N5T29YcmdOYXozTkdORHQxR2p6a1hkc2NPLWhzSHBTWlVOTjFLSWczZmRocU5R?oc=5",
+    "question": "中国2026年4月CPI和PPI同比涨幅是否均较上月扩大？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-11",
+    "resolution_rule": "以国家统计局（stats.gov.cn）首次发布的2026年4月CPI和PPI同比数据为准。若CPI同比涨幅高于2026年3月，且PPI同比涨幅也高于2026年3月，则答案为“是”；否则为“否”。",
+    "event_type": "cpi",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "财新2026年5月11日报道标题明确称'4月物价回升提速 CPI和PPI同比涨幅均扩大'，表明数据已发布且结果已揭晓。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-15T13:20:53.262991+00:00"
+  }
+]

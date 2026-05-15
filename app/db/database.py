@@ -392,6 +392,117 @@ class Database:
             "scoring_metrics": json.loads(row["scoring_metrics"]),
         }
 
+    def list_rule_search_cases(
+        self,
+        domain: str | None = None,
+        case_ids: list[str] | None = None,
+        limit: int | None = None,
+    ) -> list[dict[str, Any]]:
+        where = ["q.external_id IS NOT NULL", "fr.run_status = 'completed'", "rr.resolved_answer IS NOT NULL"]
+        params: list[Any] = []
+        if domain and domain != "all":
+            where.append("q.domain = ?")
+            params.append(domain)
+        if case_ids:
+            placeholders = ",".join("?" for _ in case_ids)
+            where.append(f"q.external_id IN ({placeholders})")
+            params.extend(case_ids)
+        query = f"""
+            WITH latest AS (
+                SELECT
+                    fr.*,
+                    ROW_NUMBER() OVER (
+                        PARTITION BY fr.question_id
+                        ORDER BY COALESCE(fr.finished_at, fr.started_at) DESC
+                    ) AS rn
+                FROM forecast_runs fr
+                WHERE fr.run_status = 'completed'
+            )
+            SELECT
+                q.external_id,
+                q.domain,
+                q.question_text,
+                r.candidate_probabilities,
+                r.evidence_items,
+                r.round_snapshots,
+                r.sub_agent_results,
+                r.markdown_report,
+                rr.resolved_answer,
+                rr.scoring_metrics
+            FROM questions q
+            JOIN latest fr ON fr.question_id = q.id AND fr.rn = 1
+            JOIN forecast_results r ON r.run_id = fr.id
+            JOIN resolution_records rr ON rr.selected_run_id = fr.id
+            WHERE {" AND ".join(where)}
+            ORDER BY q.domain, q.external_id
+        """
+        if limit:
+            query += " LIMIT ?"
+            params.append(limit)
+        with self.connect() as conn:
+            rows = conn.execute(query, params).fetchall()
+        return [
+            {
+                "case_id": row["external_id"],
+                "domain": row["domain"] or "generic",
+                "question": row["question_text"],
+                "resolved_answer": row["resolved_answer"],
+                "candidate_probabilities": json.loads(row["candidate_probabilities"]) if row["candidate_probabilities"] else [],
+                "scoring_metrics": json.loads(row["scoring_metrics"]) if row["scoring_metrics"] else {},
+                "evidence_items": json.loads(row["evidence_items"]) if row["evidence_items"] else [],
+                "sub_agent_results": json.loads(row["sub_agent_results"]) if row["sub_agent_results"] else [],
+                "round_snapshots": json.loads(row["round_snapshots"]) if row["round_snapshots"] else [],
+                "markdown_report": row["markdown_report"] or "",
+            }
+            for row in rows
+        ]
+
+    def list_rule_search_case_summaries(self, domains: list[str] | None = None) -> list[dict[str, Any]]:
+        where = ["q.external_id IS NOT NULL", "fr.run_status = 'completed'", "rr.resolved_answer IS NOT NULL"]
+        params: list[Any] = []
+        selected_domains = [domain for domain in (domains or []) if domain != "all"]
+        if selected_domains:
+            placeholders = ",".join("?" for _ in selected_domains)
+            where.append(f"q.domain IN ({placeholders})")
+            params.extend(selected_domains)
+        query = f"""
+            WITH latest AS (
+                SELECT
+                    fr.*,
+                    ROW_NUMBER() OVER (
+                        PARTITION BY fr.question_id
+                        ORDER BY COALESCE(fr.finished_at, fr.started_at) DESC
+                    ) AS rn
+                FROM forecast_runs fr
+                WHERE fr.run_status = 'completed'
+            )
+            SELECT
+                q.external_id,
+                q.domain,
+                q.question_text,
+                rr.scoring_metrics
+            FROM questions q
+            JOIN latest fr ON fr.question_id = q.id AND fr.rn = 1
+            JOIN resolution_records rr ON rr.selected_run_id = fr.id
+            WHERE {" AND ".join(where)}
+            ORDER BY q.domain, q.external_id
+        """
+        with self.connect() as conn:
+            rows = conn.execute(query, params).fetchall()
+        return [
+            {
+                "case_id": row["external_id"],
+                "domain": row["domain"] or "generic",
+                "question": row["question_text"],
+                "scoring_metrics": json.loads(row["scoring_metrics"]) if row["scoring_metrics"] else {},
+            }
+            for row in rows
+        ]
+
+    def list_rule_search_domains(self) -> list[str]:
+        rows = self.list_rule_search_case_summaries()
+        return sorted({row["domain"] for row in rows})
+
     def _row_to_question(self, row: sqlite3.Row) -> dict[str, Any]:
         return {
             "id": row["id"],

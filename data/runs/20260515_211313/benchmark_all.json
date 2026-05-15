@@ -1,0 +1,173 @@
+[
+  {
+    "id": "bm_2ae12168a73a",
+    "domain": "economy",
+    "source": "google_news_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5oX3lrZHVKX2RWR19wZzVmNHFyMmJqYlhKbzB2eXhwc1NocHhrdEtfMGxrM3ZrSjFfT2xyaTNwZVc3X25FLU13UWpwdGJFTnJ2WkxkWGVIR2tHMC1vVS1FcmZDWm90enhsWkNSQ2xYQQ?oc=5",
+    "question": "中国2026年4月CPI同比涨幅是否达到1.2%？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-11",
+    "resolution_rule": "以国家统计局（stats.gov.cn）首次发布的2026年4月CPI同比数据为准。若官方公布值为1.2%，则答案为“是”；否则为“否”。",
+    "event_type": "cpi",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "国家统计局于2026-05-11发布的数据显示同比上涨1.2%。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-15T13:20:53.262991+00:00"
+  },
+  {
+    "id": "bm_3d27c0393549",
+    "domain": "economy",
+    "source": "google_news_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1UTWc4Z3NJUkNIODEzRVBvcmo2SWNUQUF5aV9qcHM0WWl2OGpHWkl3RW4xR3N5T29YcmdOYXozTkdORHQxR2p6a1hkc2NPLWhzSHBTWlVOTjFLSWczZmRocU5R?oc=5",
+    "question": "中国2026年4月CPI和PPI同比涨幅是否均较上月扩大？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-11",
+    "resolution_rule": "以国家统计局（stats.gov.cn）首次发布的2026年4月CPI和PPI同比数据为准。若CPI同比涨幅高于2026年3月，且PPI同比涨幅也高于2026年3月，则答案为“是”；否则为“否”。",
+    "event_type": "cpi",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "财新2026年5月11日报道标题明确称'4月物价回升提速 CPI和PPI同比涨幅均扩大'，表明数据已发布且结果已揭晓。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-15T13:20:53.262991+00:00"
+  },
+  {
+    "id": "bm_66c91d4b536f",
+    "domain": "international",
+    "source": "google_news_international",
+    "source_url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5CLTc1cEZ0c2l0Q0JUN24xaHdaX05wczVYMVNLc2R6blJfMFdZbGpfZ3pFczQtYTl0WTI3ekxfZ1VpU2dMbXB6UUtKVW44TjNaeDYxSVlmUFZyaU9SQ1VOdDY5SUZNUdIBa0FVX3lxTFBoQlFiU0hrNXFjck1LaU15aUZIZURSWWc1SUIzeWFCNnJLYTJnbHJBVnlIc2k1TFRoTko2M1hqcU1EVEpuSi1pVXBUVDlMYzFYYjRPUjBDOUxOYndtUnZ4bUdHV2NCSkhaZndJ?oc=5",
+    "question": "2026年5月15日之前，美国与伊朗是否达成了终战协议？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-15",
+    "resolution_rule": "以联合国、美国政府、伊朗政府官方公告或BBC等主流媒体明确报道为准。若报道确认双方签署或宣布终战协议，则答案为“是”。",
+    "event_type": "ceasefire",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 75.0,
+    "created_at": "2026-05-15T13:21:18.896702+00:00"
+  },
+  {
+    "id": "bm_3cdb573d2275",
+    "domain": "international",
+    "source": "google_news_international",
+    "source_url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFA1U3FfQ2RuVVowZ0VGakV3ZVJGSHJDZWYzSXJkSzZ5Nmxxb05tWUFpNzFzOFVZZWRzM2Y1YTZ3MlpWLUtsRy1oYVZZZDgwUG5xaU5Wai1xS2REak1Bc1o1YVJwM2w3ZzhJV1BWOVR3SXgxaGItWHc?oc=5",
+    "question": "中国是否在2026年5月担任联合国安理会轮值主席？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-31",
+    "resolution_rule": "以联合国安理会官方公告或BBC、路透社等主流媒体报道为准。若联合国安理会官方确认中国在2026年5月担任轮值主席，则结算为“是”；否则为“否”。",
+    "event_type": "diplomatic_visit",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 75.0,
+    "created_at": "2026-05-15T13:21:22.469877+00:00"
+  },
+  {
+    "id": "bm_f3e9c3eab40e",
+    "domain": "politics",
+    "source": "bbc_zhongwen",
+    "source_url": "https://www.bbc.com/zhongwen/articles/c0m28e4d1kjo/trad?at_medium=RSS&at_campaign=rss",
+    "question": "特朗普在2026年5月13日访华了吗？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-13",
+    "resolution_rule": "以BBC、CNN、新华社等主流媒体在2026年5月13日或之后的明确报道为准。若报道确认特朗普于该日访华，则结算为“是”；否则为“否”。",
+    "event_type": "diplomatic_visit",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "新闻标题明确报道'特朗普再度訪華'，发布日期为2026-05-13，表明访问已发生。",
+    "quality_score": 100.0,
+    "created_at": "2026-05-15T13:21:35.368084+00:00"
+  },
+  {
+    "id": "bm_b744cf454a8d",
+    "domain": "politics",
+    "source": "google_news_politics",
+    "source_url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNbjVYZ3FHZEh5UmxFVUF4dkNtRlhIZWlFSkZRVXpWZGtjTzFtSlVXNDNzZG9vbkYxZkJZZTRVb3ZKVUFqWWNZWWlkUXR3SHJiTDhjSEFDM0VCaGFLQVJXaXhZVmxneUZOOWFqU2VvNDlpcmN6MGpINEZ0eTdvWW5rd3pyRXFjYlhUUFE?oc=5",
+    "question": "2026年5月13日有两个省政府领导班子调整吗？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-13",
+    "resolution_rule": "以中国政府网、省级政府官网或新华社在2026年5月13日或之后的明确报道为准。若报道确认有两个省级政府领导班子调整，则结算为“是”；否则为“否”。",
+    "event_type": "resignation",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "新闻标题明确报道'两个省政府领导班子调整'，发布日期为2026-05-13，表明调整已发生。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-15T13:21:35.368084+00:00"
+  },
+  {
+    "id": "bm_02408e2c65f8",
+    "domain": "sports",
+    "source": "sohu_nba",
+    "source_url": "https://www.sohu.com/a/295350944_458722",
+    "question": "克里斯·波什是否会在2026年5月18日公开勒布朗·詹姆斯的保养秘诀？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-18",
+    "resolution_rule": "以搜狐NBA频道（sohu.com）或主流体育媒体（如ESPN、腾讯体育）在2026年5月18日的相关报道为准。若报道明确提及克里斯·波什公开了勒布朗·詹姆斯的保养秘诀，则答案为“是”；否则为“否”。",
+    "event_type": "transfer",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 65.0,
+    "created_at": "2026-05-15T13:22:41.790326+00:00"
+  },
+  {
+    "id": "bm_794480f138e7",
+    "domain": "weather",
+    "source": "google_news_weather",
+    "source_url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBqNk1mQl9sd2xmNXNlY2p1a1h1U092VHprRjE0NkQ0SWtLdm1md2ppYWllUEJ3eVB3V3MtcHRzQlAyOGFPaUhLRnhPYU1UbUo1RHNUR3hUWXg5TVFB?oc=5",
+    "question": "2026年5月16日，中国是否出现全国性降雨过程（即当日全国范围内有超过50%的省级行政区出现降雨）？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-17",
+    "resolution_rule": "以中国气象局（CMA）在2026年5月16日发布的全国降雨实况图或官方降雨统计报告为准。若当日全国31个省级行政区（省、自治区、直辖市）中，有16个及以上出现降雨（降雨量≥0.1mm），则答案为“是”；否则为“否”。",
+    "event_type": "rain_warning",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 75.0,
+    "created_at": "2026-05-15T13:23:25.885930+00:00"
+  },
+  {
+    "id": "bm_8ef80155e8e2",
+    "domain": "weather",
+    "source": "google_news_weather",
+    "source_url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE96d3BFTkFlV21TOTRxSElhc0dxcDRvZFlnWmZEaUw3Q2lxTTNlQWFiSnU2ZTlXOTRuTWJXc2FaR2NSYnZPd3JLeDlBRFNDVlRGam9Iak5ySTdXWmo5WnVNN0ZINHp1ZzZTUHVGNm9ndmVfRlY4MTJ0RkRheWpFYlU?oc=5",
+    "question": "2026年5月19日，中国江南或华南地区是否有气象部门发布的较强降雨预警？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-19",
+    "resolution_rule": "以中国气象局（CMA）或相关省级气象台在2026年5月19日当天发布的官方预警信息为准。若在江南或华南任一区域（包括但不限于湖南、江西、浙江、福建、广东、广西等）有“暴雨”或“强降雨”预警（黄色及以上级别），则答案为“是”；否则为“否”。",
+    "event_type": "rain_warning",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 75.0,
+    "created_at": "2026-05-15T13:23:40.134728+00:00"
+  }
+]

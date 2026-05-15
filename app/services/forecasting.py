@@ -460,14 +460,17 @@ class Reducer:
         confidence_level = "high" if top_probability >= 0.7 and conflict_count == 0 else "medium" if top_probability >= 0.48 else "low"
         fragility = "low" if margin >= 0.2 and conflict_count == 0 else "medium" if margin >= 0.08 else "high"
         evidence_basis = self._format_evidence_basis(all_evidence[:6])
-        summary = self.llm.generate_structured(
-            "reducer",
-            (
-                f"Question: {forecast_input.question_text}; leading option: {ranked[0]['option']}; "
-                f"cutoff: {forecast_input.prediction_cutoff}; evidence: {evidence_basis}"
-            ),
-            {},
-        )
+        try:
+            summary = self.llm.generate_structured(
+                "reducer",
+                (
+                    f"Question: {forecast_input.question_text}; leading option: {ranked[0]['option']}; "
+                    f"cutoff: {forecast_input.prediction_cutoff}; evidence: {evidence_basis}"
+                ),
+                {},
+            )
+        except Exception:
+            summary = {"summary": "Reducer used deterministic evidence aggregation because the LLM summary call failed."}
         return {
             "probabilities": probabilities,
             "predicted_winner": ranked[0]["option"],

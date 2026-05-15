@@ -108,6 +108,34 @@ def test_forecast_flow_and_result_shape(tmp_path: Path) -> None:
     assert result_payload["conflict_summary"]
 
 
+def test_native_forecast_api_creates_prediction_and_returns_report(tmp_path: Path) -> None:
+    client = build_client(tmp_path)
+
+    response = client.post(
+        "/api/forecast",
+        json={
+            "category": "sports",
+            "question": "Will Team A win the 2026 demo championship?",
+            "resolution_date": "2026-05-20",
+            "timezone": "Asia/Shanghai",
+            "candidate_options": ["yes", "no"],
+            "wait_timeout_seconds": 20,
+        },
+    )
+
+    assert response.status_code == 200, response.text
+    payload = response.json()
+    assert payload["question_id"]
+    assert payload["run_id"]
+    assert payload["status"] == "completed"
+    report = payload["report"]
+    assert report["direct_answer"] in {"yes", "no"}
+    assert report["candidate_probability_table"]
+    assert report["confidence_basis"]
+    assert report["evidence_details"]
+    assert report["report_quality_assessment"]["probability_rigor"]
+
+
 def test_resolution_and_evaluation(tmp_path: Path) -> None:
     client = build_client(tmp_path)
     question_id = create_question(client)
@@ -169,6 +197,141 @@ def test_unresolved_benchmark_event_uses_same_forecast_without_result_scoring(tm
     assert evaluation_response.status_code == 404
 
 
+def test_benchmark_generate_endpoint_returns_items_and_paths(tmp_path: Path, monkeypatch) -> None:
+    client = build_client(tmp_path)
+
+    import app.routers.api as api_module
+
+    def fake_generate_benchmark(domain: str, limit: int, max_items_per_feed: int) -> dict:
+        assert domain == "all"
+        assert limit == 10
+        assert max_items_per_feed == 5
+        return {
+            "run_id": "test_run",
+            "total": 1,
+            "items": [benchmark_payload()],
+            "output_paths": {
+                "benchmark_all": str(tmp_path / "benchmark_all.json"),
+                "raw": str(tmp_path / "sources" / "raw.json"),
+                "events": str(tmp_path / "sources" / "events.json"),
+            },
+            "domain_counts": {"sports": 1},
+            "status_counts": {"resolved": 1},
+        }
+
+    monkeypatch.setattr(api_module, "generate_benchmark", fake_generate_benchmark)
+
+    response = client.post(
+        "/api/benchmark/generate",
+        json={"domain": "all", "limit": 10, "max_items_per_feed": 5},
+    )
+
+    assert response.status_code == 200, response.text
+    data = response.json()
+    assert data["run_id"] == "test_run"
+    assert data["total"] == 1
+    assert data["items"][0]["id"] == "bm_test_resolved"
+    assert data["domain_counts"] == {"sports": 1}
+    assert data["status_counts"] == {"resolved": 1}
+    assert data["output_paths"]["benchmark_all"].endswith("benchmark_all.json")
+
+
+def test_rule_search_endpoint_uses_completed_resolved_benchmark_predictions(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.delenv("LLM_API_KEY", raising=False)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("DEEPSEEK_API_KEY", raising=False)
+    client = build_client(tmp_path)
+
+    import app.services.benchmarking as benchmarking_module
+
+    monkeypatch.setattr(benchmarking_module, "DATA_DIR", tmp_path)
+
+    imported = client.post("/api/benchmark-events", json=benchmark_payload())
+    assert imported.status_code == 200
+    question_id = imported.json()["question_id"]
+    run = client.post(f"/api/questions/{question_id}/forecast")
+    wait_for_run(client, run.json()["run_id"])
+
+    response = client.post(
+        "/api/evaluation/rule-search",
+        json={"domains": ["all"], "iterations": 1, "candidates_per_round": 1},
+    )
+
+    assert response.status_code == 200, response.text
+    data = response.json()
+    assert data["mode"] == "per_domain"
+    assert data["total_case_count"] == 1
+    assert data["results"][0]["domain"] == "sports"
+    assert data["results"][0]["case_count"] == 1
+    assert data["results"][0]["best_rule_set_id"]
+    assert data["results"][0]["report_path"].endswith(".json")
+    assert Path(data["results"][0]["report_path"]).exists()
+
+
+def test_rule_search_case_list_filters_by_domain(tmp_path: Path) -> None:
+    client = build_client(tmp_path)
+    imported = client.post("/api/benchmark-events", json=benchmark_payload())
+    question_id = imported.json()["question_id"]
+    run = client.post(f"/api/questions/{question_id}/forecast")
+    wait_for_run(client, run.json()["run_id"])
+
+    response = client.get("/api/evaluation/rule-search/cases?domains=sports")
+
+    assert response.status_code == 200, response.text
+    data = response.json()
+    assert data["domain_counts"] == {"sports": 1}
+    assert data["cases"][0]["domain"] == "sports"
+
+
+def test_rule_search_job_reports_candidate_progress(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.delenv("LLM_API_KEY", raising=False)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("DEEPSEEK_API_KEY", raising=False)
+    client = build_client(tmp_path)
+
+    imported = client.post("/api/benchmark-events", json=benchmark_payload())
+    question_id = imported.json()["question_id"]
+    run = client.post(f"/api/questions/{question_id}/forecast")
+    wait_for_run(client, run.json()["run_id"])
+
+    started = client.post(
+        "/api/evaluation/rule-search/jobs",
+        json={"domains": ["sports"], "iterations": 1, "candidates_per_round": 1},
+    )
+
+    assert started.status_code == 200, started.text
+    job_id = started.json()["job_id"]
+    deadline = time.time() + 5
+    final_payload = None
+    while time.time() < deadline:
+        response = client.get(f"/api/evaluation/rule-search/jobs/{job_id}")
+        assert response.status_code == 200
+        final_payload = response.json()
+        if final_payload["status"] in {"completed", "failed"}:
+            break
+        time.sleep(0.1)
+
+    assert final_payload["status"] == "completed"
+    assert final_payload["progress_events"]
+    assert final_payload["best_by_round"]
+    assert final_payload["result"]["results"][0]["domain"] == "sports"
+
+
+def test_rule_search_endpoint_returns_clear_error_without_cases(tmp_path: Path) -> None:
+    client = build_client(tmp_path)
+
+    response = client.post(
+        "/api/evaluation/rule-search",
+        json={"domains": ["all"], "iterations": 1, "candidates_per_round": 1},
+    )
+
+    assert response.status_code == 400
+    assert "No completed resolved benchmark predictions" in response.json()["detail"]
+
+
 def test_forecast_report_contains_required_structured_fields(tmp_path: Path) -> None:
     client = build_client(tmp_path)
     created = client.post("/api/benchmark-events", json=benchmark_payload()).json()
@@ -190,6 +353,29 @@ def test_forecast_report_contains_required_structured_fields(tmp_path: Path) -> 
     assert 4 <= len(result["evidence_items"]) <= 6
     assert result["markdown_report"]
     assert "Forecast Report" in result["markdown_report"]
+
+
+def test_api_report_returns_formal_prediction_template(tmp_path: Path) -> None:
+    client = build_client(tmp_path)
+    created = client.post("/api/benchmark-events", json=benchmark_payload()).json()
+    run_id = client.post(f"/api/questions/{created['question_id']}/forecast").json()["run_id"]
+    wait_for_run(client, run_id)
+
+    response = client.get(f"/api/questions/{created['question_id']}/api-report")
+
+    assert response.status_code == 200, response.text
+    report = response.json()
+    assert report["prediction_date"]
+    assert report["question"]
+    assert report["direct_answer"]
+    assert report["confidence_level"] in {"low", "medium", "high"}
+    assert report["candidate_probability_table"]
+    assert report["confidence_basis"]
+    assert report["evidence_details"]
+    assert report["counterfactual_fragility"]
+    assert report["monitoring_items"]
+    assert report["report_quality_assessment"]["evidence_granularity"]
+    assert report["markdown_report"]
 
 
 def test_sub_agents_record_react_trajectories_and_local_conclusions(tmp_path: Path) -> None:

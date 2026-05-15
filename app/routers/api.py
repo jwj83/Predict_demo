@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import time as clock
 from datetime import datetime, time, timezone
 
 from fastapi import APIRouter, HTTPException
@@ -7,17 +8,35 @@ from fastapi import APIRouter, HTTPException
 from app.db.database import db
 from app.schemas import (
     BenchmarkEventInput,
+    BenchmarkGenerateRequest,
+    BenchmarkGenerateResponse,
     CreateQuestionRequest,
     CreateQuestionResponse,
     EvaluationResponse,
     ForecastResultResponse,
+    ForecastApiEvidence,
+    ForecastApiQualityAssessment,
+    ForecastApiReportResponse,
     ForecastRunResponse,
     ImportBenchmarkEventResponse,
+    NativeForecastRequest,
+    NativeForecastResponse,
     QuestionListItem,
+    RuleSearchCaseListResponse,
+    RuleSearchJobResponse,
+    RuleSearchRequest,
+    RuleSearchResponse,
     ResolutionRequest,
     RunStatusResponse,
 )
 from app.services.evaluation import compute_accuracy, compute_brier_score, compute_confidence_gap
+from app.services.benchmarking import (
+    generate_benchmark,
+    get_rule_search_job,
+    list_rule_search_cases,
+    run_rule_search,
+    start_rule_search_job,
+)
 from app.services.forecasting import forecast_service
 
 
@@ -48,6 +67,35 @@ def create_question(payload: CreateQuestionRequest) -> CreateQuestionResponse:
     return CreateQuestionResponse(question_id=question_id)
 
 
+@router.post("/forecast", response_model=NativeForecastResponse)
+def forecast_and_return_report(payload: NativeForecastRequest) -> NativeForecastResponse:
+    question_id = db.create_question(
+        category=payload.category,
+        question_text=payload.question,
+        resolution_date=payload.resolution_date.isoformat(),
+        timezone_name=payload.timezone,
+        candidate_options=payload.candidate_options,
+    )
+    run_id = forecast_service.start_forecast(question_id)
+    deadline = clock.monotonic() + payload.wait_timeout_seconds
+    while clock.monotonic() < deadline:
+        run = db.get_run(run_id)
+        if run and run["run_status"] == "completed":
+            result = db.get_latest_result(question_id)
+            if not result:
+                raise HTTPException(status_code=500, detail="预测完成但未找到报告结果。")
+            return NativeForecastResponse(
+                question_id=question_id,
+                run_id=run_id,
+                status="completed",
+                report=_build_api_report(result),
+            )
+        if run and run["run_status"] == "failed":
+            raise HTTPException(status_code=500, detail=run.get("error") or "预测失败。")
+        clock.sleep(0.5)
+    raise HTTPException(status_code=504, detail=f"预测未在 {payload.wait_timeout_seconds} 秒内完成，请稍后通过 run_id 查询。")
+
+
 @router.post("/benchmark-events", response_model=ImportBenchmarkEventResponse)
 def import_benchmark_event(payload: BenchmarkEventInput) -> ImportBenchmarkEventResponse:
     event_payload = payload.model_dump(mode="json")
@@ -57,6 +105,19 @@ def import_benchmark_event(payload: BenchmarkEventInput) -> ImportBenchmarkEvent
         cutoff_iso=_prediction_cutoff_iso(payload),
     )
     return ImportBenchmarkEventResponse(question_id=question_id, external_id=payload.id, status=status)
+
+
+@router.post("/benchmark/generate", response_model=BenchmarkGenerateResponse)
+def generate_benchmark_events(payload: BenchmarkGenerateRequest) -> BenchmarkGenerateResponse:
+    try:
+        result = generate_benchmark(
+            domain=payload.domain,
+            limit=payload.limit,
+            max_items_per_feed=payload.max_items_per_feed,
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    return BenchmarkGenerateResponse(**result)
 
 
 @router.post("/questions/{question_id}/forecast", response_model=ForecastRunResponse)
@@ -96,6 +157,51 @@ def get_result(question_id: str) -> ForecastResultResponse:
         monitoring_items=result["monitoring_items"],
         report_quality_notes=result["report_quality_notes"],
         sub_agent_results=result["sub_agent_results"],
+        markdown_report=result["markdown_report"],
+    )
+
+
+@router.get("/questions/{question_id}/api-report", response_model=ForecastApiReportResponse)
+def get_api_report(question_id: str) -> ForecastApiReportResponse:
+    result = db.get_latest_result(question_id)
+    if not result:
+        raise HTTPException(status_code=404, detail="暂无预测结果。")
+    return _build_api_report(result)
+
+
+def _build_api_report(result: dict) -> ForecastApiReportResponse:
+    quality = result["report_quality_notes"] or {}
+    evidence_items = [
+        ForecastApiEvidence(
+            claim=item.get("claim", ""),
+            role=item.get("evidence_role", "supporting"),
+            stance=item.get("stance", "neutral"),
+            supports_option=item.get("supports_option"),
+            strength=item.get("strength"),
+            source_url=item.get("source_url", ""),
+            source_title=item.get("source_title"),
+            published_at=datetime.fromisoformat(item["published_at"]) if item.get("published_at") else None,
+            cutoff_compliant=bool(item.get("cutoff_compliant", True)),
+            why_important=item.get("rationale") or item.get("source_excerpt_summary") or item.get("claim", ""),
+        )
+        for item in result["evidence_items"][:6]
+    ]
+    return ForecastApiReportResponse(
+        prediction_date=datetime.fromisoformat(result["prediction_date"]).date(),
+        question=result["question"],
+        direct_answer=result["direct_answer"],
+        confidence_level=result["confidence_level"],
+        candidate_probability_table=result["candidate_probabilities"],
+        confidence_basis=result["evidence_basis"],
+        evidence_details=evidence_items,
+        counterfactual_fragility=f"{result['counterfactual_fragility']}: {result['conflict_summary']}",
+        monitoring_items=result["monitoring_items"],
+        report_quality_assessment=ForecastApiQualityAssessment(
+            evidence_granularity=quality.get("evidence_detail", ""),
+            probability_rigor=quality.get("probability_rigor", ""),
+            counterfactual_completeness=quality.get("counterfactual_completeness", ""),
+            actionable_monitoring=quality.get("monitoring_plan", ""),
+        ),
         markdown_report=result["markdown_report"],
     )
 
@@ -149,3 +255,53 @@ def get_evaluation(question_id: str) -> EvaluationResponse:
         selected_run_id=resolution["selected_run_id"],
         scoring_metrics=resolution["scoring_metrics"],
     )
+
+
+@router.get("/evaluation/rule-search/cases", response_model=RuleSearchCaseListResponse)
+def list_scoring_rule_cases(domains: str = "all") -> RuleSearchCaseListResponse:
+    selected_domains = [item.strip() for item in domains.split(",") if item.strip()]
+    result = list_rule_search_cases(selected_domains)
+    return RuleSearchCaseListResponse(**result)
+
+
+@router.post("/evaluation/rule-search", response_model=RuleSearchResponse)
+def search_scoring_rules(payload: RuleSearchRequest) -> RuleSearchResponse:
+    try:
+        result = run_rule_search(
+            domains=payload.domains,
+            iterations=payload.iterations,
+            candidates_per_round=payload.candidates_per_round,
+            case_ids=payload.case_ids,
+            cases_per_domain=payload.cases_per_domain,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    return RuleSearchResponse(**result)
+
+
+@router.post("/evaluation/rule-search/jobs", response_model=RuleSearchJobResponse)
+def start_scoring_rule_search_job(payload: RuleSearchRequest) -> RuleSearchJobResponse:
+    try:
+        result = start_rule_search_job(
+            domains=payload.domains,
+            iterations=payload.iterations,
+            candidates_per_round=payload.candidates_per_round,
+            case_ids=payload.case_ids,
+            cases_per_domain=payload.cases_per_domain,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    return RuleSearchJobResponse(**result)
+
+
+@router.get("/evaluation/rule-search/jobs/{job_id}", response_model=RuleSearchJobResponse)
+def get_scoring_rule_search_job(job_id: str) -> RuleSearchJobResponse:
+    try:
+        result = get_rule_search_job(job_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    return RuleSearchJobResponse(**result)

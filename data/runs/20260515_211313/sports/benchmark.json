@@ -1,0 +1,21 @@
+[
+  {
+    "id": "bm_02408e2c65f8",
+    "domain": "sports",
+    "source": "sohu_nba",
+    "source_url": "https://www.sohu.com/a/295350944_458722",
+    "question": "克里斯·波什是否会在2026年5月18日公开勒布朗·詹姆斯的保养秘诀？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-18",
+    "resolution_rule": "以搜狐NBA频道（sohu.com）或主流体育媒体（如ESPN、腾讯体育）在2026年5月18日的相关报道为准。若报道明确提及克里斯·波什公开了勒布朗·詹姆斯的保养秘诀，则答案为“是”；否则为“否”。",
+    "event_type": "transfer",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 65.0,
+    "created_at": "2026-05-15T13:22:41.790326+00:00"
+  }
+]

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI 预测智能体</title>
-  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/style.css?v=20260516a">
 </head>
 <body>
   <main class="page">
@@ -16,25 +16,106 @@
       </div>
       <div class="hero-card">
         <form id="question-form">
-          <label>问题类别
-            <input name="category" value="经济与金融" required>
+          <div class="form-top">
+            <p class="form-title">预测入口</p>
+          </div>
+          <label class="mode-picker">模式
+            <select id="prediction-mode" name="mode">
+              <option value="single">单题预测</option>
+              <option value="batch">批量预测</option>
+              <option value="evaluation">预测评估</option>
+            </select>
           </label>
-          <label>预测问题
-            <textarea name="question" rows="4" required>截至 2026 年 3 月 31 日美东时间收盘，哪家公司将成为全球市值最大的公司？</textarea>
-          </label>
-          <label>揭晓日期
-            <input type="date" name="resolution_date" required>
-          </label>
-          <label>时区
-            <input name="timezone" value="America/New_York" required>
-          </label>
-          <label>候选项（每行一个）
-            <textarea name="candidate_options" rows="5" required>英伟达（NVIDIA）
+
+          <div id="single-panel" class="mode-panel">
+            <label>问题类别
+              <input name="category" value="经济与金融" required>
+            </label>
+            <label>预测问题
+              <textarea name="question" rows="4" required>截至 2026 年 3 月 31 日美东时间收盘，哪家公司将成为全球市值最大的公司？</textarea>
+            </label>
+            <label>揭晓日期
+              <input type="date" name="resolution_date" required>
+            </label>
+            <label>时区
+              <input name="timezone" value="America/New_York" required>
+            </label>
+            <label>候选项（每行一个）
+              <textarea name="candidate_options" rows="5" required>英伟达（NVIDIA）
 苹果（Apple）
 微软（Microsoft）
 Alphabet</textarea>
-          </label>
-          <button type="submit">创建问题并启动预测</button>
+            </label>
+          </div>
+
+          <div id="batch-panel" class="mode-panel hidden">
+            <div class="subpanel">
+              <p class="subpanel-title">生成 Benchmark</p>
+              <label>领域
+                <select name="generate_domain">
+                  <option value="all">all</option>
+                  <option value="economy">economy</option>
+                  <option value="finance">finance</option>
+                  <option value="international">international</option>
+                  <option value="politics">politics</option>
+                  <option value="sports">sports</option>
+                  <option value="weather">weather</option>
+                </select>
+              </label>
+              <label>生成数量 limit
+                <input name="generate_limit" type="number" min="1" value="10">
+              </label>
+              <label>每个来源搜索数量
+                <input name="max_items_per_feed" type="number" min="1" value="10">
+              </label>
+              <button id="generate-button" type="button" class="secondary-button">生成 Benchmark</button>
+              <p id="generate-summary" class="muted">也可以直接上传已有 benchmark_all.json。</p>
+            </div>
+            <label class="file-picker">Benchmark JSON 文件
+              <input id="benchmark-file" type="file" accept=".json,application/json">
+              <span class="file-control">
+                <span id="file-name">选择 benchmark_all.json</span>
+                <strong>选择文件</strong>
+              </span>
+            </label>
+            <label class="batch-limit">预测条数
+              <input name="batch_limit" type="number" min="1" value="5">
+            </label>
+            <p id="batch-summary" class="muted">上传 benchmark_all.json 后会显示样本统计。</p>
+          </div>
+
+          <div id="evaluation-panel" class="mode-panel hidden">
+            <div class="subpanel">
+              <p class="subpanel-title">选择要优化的领域规则</p>
+              <div class="check-grid" id="evaluation-domains">
+                <label><input type="checkbox" name="evaluation_domains" value="all" checked> all</label>
+                <label><input type="checkbox" name="evaluation_domains" value="economy"> economy</label>
+                <label><input type="checkbox" name="evaluation_domains" value="finance"> finance</label>
+                <label><input type="checkbox" name="evaluation_domains" value="international"> international</label>
+                <label><input type="checkbox" name="evaluation_domains" value="politics"> politics</label>
+                <label><input type="checkbox" name="evaluation_domains" value="sports"> sports</label>
+                <label><input type="checkbox" name="evaluation_domains" value="weather"> weather</label>
+              </div>
+            </div>
+            <div class="subpanel">
+              <p class="subpanel-title">选择数据</p>
+              <button id="load-rule-cases" type="button" class="secondary-button">加载可评估样本</button>
+              <label>每个领域最多使用样本数
+                <input name="cases_per_domain" type="number" min="1" placeholder="留空表示使用全部选中样本">
+              </label>
+              <div id="rule-case-summary" class="muted">只会显示已选领域中 completed + resolved 的 benchmark 样本。</div>
+              <div id="rule-case-list" class="case-picker"></div>
+            </div>
+            <label>迭代轮数
+              <input name="rule_iterations" type="number" min="1" value="2">
+            </label>
+            <label>每轮候选规则数
+              <input name="candidates_per_round" type="number" min="1" value="3">
+            </label>
+            <p class="muted">默认读取数据库中 latest completed + resolved 的 benchmark 预测结果。</p>
+          </div>
+
+          <button id="submit-button" type="submit">创建问题并启动预测</button>
         </form>
       </div>
     </section>
@@ -67,6 +148,19 @@ Alphabet</textarea>
 
   <script>
     const form = document.getElementById("question-form");
+    const modeSelect = document.getElementById("prediction-mode");
+    const singlePanel = document.getElementById("single-panel");
+    const batchPanel = document.getElementById("batch-panel");
+    const evaluationPanel = document.getElementById("evaluation-panel");
+    const benchmarkFile = document.getElementById("benchmark-file");
+    const fileName = document.getElementById("file-name");
+    const batchSummary = document.getElementById("batch-summary");
+    const generateButton = document.getElementById("generate-button");
+    const generateSummary = document.getElementById("generate-summary");
+    const loadRuleCasesButton = document.getElementById("load-rule-cases");
+    const ruleCaseSummary = document.getElementById("rule-case-summary");
+    const ruleCaseList = document.getElementById("rule-case-list");
+    const submitButton = document.getElementById("submit-button");
     const statusText = document.getElementById("status-text");
     const traceList = document.getElementById("trace-list");
     const resultPreview = document.getElementById("result-preview");
@@ -74,6 +168,12 @@ Alphabet</textarea>
     let activeRunId = null;
     let activeQuestionId = null;
     let pollHandle = null;
+    let batchPollHandle = null;
+    let ruleSearchPollHandle = null;
+    let batchItems = [];
+    let batchRuns = [];
+    let selectedBatchIndex = null;
+    let ruleCases = [];
 
     function escapeHtml(value) {
       return String(value)
@@ -119,6 +219,264 @@ Alphabet</textarea>
       `).join("");
     }
 
+    function renderInlineProbabilities(probabilities) {
+      if (!probabilities || !probabilities.length) return "";
+      return `
+        <div class="inline-probs">
+          ${probabilities.map(item => `
+            <span>${escapeHtml(item.option)} ${(item.probability * 100).toFixed(1)}%</span>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderReportMarkdown(markdown) {
+      if (!markdown) {
+        return "<p class='muted'>这条预测还没有生成完整报告。</p>";
+      }
+      return `<div class="markdown-report">${escapeHtml(markdown)}</div>`;
+    }
+
+    function batchDisplayStatus(item) {
+      if (item.status === "completed") return "finished";
+      if (item.status === "failed") return "failed";
+      return item.progress_stage || item.status;
+    }
+
+    function setPanelDisabled(panel, disabled) {
+      panel.querySelectorAll("input, textarea, select").forEach(control => {
+        control.disabled = disabled;
+      });
+    }
+
+    function updateMode() {
+      const isBatch = modeSelect.value === "batch";
+      const isEvaluation = modeSelect.value === "evaluation";
+      singlePanel.classList.toggle("hidden", isBatch || isEvaluation);
+      batchPanel.classList.toggle("hidden", !isBatch);
+      evaluationPanel.classList.toggle("hidden", !isEvaluation);
+      setPanelDisabled(singlePanel, isBatch || isEvaluation);
+      setPanelDisabled(batchPanel, !isBatch);
+      setPanelDisabled(evaluationPanel, !isEvaluation);
+      submitButton.textContent = isEvaluation ? "运行预测评估" : isBatch ? "导入 JSON 并启动批量预测" : "创建问题并启动预测";
+      statusText.textContent = isEvaluation ? "读取已完成预测结果并搜索评分规则。" : isBatch ? "生成或上传 benchmark JSON 后可启动批量预测。" : "提交问题后会在这里展示智能体运行进度。";
+      traceList.innerHTML = "";
+      resultPreview.innerHTML = "";
+      selectedBatchIndex = null;
+    }
+
+    function normalizeBenchmarkItems(payload) {
+      if (Array.isArray(payload)) return payload;
+      if (Array.isArray(payload.items)) return payload.items;
+      if (Array.isArray(payload.data)) return payload.data;
+      throw new Error("JSON 必须是数组，或包含 items/data 数组。");
+    }
+
+    function renderBatchList() {
+      if (!batchRuns.length) return '<div class="batch-list"></div>';
+      return `
+        <div class="batch-list">
+          ${batchRuns.map((item, index) => `
+            <button type="button" class="batch-row ${index === selectedBatchIndex ? "selected" : ""}" data-batch-index="${index}">
+              <div>
+                <span>${index + 1}. ${escapeHtml(item.question || item.external_id)}</span>
+                ${item.result ? `
+                  <div class="batch-result">
+                    预测：${escapeHtml(item.result.direct_answer)}
+                    <span>${escapeHtml(item.result.confidence_level)}</span>
+                  </div>
+                  ${renderInlineProbabilities(item.result.candidate_probabilities)}
+                ` : item.error ? `
+                  <div class="batch-result error-text">${escapeHtml(item.error)}</div>
+                ` : ""}
+              </div>
+              <strong>${escapeHtml(batchDisplayStatus(item))}</strong>
+            </button>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderSelectedReport() {
+      if (selectedBatchIndex === null || !batchRuns[selectedBatchIndex]) return "";
+      const selected = batchRuns[selectedBatchIndex];
+      return `
+        <div class="selected-report">
+          <div class="result-head">
+            ${escapeHtml(selected.result?.direct_answer || selected.question || selected.external_id)}
+            <span class="pill">${escapeHtml(selected.result?.confidence_level || selected.status)}</span>
+          </div>
+          ${selected.result ? `
+            <div class="prob-list compact">${renderProbabilities(selected.result.candidate_probabilities)}</div>
+            ${renderReportMarkdown(selected.result.markdown_report)}
+          ` : selected.error ? `
+            <p class="muted error-text">${escapeHtml(selected.error)}</p>
+          ` : `
+            <p class="muted">这条预测还在运行中，完成后会在这里展示报告。</p>
+          `}
+        </div>
+      `;
+    }
+
+    function renderBatchRuns() {
+      return renderBatchList() + renderSelectedReport();
+    }
+
+    function selectBatchRun(index) {
+      if (!batchRuns[index]) return;
+      selectedBatchIndex = index;
+      const selected = batchRuns[index];
+      renderTrace(selected.trace_summary || []);
+      // Update the list highlight and report without rebuilding the report DOM
+      const listContainer = resultPreview.querySelector(".batch-list");
+      if (listContainer) {
+        listContainer.outerHTML = renderBatchList();
+      }
+      const reportContainer = resultPreview.querySelector(".selected-report");
+      if (reportContainer) {
+        reportContainer.outerHTML = renderSelectedReport();
+      } else {
+        resultPreview.insertAdjacentHTML("beforeend", renderSelectedReport());
+      }
+    }
+
+    function summarizeBatchItems(items) {
+      const domains = {};
+      const statuses = {};
+      items.forEach(item => {
+        domains[item.domain || "unknown"] = (domains[item.domain || "unknown"] || 0) + 1;
+        statuses[item.event_status || "unknown"] = (statuses[item.event_status || "unknown"] || 0) + 1;
+      });
+      return `已读取 ${items.length} 条；领域：${Object.entries(domains).map(([k, v]) => `${k} ${v}`).join(" / ")}；状态：${Object.entries(statuses).map(([k, v]) => `${k} ${v}`).join(" / ")}`;
+    }
+
+    function renderGeneratedBenchmark(result) {
+      return `
+        已生成 ${result.total} 条；领域：${Object.entries(result.domain_counts).map(([k, v]) => `${k} ${v}`).join(" / ")}；状态：${Object.entries(result.status_counts).map(([k, v]) => `${k} ${v}`).join(" / ")}
+        <br>文件：${escapeHtml(result.output_paths.benchmark_all || "")}
+      `;
+    }
+
+    function renderRuleSearch(result) {
+      const rows = result.results.map(item => `
+        <div class="rule-result-row">
+          <strong>${escapeHtml(item.domain)}</strong>
+          <span>样本 ${item.case_count}</span>
+          <span>最佳规则 ${escapeHtml(item.best_rule_set_id)}</span>
+          <span>分数 ${item.validation_score}</span>
+          <span>Brier相关 ${item.correlation_with_brier}</span>
+          <span>报告 ${escapeHtml(item.report_path)}</span>
+        </div>
+      `).join("");
+      const skipped = result.skipped.length ? `
+        <p class="muted">跳过：${result.skipped.map(item => `${escapeHtml(item.domain)} (${escapeHtml(item.reason)})`).join(" / ")}</p>
+      ` : "";
+      return `
+        <div class="result-head">规则搜索完成 <span class="pill">${escapeHtml(result.mode)}</span></div>
+        <p><strong>总样本数：</strong>${result.total_case_count}</p>
+        <div class="rule-result-list">${rows}</div>
+        ${skipped}
+      `;
+    }
+
+    function renderRuleProgress(events) {
+      if (!events.length) return "<p class='muted'>等待候选规则评分。</p>";
+      return events.slice(-24).map(event => {
+        if (event.type === "candidate_scored") {
+          return `
+            <div class="trace-item rule-progress-item">
+              <div class="trace-meta">${escapeHtml(event.domain)} · 第 ${event.round_index} 轮 · 候选规则 ${event.candidate_index}</div>
+              <div class="trace-thought">${escapeHtml(event.rule_set_id)}</div>
+              <div class="trace-obs">
+                validation ${event.validation_score} · resolved ${event.correlation_with_resolved_probability}
+                · -Brier ${event.correlation_with_brier} · accuracy ${event.correlation_with_accuracy}
+              </div>
+            </div>
+          `;
+        }
+        if (event.type === "round_completed") {
+          return `
+            <div class="trace-item rule-progress-item selected">
+              <div class="trace-meta">${escapeHtml(event.domain)} · 第 ${event.round_index} 轮最优</div>
+              <div class="trace-thought">${escapeHtml(event.best_rule_set_id)}</div>
+              <div class="trace-obs">validation ${event.validation_score}</div>
+            </div>
+          `;
+        }
+        return `
+          <div class="trace-item rule-progress-item">
+            <div class="trace-meta">${escapeHtml(event.domain)} · 第 ${event.round_index} 轮</div>
+            <div class="trace-thought">开始生成并评估候选规则。</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderRuleBestByRound(job) {
+      if (job.result) return renderRuleSearch(job.result);
+      if (!job.best_by_round.length) {
+        return "<p class='muted'>正在读取数据库并运行规则搜索。</p>";
+      }
+      return `
+        <div class="result-head">当前最优规则 <span class="pill">${escapeHtml(job.status)}</span></div>
+        <div class="rule-result-list">
+          ${job.best_by_round.map(item => `
+            <div class="rule-result-row">
+              <strong>${escapeHtml(item.domain)} · 第 ${item.round_index} 轮</strong>
+              <span>最优规则 ${escapeHtml(item.best_rule_set_id)}</span>
+              <span>Validation Score ${item.validation_score}</span>
+              <span>${escapeHtml(item.feedback || "")}</span>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    async function pollRuleSearchJob(jobId) {
+      const job = await api(`/api/evaluation/rule-search/jobs/${jobId}`);
+      statusText.textContent = job.message || `预测评估状态：${job.status}`;
+      traceList.innerHTML = renderRuleProgress(job.progress_events || []);
+      resultPreview.innerHTML = renderRuleBestByRound(job);
+      if (job.status === "completed") {
+        clearInterval(ruleSearchPollHandle);
+        statusText.textContent = `预测评估完成：${job.result.total_case_count} 条样本。`;
+      }
+      if (job.status === "failed") {
+        clearInterval(ruleSearchPollHandle);
+        resultPreview.innerHTML = `<p class="muted error-text">规则搜索失败：${escapeHtml(job.error || "未知错误")}</p>`;
+      }
+    }
+
+    function selectedRuleDomains() {
+      const checked = [...document.querySelectorAll("input[name='evaluation_domains']:checked")].map(item => item.value);
+      return checked.length ? checked : ["all"];
+    }
+
+    function renderRuleCases(cases) {
+      if (!cases.length) {
+        ruleCaseList.innerHTML = "<p class='muted'>当前领域没有可评估样本。</p>";
+        return;
+      }
+      ruleCaseList.innerHTML = cases.map(item => `
+        <label class="case-option">
+          <input type="checkbox" name="rule_case_ids" value="${escapeHtml(item.case_id)}" checked>
+          <span>
+            <strong>${escapeHtml(item.domain)}</strong>
+            ${escapeHtml(item.question)}
+            <em>Brier ${item.scoring_metrics?.brier_score ?? "n/a"} / resolved prob ${item.scoring_metrics?.resolved_option_probability ?? "n/a"}</em>
+          </span>
+        </label>
+      `).join("");
+    }
+
+    async function loadRuleSearchCases() {
+      const domains = selectedRuleDomains();
+      const result = await api(`/api/evaluation/rule-search/cases?domains=${encodeURIComponent(domains.join(","))}`);
+      ruleCases = result.cases;
+      ruleCaseSummary.innerHTML = `可评估样本 ${result.cases.length} 条；领域：${Object.entries(result.domain_counts).map(([k, v]) => `${escapeHtml(k)} ${v}`).join(" / ") || "无"}`;
+      renderRuleCases(result.cases);
+    }
+
     async function loadResult(questionId) {
       try {
         const result = await api(`/api/questions/${questionId}/result`);
@@ -154,6 +512,59 @@ Alphabet</textarea>
       if (run.run_status === "failed") {
         clearInterval(pollHandle);
         resultPreview.innerHTML = `<p class="muted">运行失败：${escapeHtml(run.error || "未知错误")}</p>`;
+      }
+    }
+
+    async function pollBatchRuns() {
+      if (!batchRuns.length) return;
+      let completed = 0;
+      for (const item of batchRuns) {
+        if (!item.run_id) {
+          if (item.status === "failed") completed += 1;
+          continue;
+        }
+        if (item.status === "completed" || item.status === "failed") {
+          if (item.status === "completed" && !item.result) {
+            try {
+              item.result = await api(`/api/questions/${item.question_id}/result`);
+            } catch (error) {
+              item.error = error.message;
+            }
+          }
+          if (item.status === "completed") completed += 1;
+          continue;
+        }
+        try {
+          const run = await api(`/api/runs/${item.run_id}`);
+          item.status = run.run_status;
+          item.progress_stage = run.progress_stage;
+          item.trace_summary = run.trace_summary;
+          if (run.run_status === "completed") completed += 1;
+          if (run.run_status === "completed" && !item.result) {
+            item.result = await api(`/api/questions/${item.question_id}/result`);
+          }
+        } catch (error) {
+          item.status = "failed";
+          item.error = error.message;
+          completed += 1;
+        }
+      }
+      statusText.textContent = `批量预测进度：${completed} / ${batchRuns.length} 完成`;
+      if (selectedBatchIndex === null) {
+        selectedBatchIndex = batchRuns.findIndex(item => item.trace_summary || item.result || item.error);
+        if (selectedBatchIndex < 0) selectedBatchIndex = 0;
+      }
+      renderTrace(batchRuns[selectedBatchIndex]?.trace_summary || []);
+      // Only update the batch list during polling; keep the report DOM intact
+      const listEl = resultPreview.querySelector(".batch-list");
+      if (listEl) {
+        listEl.outerHTML = renderBatchList();
+      } else {
+        resultPreview.innerHTML = renderBatchRuns();
+      }
+      if (completed === batchRuns.length) {
+        clearInterval(batchPollHandle);
+        await loadQuestions();
       }
     }
 
@@ -200,9 +611,7 @@ Alphabet</textarea>
       }
     }
 
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const formData = new FormData(form);
+    async function submitSingleForecast(formData) {
       const payload = {
         category: formData.get("category"),
         question: formData.get("question"),
@@ -224,10 +633,171 @@ Alphabet</textarea>
       pollHandle = setInterval(pollRun, 1200);
       await loadQuestions();
       await pollRun();
+    }
+
+    async function submitBatchForecast(formData) {
+      if (!batchItems.length) {
+        throw new Error("请先上传 benchmark JSON 文件。");
+      }
+      const limitValue = Number(formData.get("batch_limit") || 5);
+      const selectedItems = batchItems.slice(0, Math.max(1, Math.min(limitValue, batchItems.length)));
+      batchRuns = selectedItems.map(item => ({
+        external_id: item.id,
+        question: item.question,
+        status: "queued",
+      }));
+      selectedBatchIndex = selectedItems.length ? 0 : null;
+      traceList.innerHTML = "";
+      resultPreview.innerHTML = renderBatchList() + (selectedBatchIndex !== null ? renderSelectedReport() : "");
+      statusText.textContent = `正在导入并启动 ${selectedItems.length} 条 benchmark 预测。`;
+
+      for (let index = 0; index < selectedItems.length; index += 1) {
+        const item = selectedItems[index];
+        batchRuns[index].status = "importing";
+        resultPreview.innerHTML = renderBatchRuns();
+        try {
+          const created = await api("/api/benchmark-events", {
+            method: "POST",
+            body: JSON.stringify(item)
+          });
+          batchRuns[index].question_id = created.question_id;
+          batchRuns[index].status = "starting";
+          resultPreview.innerHTML = renderBatchRuns();
+          const run = await api(`/api/questions/${created.question_id}/forecast`, { method: "POST" });
+          batchRuns[index].run_id = run.run_id;
+          batchRuns[index].status = "running";
+        } catch (error) {
+          batchRuns[index].status = "failed";
+          batchRuns[index].error = error.message;
+        }
+        resultPreview.innerHTML = renderBatchRuns();
+      }
+
+      if (batchPollHandle) clearInterval(batchPollHandle);
+      batchPollHandle = setInterval(pollBatchRuns, 1500);
+      await loadQuestions();
+      await pollBatchRuns();
+    }
+
+    async function submitRuleSearch(formData) {
+      traceList.innerHTML = "";
+      resultPreview.innerHTML = "<p class='muted'>正在启动规则搜索任务。</p>";
+      statusText.textContent = "预测评估运行中。";
+      const domains = selectedRuleDomains();
+      const caseIds = [...document.querySelectorAll("input[name='rule_case_ids']:checked")].map(item => item.value);
+      const casesPerDomainRaw = formData.get("cases_per_domain");
+      const job = await api("/api/evaluation/rule-search/jobs", {
+        method: "POST",
+        body: JSON.stringify({
+          domains,
+          case_ids: caseIds,
+          cases_per_domain: casesPerDomainRaw ? Number(casesPerDomainRaw) : null,
+          iterations: Number(formData.get("rule_iterations") || 2),
+          candidates_per_round: Number(formData.get("candidates_per_round") || 3),
+        })
+      });
+      if (ruleSearchPollHandle) clearInterval(ruleSearchPollHandle);
+      await pollRuleSearchJob(job.job_id);
+      ruleSearchPollHandle = setInterval(() => pollRuleSearchJob(job.job_id), 1500);
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      try {
+        if (modeSelect.value === "evaluation") {
+          await submitRuleSearch(formData);
+        } else if (modeSelect.value === "batch") {
+          await submitBatchForecast(formData);
+        } else {
+          await submitSingleForecast(formData);
+        }
+      } catch (error) {
+        statusText.textContent = "提交失败";
+        resultPreview.innerHTML = `<p class="muted">${escapeHtml(error.message)}</p>`;
+      }
+    });
+
+    resultPreview.addEventListener("click", (event) => {
+      const row = event.target.closest("[data-batch-index]");
+      if (!row) return;
+      selectBatchRun(Number(row.dataset.batchIndex));
+    });
+
+    document.getElementById("evaluation-domains").addEventListener("change", async (event) => {
+      if (event.target.value === "all" && event.target.checked) {
+        document.querySelectorAll("input[name='evaluation_domains']").forEach(item => {
+          if (item.value !== "all") item.checked = false;
+        });
+      }
+      if (event.target.value !== "all" && event.target.checked) {
+        document.querySelector("input[name='evaluation_domains'][value='all']").checked = false;
+      }
+      ruleCases = [];
+      ruleCaseList.innerHTML = "";
+      ruleCaseSummary.textContent = "领域已变化，请重新加载可评估样本。";
+    });
+
+    loadRuleCasesButton.addEventListener("click", async () => {
+      loadRuleCasesButton.disabled = true;
+      ruleCaseSummary.textContent = "正在读取数据库中的可评估样本。";
+      try {
+        await loadRuleSearchCases();
+      } catch (error) {
+        ruleCaseSummary.textContent = `加载失败：${error.message}`;
+      } finally {
+        loadRuleCasesButton.disabled = false;
+      }
+    });
+
+    generateButton.addEventListener("click", async () => {
+      const formData = new FormData(form);
+      generateButton.disabled = true;
+      generateSummary.textContent = "正在生成 benchmark，可能需要等待新闻抓取和模型调用。";
+      try {
+        const result = await api("/api/benchmark/generate", {
+          method: "POST",
+          body: JSON.stringify({
+            domain: formData.get("generate_domain"),
+            limit: Number(formData.get("generate_limit") || 10),
+            max_items_per_feed: Number(formData.get("max_items_per_feed") || 10),
+          })
+        });
+        batchItems = result.items;
+        fileName.textContent = result.output_paths.benchmark_all ? result.output_paths.benchmark_all.split(/[\\\\/]/).pop() : "generated benchmark";
+        batchSummary.textContent = summarizeBatchItems(batchItems);
+        generateSummary.innerHTML = renderGeneratedBenchmark(result);
+      } catch (error) {
+        generateSummary.textContent = `生成失败：${error.message}`;
+      } finally {
+        generateButton.disabled = false;
+      }
+    });
+
+    benchmarkFile.addEventListener("change", async () => {
+      const file = benchmarkFile.files && benchmarkFile.files[0];
+      if (!file) {
+        batchItems = [];
+        batchSummary.textContent = "上传 benchmark_all.json 后会显示样本统计。";
+        fileName.textContent = "选择 benchmark_all.json";
+        return;
+      }
+      try {
+        const payload = JSON.parse(await file.text());
+        batchItems = normalizeBenchmarkItems(payload);
+        fileName.textContent = file.name;
+        batchSummary.textContent = summarizeBatchItems(batchItems);
+      } catch (error) {
+        batchItems = [];
+        fileName.textContent = file.name;
+        batchSummary.textContent = `读取失败：${error.message}`;
+      }
     });
 
     const today = new Date().toISOString().split("T")[0];
     document.querySelector("input[name='resolution_date']").value = today;
+    modeSelect.addEventListener("change", updateMode);
+    updateMode();
     loadQuestions();
   </script>
 </body>

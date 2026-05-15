@@ -1,0 +1,4074 @@
+{
+  "domain": "forecast_general",
+  "seed_rule_set": {
+    "rule_set_id": "generic_v0",
+    "domain": "forecast_general",
+    "description": "Generic forecast trajectory rubric. It evaluates whether a ReAct forecasting agent understands a resolvable event, retrieves reliable evidence, reasons faithfully, updates probabilities, and uses tools efficiently.",
+    "dimensions": [
+      {
+        "name": "Question understanding and resolvability",
+        "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria.",
+        "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+        "score_3": "Understands the broad event but misses some boundary or settlement details.",
+        "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+        "weight": 1.5
+      },
+      {
+        "name": "Information retrieval quality",
+        "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources.",
+        "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+        "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+        "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+        "weight": 2.0
+      },
+      {
+        "name": "Source credibility and news quality",
+        "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources.",
+        "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+        "score_3": "Uses generally credible secondary sources but limited primary verification.",
+        "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+        "weight": 2.0
+      },
+      {
+        "name": "Reasoning chain quality",
+        "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty.",
+        "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+        "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+        "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+        "weight": 2.0
+      },
+      {
+        "name": "Probability update quality",
+        "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty.",
+        "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+        "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+        "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+        "weight": 1.5
+      },
+      {
+        "name": "Tool use and execution efficiency",
+        "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps.",
+        "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+        "score_3": "Uses the right tools but has some redundant or shallow steps.",
+        "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+        "weight": 1.0
+      }
+    ],
+    "parent_id": null
+  },
+  "best_rule_set": {
+    "rule_set_id": "round_2_candidate_1",
+    "domain": "forecast_general",
+    "description": "Mock domain-adapted candidate 1 for forecast_general.",
+    "dimensions": [
+      {
+        "name": "Question understanding and resolvability",
+        "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+        "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+        "score_3": "Understands the broad event but misses some boundary or settlement details.",
+        "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+        "weight": 1.5
+      },
+      {
+        "name": "Information retrieval quality",
+        "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+        "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+        "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+        "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+        "weight": 2.5
+      },
+      {
+        "name": "Source credibility and news quality",
+        "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+        "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+        "score_3": "Uses generally credible secondary sources but limited primary verification.",
+        "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+        "weight": 2.5
+      },
+      {
+        "name": "Reasoning chain quality",
+        "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+        "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+        "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+        "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+        "weight": 2.0
+      },
+      {
+        "name": "Probability update quality",
+        "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+        "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+        "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+        "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+        "weight": 1.5
+      },
+      {
+        "name": "Tool use and execution efficiency",
+        "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+        "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+        "score_3": "Uses the right tools but has some redundant or shallow steps.",
+        "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+        "weight": 1.0
+      }
+    ],
+    "parent_id": "round_1_candidate_1"
+  },
+  "rounds": [
+    {
+      "round_index": 1,
+      "candidates": [
+        {
+          "rule_set_id": "round_1_candidate_1",
+          "domain": "forecast_general",
+          "description": "Mock domain-adapted candidate 1 for forecast_general.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: forecast_general.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: forecast_general.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.25
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: forecast_general.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.25
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: forecast_general.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: forecast_general.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: forecast_general.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "generic_v0"
+        },
+        {
+          "rule_set_id": "round_1_candidate_2",
+          "domain": "forecast_general",
+          "description": "Mock domain-adapted candidate 2 for forecast_general.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: forecast_general.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: forecast_general.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.0
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: forecast_general.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.0
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: forecast_general.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: forecast_general.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: forecast_general.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "generic_v0"
+        },
+        {
+          "rule_set_id": "round_1_candidate_3",
+          "domain": "forecast_general",
+          "description": "Mock domain-adapted candidate 3 for forecast_general.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: forecast_general.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: forecast_general.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.0
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: forecast_general.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.0
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: forecast_general.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: forecast_general.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: forecast_general.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "generic_v0"
+        }
+      ],
+      "validations": [
+        {
+          "rule_set_id": "round_1_candidate_1",
+          "validation_score": 0.5835,
+          "correlation_with_resolved_probability": 0.3485,
+          "correlation_with_brier": -0.2351,
+          "case_count": 74
+        },
+        {
+          "rule_set_id": "round_1_candidate_2",
+          "validation_score": 0.5751,
+          "correlation_with_resolved_probability": 0.343,
+          "correlation_with_brier": -0.2321,
+          "case_count": 74
+        },
+        {
+          "rule_set_id": "round_1_candidate_3",
+          "validation_score": 0.5751,
+          "correlation_with_resolved_probability": 0.343,
+          "correlation_with_brier": -0.2321,
+          "case_count": 74
+        }
+      ],
+      "best_rule_set_id": "round_1_candidate_1",
+      "feedback": "round_1_candidate_1 is currently best. Validation score=0.5835, corr(resolved probability)=0.3485, corr(Brier)=-0.2351. Improve dimensions that better distinguish credible evidence, cutoff compliance, and probability calibration."
+    },
+    {
+      "round_index": 2,
+      "candidates": [
+        {
+          "rule_set_id": "round_2_candidate_1",
+          "domain": "forecast_general",
+          "description": "Mock domain-adapted candidate 1 for forecast_general.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.5
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.5
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "round_1_candidate_1"
+        },
+        {
+          "rule_set_id": "round_2_candidate_2",
+          "domain": "forecast_general",
+          "description": "Mock domain-adapted candidate 2 for forecast_general.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.25
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.25
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "round_1_candidate_1"
+        },
+        {
+          "rule_set_id": "round_2_candidate_3",
+          "domain": "forecast_general",
+          "description": "Mock domain-adapted candidate 3 for forecast_general.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.25
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.25
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: forecast_general. Domain adaptation target: forecast_general.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "round_1_candidate_1"
+        }
+      ],
+      "validations": [
+        {
+          "rule_set_id": "round_2_candidate_1",
+          "validation_score": 0.5908,
+          "correlation_with_resolved_probability": 0.3532,
+          "correlation_with_brier": -0.2376,
+          "case_count": 74
+        },
+        {
+          "rule_set_id": "round_2_candidate_2",
+          "validation_score": 0.5835,
+          "correlation_with_resolved_probability": 0.3485,
+          "correlation_with_brier": -0.2351,
+          "case_count": 74
+        },
+        {
+          "rule_set_id": "round_2_candidate_3",
+          "validation_score": 0.5835,
+          "correlation_with_resolved_probability": 0.3485,
+          "correlation_with_brier": -0.2351,
+          "case_count": 74
+        }
+      ],
+      "best_rule_set_id": "round_2_candidate_1",
+      "feedback": "round_2_candidate_1 is currently best. Validation score=0.5908, corr(resolved probability)=0.3532, corr(Brier)=-0.2376. Improve dimensions that better distinguish credible evidence, cutoff compliance, and probability calibration."
+    }
+  ],
+  "case_scores": [
+    {
+      "case_id": "bm_054795befb79",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.00312,
+        "resolved_option_probability": 0.9605
+      }
+    },
+    {
+      "case_id": "bm_06eaa878a971",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 5.0,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 5,
+          "rationale": "Multiple independent sources and enough evidence items were retrieved.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.0,
+        "resolved_option_probability": 0.9998
+      }
+    },
+    {
+      "case_id": "bm_0a7adfb38244",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.164508,
+        "resolved_option_probability": 0.7132
+      }
+    },
+    {
+      "case_id": "bm_1b3dd7100ceb",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.406802,
+        "resolved_option_probability": 0.549
+      }
+    },
+    {
+      "case_id": "bm_1e3a6147cbb0",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.2727,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 1e-06,
+        "resolved_option_probability": 0.9993
+      }
+    },
+    {
+      "case_id": "bm_1fbd91f938c4",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.009688,
+        "resolved_option_probability": 0.9304
+      }
+    },
+    {
+      "case_id": "bm_20b3e14db956",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.378102,
+        "resolved_option_probability": 0.5652
+      }
+    },
+    {
+      "case_id": "bm_2125f2ec101c",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.6364,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 1.962577,
+        "resolved_option_probability": 0.0094
+      }
+    },
+    {
+      "case_id": "bm_2181fbf9d68e",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 5.0,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 5,
+          "rationale": "Multiple independent sources and enough evidence items were retrieved.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.008398,
+        "resolved_option_probability": 0.9352
+      }
+    },
+    {
+      "case_id": "bm_2d43d04637b2",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.001123,
+        "resolved_option_probability": 0.9763
+      }
+    },
+    {
+      "case_id": "bm_374a94268b2b",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_666559429648",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_6e9855017d20",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.9091,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 3,
+          "rationale": "Reasoning is auditable but conflict coverage is incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.000753,
+        "resolved_option_probability": 0.9806
+      }
+    },
+    {
+      "case_id": "bm_b2b502f41c0c",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.2727,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 1e-06,
+        "resolved_option_probability": 0.9994
+      }
+    },
+    {
+      "case_id": "bm_cfcacdb3650f",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.033437,
+        "resolved_option_probability": 0.8707
+      }
+    },
+    {
+      "case_id": "bm_d651f5b4afe7",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.2727,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 1e-06,
+        "resolved_option_probability": 0.9993
+      }
+    },
+    {
+      "case_id": "bm_f053c823a61c",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.6364,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.011674,
+        "resolved_option_probability": 0.9236
+      }
+    },
+    {
+      "case_id": "bm_23f7c9f84615",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_3327af9b8d0f",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 1.988816,
+        "resolved_option_probability": 0.0028
+      }
+    },
+    {
+      "case_id": "bm_34cce18a789b",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.0909,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.00238,
+        "resolved_option_probability": 0.9655
+      }
+    },
+    {
+      "case_id": "bm_4dcc7f877916",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.0909,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 9e-06,
+        "resolved_option_probability": 0.9979
+      }
+    },
+    {
+      "case_id": "bm_6a76359a4804",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.0909,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.43861,
+        "resolved_option_probability": 0.5317
+      }
+    },
+    {
+      "case_id": "bm_7f7cb4de647a",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.120737,
+        "resolved_option_probability": 0.7543
+      }
+    },
+    {
+      "case_id": "bm_85db8dacff20",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_8afb6780b79d",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 1.160678,
+        "resolved_option_probability": 0.2382
+      }
+    },
+    {
+      "case_id": "bm_abb0c4522303",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 0.777006,
+        "resolved_option_probability": 0.3767
+      }
+    },
+    {
+      "case_id": "bm_c62c94e909b9",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_c91149fba651",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.242069,
+        "resolved_option_probability": 0.6521
+      }
+    },
+    {
+      "case_id": "bm_cd485b9397af",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.2727,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.075427,
+        "resolved_option_probability": 0.8058
+      }
+    },
+    {
+      "case_id": "bm_dff109574882",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.2727,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 1.985227,
+        "resolved_option_probability": 0.0037
+      }
+    },
+    {
+      "case_id": "bm_f2e76958cbd6",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.0909,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.00238,
+        "resolved_option_probability": 0.9655
+      }
+    },
+    {
+      "case_id": "bm_11f114c864bb",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 5.0,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 5,
+          "rationale": "Multiple independent sources and enough evidence items were retrieved.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.039424,
+        "resolved_option_probability": 0.8596
+      }
+    },
+    {
+      "case_id": "bm_232ed6a95d48",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 1.995602,
+        "resolved_option_probability": 0.0011
+      }
+    },
+    {
+      "case_id": "bm_256a79062421",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 5.0,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 5,
+          "rationale": "Multiple independent sources and enough evidence items were retrieved.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 0.538307,
+        "resolved_option_probability": 0.4812
+      }
+    },
+    {
+      "case_id": "bm_318550cfe965",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.286524,
+        "resolved_option_probability": 0.6215
+      }
+    },
+    {
+      "case_id": "bm_623c92409d9f",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 5.0,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 5,
+          "rationale": "Multiple independent sources and enough evidence items were retrieved.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.040214,
+        "resolved_option_probability": 0.8582
+      }
+    },
+    {
+      "case_id": "bm_9a6911aededd",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.09245,
+        "resolved_option_probability": 0.785
+      }
+    },
+    {
+      "case_id": "bm_d023b3057aea",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.2727,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 9e-06,
+        "resolved_option_probability": 0.9979
+      }
+    },
+    {
+      "case_id": "bm_0422dc3c79a9",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.0909,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.269231,
+        "resolved_option_probability": 0.6331
+      }
+    },
+    {
+      "case_id": "bm_043775c0a714",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.0,
+        "resolved_option_probability": 0.9997
+      }
+    },
+    {
+      "case_id": "bm_0a9b97fcbc02",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_1607af5fc397",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 5.0,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 5,
+          "rationale": "Multiple independent sources and enough evidence items were retrieved.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.0,
+        "resolved_option_probability": 0.9999
+      }
+    },
+    {
+      "case_id": "bm_21893e0d885e",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 5.0,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 5,
+          "rationale": "Multiple independent sources and enough evidence items were retrieved.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.036396,
+        "resolved_option_probability": 0.8651
+      }
+    },
+    {
+      "case_id": "bm_35e79542dee9",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 3,
+          "rationale": "Reasoning is auditable but conflict coverage is incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.000144,
+        "resolved_option_probability": 0.9915
+      }
+    },
+    {
+      "case_id": "bm_6173b769d3cc",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.0,
+        "resolved_option_probability": 0.9995
+      }
+    },
+    {
+      "case_id": "bm_6c1afd64c447",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.2727,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.018509,
+        "resolved_option_probability": 0.9038
+      }
+    },
+    {
+      "case_id": "bm_8e346f5b05bd",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.000882,
+        "resolved_option_probability": 0.979
+      }
+    },
+    {
+      "case_id": "bm_90c36ebe15a6",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.111015,
+        "resolved_option_probability": 0.7644
+      }
+    },
+    {
+      "case_id": "bm_cf7a9ef0277f",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 5.0,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 5,
+          "rationale": "Multiple independent sources and enough evidence items were retrieved.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.0,
+        "resolved_option_probability": 0.9997
+      }
+    },
+    {
+      "case_id": "bm_d6f2692eed26",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.092881,
+        "resolved_option_probability": 0.7845
+      }
+    },
+    {
+      "case_id": "bm_faf512d8f948",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.0909,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 1.161593,
+        "resolved_option_probability": 0.2379
+      }
+    },
+    {
+      "case_id": "bm_0841a7395e7d",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.6364,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 1.662029,
+        "resolved_option_probability": 0.0884
+      }
+    },
+    {
+      "case_id": "bm_1cf9795fb57d",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.0909,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.00238,
+        "resolved_option_probability": 0.9655
+      }
+    },
+    {
+      "case_id": "bm_633db26bb843",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.2727,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 1.594184,
+        "resolved_option_probability": 0.1072
+      }
+    },
+    {
+      "case_id": "bm_712a5c6f8322",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_72786ebfc191",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.9091,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 3,
+          "rationale": "Reasoning is auditable but conflict coverage is incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.046696,
+        "resolved_option_probability": 0.8472
+      }
+    },
+    {
+      "case_id": "bm_9594b7b638d8",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.00095,
+        "resolved_option_probability": 0.9782
+      }
+    },
+    {
+      "case_id": "bm_ad4b74712e6c",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.00123,
+        "resolved_option_probability": 0.9752
+      }
+    },
+    {
+      "case_id": "bm_bfa473ccd783",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.2727,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 2e-06,
+        "resolved_option_probability": 0.9991
+      }
+    },
+    {
+      "case_id": "bm_07074bfb4307",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.6364,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 1.967334,
+        "resolved_option_probability": 0.0082
+      }
+    },
+    {
+      "case_id": "bm_0eb08568cb8f",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_20b45895b467",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.0909,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.003802,
+        "resolved_option_probability": 0.9564
+      }
+    },
+    {
+      "case_id": "bm_280538004068",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.108858,
+        "resolved_option_probability": 0.7667
+      }
+    },
+    {
+      "case_id": "bm_329488913d01",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_388bddef6a40",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.2727,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.105524,
+        "resolved_option_probability": 0.7703
+      }
+    },
+    {
+      "case_id": "bm_3e4121d834c6",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_426c3c78ec6c",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.0909,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 1.972892,
+        "resolved_option_probability": 0.0068
+      }
+    },
+    {
+      "case_id": "bm_557e4075e9b6",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_7d1e5551d290",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 4.5455,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.199838,
+        "resolved_option_probability": 0.6839
+      }
+    },
+    {
+      "case_id": "bm_8f3b62a07d88",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_98b135bb2e7d",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.0909,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 0.886047,
+        "resolved_option_probability": 0.3344
+      }
+    },
+    {
+      "case_id": "bm_99a28216fc4c",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.4545,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 3,
+          "rationale": "Reasoning is auditable but conflict coverage is incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 1.836678,
+        "resolved_option_probability": 0.0417
+      }
+    },
+    {
+      "case_id": "bm_9d172a87836e",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_c210007076bc",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.1818,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    }
+  ],
+  "validation_summary": {
+    "rule_set_id": "round_2_candidate_1",
+    "validation_score": 0.5908,
+    "correlation_with_resolved_probability": 0.3532,
+    "correlation_with_brier": -0.2376,
+    "case_count": 74
+  }
+}

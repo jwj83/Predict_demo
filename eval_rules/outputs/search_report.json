@@ -1,0 +1,774 @@
+{
+  "domain": "politics_governance",
+  "seed_rule_set": {
+    "rule_set_id": "generic_v0",
+    "domain": "politics_governance",
+    "description": "Generic forecast trajectory rubric. It evaluates whether a ReAct forecasting agent understands a resolvable event, retrieves reliable evidence, reasons faithfully, updates probabilities, and uses tools efficiently.",
+    "dimensions": [
+      {
+        "name": "Question understanding and resolvability",
+        "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria.",
+        "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+        "score_3": "Understands the broad event but misses some boundary or settlement details.",
+        "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+        "weight": 1.5
+      },
+      {
+        "name": "Information retrieval quality",
+        "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources.",
+        "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+        "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+        "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+        "weight": 2.0
+      },
+      {
+        "name": "Source credibility and news quality",
+        "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources.",
+        "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+        "score_3": "Uses generally credible secondary sources but limited primary verification.",
+        "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+        "weight": 2.0
+      },
+      {
+        "name": "Reasoning chain quality",
+        "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty.",
+        "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+        "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+        "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+        "weight": 2.0
+      },
+      {
+        "name": "Probability update quality",
+        "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty.",
+        "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+        "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+        "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+        "weight": 1.5
+      },
+      {
+        "name": "Tool use and execution efficiency",
+        "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps.",
+        "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+        "score_3": "Uses the right tools but has some redundant or shallow steps.",
+        "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+        "weight": 1.0
+      }
+    ],
+    "parent_id": null
+  },
+  "best_rule_set": {
+    "rule_set_id": "round_2_candidate_1",
+    "domain": "politics_governance",
+    "description": "Mock domain-adapted candidate 1 for politics_governance.",
+    "dimensions": [
+      {
+        "name": "Question understanding and resolvability",
+        "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+        "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+        "score_3": "Understands the broad event but misses some boundary or settlement details.",
+        "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+        "weight": 1.5
+      },
+      {
+        "name": "Information retrieval quality",
+        "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+        "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+        "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+        "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+        "weight": 2.5
+      },
+      {
+        "name": "Source credibility and news quality",
+        "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+        "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+        "score_3": "Uses generally credible secondary sources but limited primary verification.",
+        "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+        "weight": 2.5
+      },
+      {
+        "name": "Reasoning chain quality",
+        "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+        "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+        "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+        "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+        "weight": 2.0
+      },
+      {
+        "name": "Probability update quality",
+        "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+        "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+        "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+        "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+        "weight": 1.5
+      },
+      {
+        "name": "Tool use and execution efficiency",
+        "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+        "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+        "score_3": "Uses the right tools but has some redundant or shallow steps.",
+        "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+        "weight": 1.0
+      },
+      {
+        "name": "Official institution sourcing",
+        "description": "Whether the trajectory traces claims to election bodies, courts, agencies, legislation, or official schedules. Domain adaptation target: politics_governance.",
+        "score_5": "Uses primary institutions or direct legal/procedural records.",
+        "score_3": "Uses credible media summaries but limited primary institutional evidence.",
+        "score_1": "Relies on commentary or campaign claims without institutional verification.",
+        "weight": 1.4
+      },
+      {
+        "name": "Statement versus execution distinction",
+        "description": "Whether the agent separates rhetoric, pledges, media narratives, legal acts, and executed government decisions. Domain adaptation target: politics_governance.",
+        "score_5": "Clearly distinguishes public statements from binding actions or official execution.",
+        "score_3": "Mentions the distinction but inconsistently applies it.",
+        "score_1": "Treats rhetoric or headlines as resolved political action.",
+        "weight": 1.2
+      },
+      {
+        "name": "Procedural and timing feasibility",
+        "description": "Whether the trajectory checks deadlines, legal thresholds, vote counts, procedural calendars, and remaining feasible actions. Domain adaptation target: politics_governance.",
+        "score_5": "Uses concrete procedural constraints and timing feasibility in probability reasoning.",
+        "score_3": "Mentions timing or procedure but lacks quantitative/procedural grounding.",
+        "score_1": "Ignores legal/procedural feasibility.",
+        "weight": 1.3
+      }
+    ],
+    "parent_id": "round_1_candidate_1"
+  },
+  "rounds": [
+    {
+      "round_index": 1,
+      "candidates": [
+        {
+          "rule_set_id": "round_1_candidate_1",
+          "domain": "politics_governance",
+          "description": "Mock domain-adapted candidate 1 for politics_governance.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: politics_governance.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: politics_governance.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.25
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: politics_governance.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.25
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: politics_governance.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: politics_governance.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: politics_governance.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            },
+            {
+              "name": "Official institution sourcing",
+              "description": "Whether the trajectory traces claims to election bodies, courts, agencies, legislation, or official schedules.",
+              "score_5": "Uses primary institutions or direct legal/procedural records.",
+              "score_3": "Uses credible media summaries but limited primary institutional evidence.",
+              "score_1": "Relies on commentary or campaign claims without institutional verification.",
+              "weight": 1.4
+            },
+            {
+              "name": "Statement versus execution distinction",
+              "description": "Whether the agent separates rhetoric, pledges, media narratives, legal acts, and executed government decisions.",
+              "score_5": "Clearly distinguishes public statements from binding actions or official execution.",
+              "score_3": "Mentions the distinction but inconsistently applies it.",
+              "score_1": "Treats rhetoric or headlines as resolved political action.",
+              "weight": 1.2
+            },
+            {
+              "name": "Procedural and timing feasibility",
+              "description": "Whether the trajectory checks deadlines, legal thresholds, vote counts, procedural calendars, and remaining feasible actions.",
+              "score_5": "Uses concrete procedural constraints and timing feasibility in probability reasoning.",
+              "score_3": "Mentions timing or procedure but lacks quantitative/procedural grounding.",
+              "score_1": "Ignores legal/procedural feasibility.",
+              "weight": 1.3
+            }
+          ],
+          "parent_id": "generic_v0"
+        },
+        {
+          "rule_set_id": "round_1_candidate_2",
+          "domain": "politics_governance",
+          "description": "Mock domain-adapted candidate 2 for politics_governance.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: politics_governance.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: politics_governance.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.0
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: politics_governance.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.0
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: politics_governance.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: politics_governance.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: politics_governance.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "generic_v0"
+        },
+        {
+          "rule_set_id": "round_1_candidate_3",
+          "domain": "politics_governance",
+          "description": "Mock domain-adapted candidate 3 for politics_governance.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: politics_governance.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: politics_governance.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.0
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: politics_governance.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.0
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: politics_governance.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: politics_governance.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: politics_governance.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "generic_v0"
+        }
+      ],
+      "validations": [
+        {
+          "rule_set_id": "round_1_candidate_1",
+          "validation_score": 2.0,
+          "correlation_with_resolved_probability": 1.0,
+          "correlation_with_brier": -1.0,
+          "case_count": 2
+        },
+        {
+          "rule_set_id": "round_1_candidate_2",
+          "validation_score": 2.0,
+          "correlation_with_resolved_probability": 1.0,
+          "correlation_with_brier": -1.0,
+          "case_count": 2
+        },
+        {
+          "rule_set_id": "round_1_candidate_3",
+          "validation_score": 2.0,
+          "correlation_with_resolved_probability": 1.0,
+          "correlation_with_brier": -1.0,
+          "case_count": 2
+        }
+      ],
+      "best_rule_set_id": "round_1_candidate_1",
+      "feedback": "round_1_candidate_1 is currently best. Validation score=2.0, corr(resolved probability)=1.0, corr(Brier)=-1.0. Improve dimensions that better distinguish credible evidence, cutoff compliance, and probability calibration."
+    },
+    {
+      "round_index": 2,
+      "candidates": [
+        {
+          "rule_set_id": "round_2_candidate_1",
+          "domain": "politics_governance",
+          "description": "Mock domain-adapted candidate 1 for politics_governance.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.5
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.5
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            },
+            {
+              "name": "Official institution sourcing",
+              "description": "Whether the trajectory traces claims to election bodies, courts, agencies, legislation, or official schedules. Domain adaptation target: politics_governance.",
+              "score_5": "Uses primary institutions or direct legal/procedural records.",
+              "score_3": "Uses credible media summaries but limited primary institutional evidence.",
+              "score_1": "Relies on commentary or campaign claims without institutional verification.",
+              "weight": 1.4
+            },
+            {
+              "name": "Statement versus execution distinction",
+              "description": "Whether the agent separates rhetoric, pledges, media narratives, legal acts, and executed government decisions. Domain adaptation target: politics_governance.",
+              "score_5": "Clearly distinguishes public statements from binding actions or official execution.",
+              "score_3": "Mentions the distinction but inconsistently applies it.",
+              "score_1": "Treats rhetoric or headlines as resolved political action.",
+              "weight": 1.2
+            },
+            {
+              "name": "Procedural and timing feasibility",
+              "description": "Whether the trajectory checks deadlines, legal thresholds, vote counts, procedural calendars, and remaining feasible actions. Domain adaptation target: politics_governance.",
+              "score_5": "Uses concrete procedural constraints and timing feasibility in probability reasoning.",
+              "score_3": "Mentions timing or procedure but lacks quantitative/procedural grounding.",
+              "score_1": "Ignores legal/procedural feasibility.",
+              "weight": 1.3
+            }
+          ],
+          "parent_id": "round_1_candidate_1"
+        },
+        {
+          "rule_set_id": "round_2_candidate_2",
+          "domain": "politics_governance",
+          "description": "Mock domain-adapted candidate 2 for politics_governance.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.25
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.25
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            },
+            {
+              "name": "Official institution sourcing",
+              "description": "Whether the trajectory traces claims to election bodies, courts, agencies, legislation, or official schedules. Domain adaptation target: politics_governance.",
+              "score_5": "Uses primary institutions or direct legal/procedural records.",
+              "score_3": "Uses credible media summaries but limited primary institutional evidence.",
+              "score_1": "Relies on commentary or campaign claims without institutional verification.",
+              "weight": 1.4
+            },
+            {
+              "name": "Statement versus execution distinction",
+              "description": "Whether the agent separates rhetoric, pledges, media narratives, legal acts, and executed government decisions. Domain adaptation target: politics_governance.",
+              "score_5": "Clearly distinguishes public statements from binding actions or official execution.",
+              "score_3": "Mentions the distinction but inconsistently applies it.",
+              "score_1": "Treats rhetoric or headlines as resolved political action.",
+              "weight": 1.2
+            },
+            {
+              "name": "Procedural and timing feasibility",
+              "description": "Whether the trajectory checks deadlines, legal thresholds, vote counts, procedural calendars, and remaining feasible actions. Domain adaptation target: politics_governance.",
+              "score_5": "Uses concrete procedural constraints and timing feasibility in probability reasoning.",
+              "score_3": "Mentions timing or procedure but lacks quantitative/procedural grounding.",
+              "score_1": "Ignores legal/procedural feasibility.",
+              "weight": 1.3
+            }
+          ],
+          "parent_id": "round_1_candidate_1"
+        },
+        {
+          "rule_set_id": "round_2_candidate_3",
+          "domain": "politics_governance",
+          "description": "Mock domain-adapted candidate 3 for politics_governance.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.25
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.25
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: politics_governance. Domain adaptation target: politics_governance.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            },
+            {
+              "name": "Official institution sourcing",
+              "description": "Whether the trajectory traces claims to election bodies, courts, agencies, legislation, or official schedules. Domain adaptation target: politics_governance.",
+              "score_5": "Uses primary institutions or direct legal/procedural records.",
+              "score_3": "Uses credible media summaries but limited primary institutional evidence.",
+              "score_1": "Relies on commentary or campaign claims without institutional verification.",
+              "weight": 1.4
+            },
+            {
+              "name": "Statement versus execution distinction",
+              "description": "Whether the agent separates rhetoric, pledges, media narratives, legal acts, and executed government decisions. Domain adaptation target: politics_governance.",
+              "score_5": "Clearly distinguishes public statements from binding actions or official execution.",
+              "score_3": "Mentions the distinction but inconsistently applies it.",
+              "score_1": "Treats rhetoric or headlines as resolved political action.",
+              "weight": 1.2
+            },
+            {
+              "name": "Procedural and timing feasibility",
+              "description": "Whether the trajectory checks deadlines, legal thresholds, vote counts, procedural calendars, and remaining feasible actions. Domain adaptation target: politics_governance.",
+              "score_5": "Uses concrete procedural constraints and timing feasibility in probability reasoning.",
+              "score_3": "Mentions timing or procedure but lacks quantitative/procedural grounding.",
+              "score_1": "Ignores legal/procedural feasibility.",
+              "weight": 1.3
+            }
+          ],
+          "parent_id": "round_1_candidate_1"
+        }
+      ],
+      "validations": [
+        {
+          "rule_set_id": "round_2_candidate_1",
+          "validation_score": 2.0,
+          "correlation_with_resolved_probability": 1.0,
+          "correlation_with_brier": -1.0,
+          "case_count": 2
+        },
+        {
+          "rule_set_id": "round_2_candidate_2",
+          "validation_score": 2.0,
+          "correlation_with_resolved_probability": 1.0,
+          "correlation_with_brier": -1.0,
+          "case_count": 2
+        },
+        {
+          "rule_set_id": "round_2_candidate_3",
+          "validation_score": 2.0,
+          "correlation_with_resolved_probability": 1.0,
+          "correlation_with_brier": -1.0,
+          "case_count": 2
+        }
+      ],
+      "best_rule_set_id": "round_2_candidate_1",
+      "feedback": "round_2_candidate_1 is currently best. Validation score=2.0, corr(resolved probability)=1.0, corr(Brier)=-1.0. Improve dimensions that better distinguish credible evidence, cutoff compliance, and probability calibration."
+    }
+  ],
+  "case_scores": [
+    {
+      "case_id": "case_politics_good",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.443,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 3,
+          "rationale": "Some sub-agent/tool structure is present but incomplete.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Official institution sourcing",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.4
+        },
+        {
+          "dimension": "Statement versus execution distinction",
+          "score": 3,
+          "rationale": "Some sub-agent/tool structure is present but incomplete.",
+          "weight": 1.2
+        },
+        {
+          "dimension": "Procedural and timing feasibility",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.3
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.0648,
+        "resolved_option_probability": 0.82
+      }
+    },
+    {
+      "case_id": "case_politics_bad",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 1.0,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 1,
+          "rationale": "The trajectory lacks enough structure to verify problem understanding.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.5
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 1,
+          "rationale": "No clear probability output was found.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 1,
+          "rationale": "Tool use is missing or poorly recorded.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Official institution sourcing",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.4
+        },
+        {
+          "dimension": "Statement versus execution distinction",
+          "score": 1,
+          "rationale": "Tool use is missing or poorly recorded.",
+          "weight": 1.2
+        },
+        {
+          "dimension": "Procedural and timing feasibility",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.3
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 1.1552,
+        "resolved_option_probability": 0.24
+      }
+    }
+  ],
+  "validation_summary": {
+    "rule_set_id": "round_2_candidate_1",
+    "validation_score": 2.0,
+    "correlation_with_resolved_probability": 1.0,
+    "correlation_with_brier": -1.0,
+    "case_count": 2
+  }
+}
