@@ -1,0 +1,135 @@
+[
+  {
+    "id": "bm_6f8aa81abee4",
+    "domain": "economy",
+    "source": "google_news_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5oX3lrZHVKX2RWR19wZzVmNHFyMmJqYlhKbzB2eXhwc1NocHhrdEtfMGxrM3ZrSjFfT2xyaTNwZVc3X25FLU13UWpwdGJFTnJ2WkxkWGVIR2tHMC1vVS1FcmZDWm90enhsWkNSQ2xYQQ?oc=5",
+    "question": "2026年4月中国居民消费价格同比涨幅是否等于1.2%？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-11",
+    "resolution_rule": "以国家统计局官网（stats.gov.cn）首次发布的《2026年4月份居民消费价格同比上涨1.2%》数据为准。",
+    "event_type": "cpi",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "国家统计局官网发布数据，标题为'2026年4月份居民消费价格同比上涨1.2%'，发布于2026-05-11。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-16T03:22:13.630281+00:00"
+  },
+  {
+    "id": "bm_95485e06cdae",
+    "domain": "economy",
+    "source": "google_news_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5LUms2RVBfcnpQbTJvNUNwSmNnNzVlekFpdnN1ZEQtUXhGNlRmWXNfaE5JY29LY096Z2QtVFFOaGM2NlRTaGtZamJNY3VlMGxXdDRN?oc=5",
+    "question": "美国2026年4月CPI同比涨幅是否为3.8%？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-12",
+    "resolution_rule": "以美国劳工统计局（BLS）首次发布的2026年4月CPI数据为准。",
+    "event_type": "cpi",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "华尔街见闻报道：美国4月CPI同比3.8%创近三年新高。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-16T03:22:13.630337+00:00"
+  },
+  {
+    "id": "bm_4a89df993cd0",
+    "domain": "finance",
+    "source": "google_wsj_international",
+    "source_url": "https://news.google.com/rss/articles/CBMi7gJBVV95cUxQcjdpQjBRUWZBVDBQRENwdWxEOGVCYUUtSF81X3JrVV9ITWgzTkd5RmhkUklJaW51SnFCMXp1MlExUG9EVVJzN2JYbHU4U0lzTjJRaWFTLXBodVFNOEd3VElQVDdHME1Rb0FFcGdiMVVLRDdBWGlPZjFySDJnODJtUExxbG1hX1gzTmhucEhOMUstM3dDYWcxMGE4TFlhQTBDOVpNVUYtNmVTa0VQVFM3RFgxZTFZSG8wQlFfU1NSYWh4VE0wN2lfekVmdFdmRXNBREhscVhzd1V2U1hGZ2NLcUlFSlVRdnh1M29LVDVsU2NOajAwZnhBXzFRZ1lNVlRNTzc3SGtDazBQX2F6dV9VSWd0VU5QcDJ6T1pObF9JX0NScHhkX3EtSjdRaUk2aXgzZlYzVUhfUzRZMm56NHFuVkRndF8zSnRrbXd5cHpqSU4ycHVUWlZDY2gtNXNfV3hoZFI3Y0tTUTFZdmdfSUE?oc=5",
+    "question": "特朗普在2026年5月15日访华期间是否披露此前买入大量波音和英伟达股票？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-15",
+    "resolution_rule": "以华尔街日报中文网2026年5月15日官方报道为准，若报道明确提及特朗普在访华期间披露买入大量波音和英伟达股票，则结算为“是”；否则为“否”。",
+    "event_type": "stock_move",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "华尔街日报中文网2026年5月15日报道，特朗普在访华期间披露此前买入大量波音和英伟达股票。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-16T03:22:50.236396+00:00"
+  },
+  {
+    "id": "bm_a355ab96f9ac",
+    "domain": "politics",
+    "source": "google_news_politics",
+    "source_url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9GTEFPRVpVUEEyaU9jOVRtd3FhWDAzTnJtb0N5SlF2ckNCRTlXb3ZrRHpLeVVKNmItbXVhWGY1VF9GUXFUMmZZb2psRlR6VDN2RExuWHNoSHpsdGRGc1FpZ2JJUThUd9IBa0FVX3lxTE02SXBEUjhUYWtvYXd6Ql9UanRrNlVqNUFzWGZTbWwwVHZJQlFxVUxNYTU2T2RHSUhzdV9SS0F1aEczOG4xVzVyNndFaGI0Vy1ZR3FNYjJnSDczelNUNHpkUDNXNHJrYUg5Y1JF?oc=5",
+    "question": "2026年美国中期选举中，共和党是否赢得众议院多数席位？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-11-03",
+    "resolution_rule": "以美联社、BBC等主流媒体或美国联邦选举委员会官方公告为准。若共和党赢得众议院多数席位，则答案为是；否则为否。",
+    "event_type": "election",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 75.0,
+    "created_at": "2026-05-16T03:24:44.843001+00:00"
+  },
+  {
+    "id": "bm_09da4a25e0c7",
+    "domain": "sports",
+    "source": "sohu_nba",
+    "source_url": "https://www.sohu.com/a/295073155_458722",
+    "question": "国际队是否在对阵美国队的篮球比赛中获胜？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-16",
+    "resolution_rule": "以赛事官方公告或主流媒体（如搜狐体育）一致报道为准。",
+    "event_type": "match_winner",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 75.0,
+    "created_at": "2026-05-16T03:25:30.630464+00:00"
+  },
+  {
+    "id": "bm_e885ca3b72b9",
+    "domain": "weather",
+    "source": "google_news_weather",
+    "source_url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE50ZFc1OUJaWUpSTGlZNDM3Z2U1ZHBzOVBhU2Y5N1J4ejhhb1BRb2QxVEJEQ3lkNF9GcGRfZUREQzVQNDB6dWNkZmF0TzlBUlFEbFRzSGxqMHZfUk02eEdKVE1zaUlFMUNTSzlWNjJwY1N1SmJQ?oc=5",
+    "question": "2026年5月14日重庆市是否因强降雨启动了防汛四级应急响应？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-14",
+    "resolution_rule": "以重庆市人民政府或重庆市应急管理局官方公告为准。若官方明确宣布因强降雨启动防汛四级应急响应，则答案为是；否则为否。",
+    "event_type": "rain_warning",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "重庆市人民政府于2026年5月14日发布公告，因强降雨天气启动防汛四级应急响应。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-16T03:25:43.407612+00:00"
+  },
+  {
+    "id": "bm_0724cb1382ab",
+    "domain": "weather",
+    "source": "google_news_weather",
+    "source_url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBITzlWckt2blNST1pqMzJ1c2k4VWxHOWY0bUk4MmpvUHFZUGxLTU1HbUdjMnR1TUF1dXNwMXlYNHFhN0tCWXJZMGQwQ3RMZXQ1aHRiUXZfTXhudHU2TG9NQzAzMWFiUVJibHc?oc=5",
+    "question": "2026年5月6日重庆市气象台是否发布了阵风可达7级以上的大风蓝色预警？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-06",
+    "resolution_rule": "以重庆市气象台官方发布信息为准。若官方于2026年5月6日发布大风蓝色预警且明确提及阵风可达7级以上，则答案为是；否则为否。",
+    "event_type": "rain_warning",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "重庆市人民政府官网于2026-05-06发布大风蓝色预警信息，预计阵风可达7级以上。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-16T03:25:43.407643+00:00"
+  }
+]

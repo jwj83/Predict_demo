@@ -1,0 +1,40 @@
+[
+  {
+    "id": "bm_6f8aa81abee4",
+    "domain": "economy",
+    "source": "google_news_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5oX3lrZHVKX2RWR19wZzVmNHFyMmJqYlhKbzB2eXhwc1NocHhrdEtfMGxrM3ZrSjFfT2xyaTNwZVc3X25FLU13UWpwdGJFTnJ2WkxkWGVIR2tHMC1vVS1FcmZDWm90enhsWkNSQ2xYQQ?oc=5",
+    "question": "2026年4月中国居民消费价格同比涨幅是否等于1.2%？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-11",
+    "resolution_rule": "以国家统计局官网（stats.gov.cn）首次发布的《2026年4月份居民消费价格同比上涨1.2%》数据为准。",
+    "event_type": "cpi",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "国家统计局官网发布数据，标题为'2026年4月份居民消费价格同比上涨1.2%'，发布于2026-05-11。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-16T03:22:13.630281+00:00"
+  },
+  {
+    "id": "bm_95485e06cdae",
+    "domain": "economy",
+    "source": "google_news_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5LUms2RVBfcnpQbTJvNUNwSmNnNzVlekFpdnN1ZEQtUXhGNlRmWXNfaE5JY29LY096Z2QtVFFOaGM2NlRTaGtZamJNY3VlMGxXdDRN?oc=5",
+    "question": "美国2026年4月CPI同比涨幅是否为3.8%？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-12",
+    "resolution_rule": "以美国劳工统计局（BLS）首次发布的2026年4月CPI数据为准。",
+    "event_type": "cpi",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "华尔街见闻报道：美国4月CPI同比3.8%创近三年新高。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-16T03:22:13.630337+00:00"
+  }
+]

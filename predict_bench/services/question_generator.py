@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import json
 from datetime import date
 from typing import Any
@@ -13,34 +14,59 @@ class QuestionGenerator:
     def __init__(
         self,
         llm: OpenAICompatibleLLMClient | None = None,
-        batch_size: int = 3,
+        batch_size: int = 10,
+        max_concurrent: int = 5,
         config: DomainConfig | None = None,
     ) -> None:
         self.llm = llm or OpenAICompatibleLLMClient()
         self.batch_size = batch_size
+        self.max_concurrent = max_concurrent
         self.config = config
 
     def generate(self, events: list[FutureEvent], limit: int) -> list[BenchmarkItem]:
-        items: list[BenchmarkItem] = []
         events_by_id = {event.id: event for event in events}
+
+        batches = []
         for start in range(0, len(events), self.batch_size):
             batch = events[start : start + self.batch_size]
-            response = self.llm.generate_json(
-                system=(
-                    "你是 Polymarket 风格 benchmark 问题生成器。只返回 JSON，不要 Markdown。"
-                    "问题必须简单、答案有限、可结算。"
-                ),
-                user=self._build_prompt(batch, remaining=limit - len(items)),
-            )
-            for raw_item in response.get("items", []):
-                if not isinstance(raw_item, dict):
-                    continue
-                item = self._coerce_item(raw_item, events_by_id)
-                if item is not None:
-                    items.append(item)
-                if len(items) >= limit:
-                    return items
-        return items
+            batches.append((batch, limit))
+
+        results = asyncio.run(self._generate_concurrent(batches, events_by_id))
+        return results[:limit]
+
+    async def _generate_concurrent(self, batches: list[tuple[list[FutureEvent], int]], events_by_id: dict[str, FutureEvent]) -> list[BenchmarkItem]:
+        semaphore = asyncio.Semaphore(self.max_concurrent)
+
+        async def process_batch(batch_limit: tuple[list[FutureEvent], int]) -> list[BenchmarkItem]:
+            events, remaining = batch_limit
+            async with semaphore:
+                loop = asyncio.get_event_loop()
+                response = await loop.run_in_executor(
+                    None,
+                    lambda: self.llm.generate_json(
+                        system=(
+                            "你是 Polymarket 风格 benchmark 问题生成器。只返回 JSON，不要 Markdown。"
+                            "问题必须简单、答案有限、可结算。"
+                        ),
+                        user=self._build_prompt(events, remaining=remaining),
+                    )
+                )
+                items = []
+                for raw_item in response.get("items", []):
+                    if not isinstance(raw_item, dict):
+                        continue
+                    item = self._coerce_item(raw_item, events_by_id)
+                    if item is not None:
+                        items.append(item)
+                return items
+
+        batch_tasks = [process_batch(batch) for batch in batches]
+        batch_results = await asyncio.gather(*batch_tasks)
+
+        all_items = []
+        for batch_items in batch_results:
+            all_items.extend(batch_items)
+        return all_items
 
     def _build_prompt(self, events: list[FutureEvent], remaining: int) -> str:
         payload = [event.model_dump(mode="json") for event in events]

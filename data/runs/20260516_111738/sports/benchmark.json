@@ -1,0 +1,21 @@
+[
+  {
+    "id": "bm_09da4a25e0c7",
+    "domain": "sports",
+    "source": "sohu_nba",
+    "source_url": "https://www.sohu.com/a/295073155_458722",
+    "question": "国际队是否在对阵美国队的篮球比赛中获胜？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-16",
+    "resolution_rule": "以赛事官方公告或主流媒体（如搜狐体育）一致报道为准。",
+    "event_type": "match_winner",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 75.0,
+    "created_at": "2026-05-16T03:25:30.630464+00:00"
+  }
+]

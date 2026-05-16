@@ -1,0 +1,21 @@
+[
+  {
+    "id": "bm_a355ab96f9ac",
+    "domain": "politics",
+    "source": "google_news_politics",
+    "source_url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9GTEFPRVpVUEEyaU9jOVRtd3FhWDAzTnJtb0N5SlF2ckNCRTlXb3ZrRHpLeVVKNmItbXVhWGY1VF9GUXFUMmZZb2psRlR6VDN2RExuWHNoSHpsdGRGc1FpZ2JJUThUd9IBa0FVX3lxTE02SXBEUjhUYWtvYXd6Ql9UanRrNlVqNUFzWGZTbWwwVHZJQlFxVUxNYTU2T2RHSUhzdV9SS0F1aEczOG4xVzVyNndFaGI0Vy1ZR3FNYjJnSDczelNUNHpkUDNXNHJrYUg5Y1JF?oc=5",
+    "question": "2026年美国中期选举中，共和党是否赢得众议院多数席位？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-11-03",
+    "resolution_rule": "以美联社、BBC等主流媒体或美国联邦选举委员会官方公告为准。若共和党赢得众议院多数席位，则答案为是；否则为否。",
+    "event_type": "election",
+    "event_status": "unresolved",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "quality_score": 75.0,
+    "created_at": "2026-05-16T03:24:44.843001+00:00"
+  }
+]

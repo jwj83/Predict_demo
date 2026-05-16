@@ -1,0 +1,1973 @@
+{
+  "domain": "finance",
+  "seed_rule_set": {
+    "rule_set_id": "generic_v0",
+    "domain": "finance",
+    "description": "Generic forecast trajectory rubric. It evaluates whether a ReAct forecasting agent understands a resolvable event, retrieves reliable evidence, reasons faithfully, updates probabilities, and uses tools efficiently.",
+    "dimensions": [
+      {
+        "name": "Question understanding and resolvability",
+        "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria.",
+        "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+        "score_3": "Understands the broad event but misses some boundary or settlement details.",
+        "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+        "weight": 1.5
+      },
+      {
+        "name": "Information retrieval quality",
+        "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources.",
+        "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+        "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+        "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+        "weight": 2.0
+      },
+      {
+        "name": "Source credibility and news quality",
+        "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources.",
+        "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+        "score_3": "Uses generally credible secondary sources but limited primary verification.",
+        "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+        "weight": 2.0
+      },
+      {
+        "name": "Reasoning chain quality",
+        "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty.",
+        "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+        "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+        "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+        "weight": 2.0
+      },
+      {
+        "name": "Probability update quality",
+        "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty.",
+        "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+        "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+        "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+        "weight": 1.5
+      },
+      {
+        "name": "Tool use and execution efficiency",
+        "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps.",
+        "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+        "score_3": "Uses the right tools but has some redundant or shallow steps.",
+        "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+        "weight": 1.0
+      }
+    ],
+    "parent_id": null
+  },
+  "best_rule_set": {
+    "rule_set_id": "round_2_candidate_1",
+    "domain": "finance",
+    "description": "Mock domain-adapted candidate 1 for finance.",
+    "dimensions": [
+      {
+        "name": "Question understanding and resolvability",
+        "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: finance. Domain adaptation target: finance.",
+        "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+        "score_3": "Understands the broad event but misses some boundary or settlement details.",
+        "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+        "weight": 1.5
+      },
+      {
+        "name": "Information retrieval quality",
+        "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: finance. Domain adaptation target: finance.",
+        "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+        "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+        "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+        "weight": 2.25
+      },
+      {
+        "name": "Source credibility and news quality",
+        "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: finance. Domain adaptation target: finance.",
+        "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+        "score_3": "Uses generally credible secondary sources but limited primary verification.",
+        "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+        "weight": 2.25
+      },
+      {
+        "name": "Reasoning chain quality",
+        "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: finance. Domain adaptation target: finance.",
+        "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+        "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+        "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+        "weight": 2.0
+      },
+      {
+        "name": "Probability update quality",
+        "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: finance. Domain adaptation target: finance.",
+        "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+        "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+        "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+        "weight": 1.5
+      },
+      {
+        "name": "Tool use and execution efficiency",
+        "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: finance. Domain adaptation target: finance.",
+        "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+        "score_3": "Uses the right tools but has some redundant or shallow steps.",
+        "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+        "weight": 1.0
+      },
+      {
+        "name": "Settlement rule extraction",
+        "description": "Evaluate settlement rule extraction for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent settlement rule extraction with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial settlement rule extraction with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable settlement rule extraction.",
+        "weight": 1.0
+      },
+      {
+        "name": "Entity and option grounding",
+        "description": "Evaluate entity and option grounding for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent entity and option grounding with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial entity and option grounding with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable entity and option grounding.",
+        "weight": 1.0
+      },
+      {
+        "name": "Temporal boundary compliance",
+        "description": "Evaluate temporal boundary compliance for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent temporal boundary compliance with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial temporal boundary compliance with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable temporal boundary compliance.",
+        "weight": 1.0
+      },
+      {
+        "name": "Official source prioritization",
+        "description": "Evaluate official source prioritization for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent official source prioritization with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial official source prioritization with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable official source prioritization.",
+        "weight": 1.25
+      },
+      {
+        "name": "Independent source diversity",
+        "description": "Evaluate independent source diversity for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent independent source diversity with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial independent source diversity with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable independent source diversity.",
+        "weight": 1.25
+      },
+      {
+        "name": "Direct evidence identification",
+        "description": "Evaluate direct evidence identification for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent direct evidence identification with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial direct evidence identification with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable direct evidence identification.",
+        "weight": 1.0
+      },
+      {
+        "name": "Supporting evidence coverage",
+        "description": "Evaluate supporting evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent supporting evidence coverage with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial supporting evidence coverage with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable supporting evidence coverage.",
+        "weight": 1.0
+      },
+      {
+        "name": "Opposing evidence coverage",
+        "description": "Evaluate opposing evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent opposing evidence coverage with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial opposing evidence coverage with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable opposing evidence coverage.",
+        "weight": 1.0
+      },
+      {
+        "name": "Conflict resolution",
+        "description": "Evaluate conflict resolution for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent conflict resolution with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial conflict resolution with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable conflict resolution.",
+        "weight": 1.0
+      },
+      {
+        "name": "Evidence recency",
+        "description": "Evaluate evidence recency for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent evidence recency with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial evidence recency with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable evidence recency.",
+        "weight": 1.0
+      },
+      {
+        "name": "Cutoff violation avoidance",
+        "description": "Evaluate cutoff violation avoidance for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent cutoff violation avoidance with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial cutoff violation avoidance with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable cutoff violation avoidance.",
+        "weight": 1.0
+      },
+      {
+        "name": "Quantitative anchor use",
+        "description": "Evaluate quantitative anchor use for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent quantitative anchor use with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial quantitative anchor use with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable quantitative anchor use.",
+        "weight": 1.0
+      },
+      {
+        "name": "Probability calibration rationale",
+        "description": "Evaluate probability calibration rationale for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent probability calibration rationale with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial probability calibration rationale with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable probability calibration rationale.",
+        "weight": 1.0
+      },
+      {
+        "name": "Residual uncertainty allocation",
+        "description": "Evaluate residual uncertainty allocation for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+        "score_5": "Excellent residual uncertainty allocation with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial residual uncertainty allocation with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable residual uncertainty allocation.",
+        "weight": 1.0
+      }
+    ],
+    "parent_id": "round_1_candidate_2"
+  },
+  "rounds": [
+    {
+      "round_index": 1,
+      "candidates": [
+        {
+          "rule_set_id": "round_1_candidate_1",
+          "domain": "finance",
+          "description": "Mock domain-adapted candidate 1 for finance.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: finance.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: finance.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.25
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: finance.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.25
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: finance.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: finance.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: finance.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            },
+            {
+              "name": "Settlement rule extraction",
+              "description": "Evaluate settlement rule extraction for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent settlement rule extraction with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial settlement rule extraction with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable settlement rule extraction.",
+              "weight": 1.0
+            },
+            {
+              "name": "Entity and option grounding",
+              "description": "Evaluate entity and option grounding for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent entity and option grounding with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial entity and option grounding with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable entity and option grounding.",
+              "weight": 1.0
+            },
+            {
+              "name": "Temporal boundary compliance",
+              "description": "Evaluate temporal boundary compliance for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent temporal boundary compliance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial temporal boundary compliance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable temporal boundary compliance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Official source prioritization",
+              "description": "Evaluate official source prioritization for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent official source prioritization with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial official source prioritization with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable official source prioritization.",
+              "weight": 1.0
+            },
+            {
+              "name": "Independent source diversity",
+              "description": "Evaluate independent source diversity for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent independent source diversity with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial independent source diversity with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable independent source diversity.",
+              "weight": 1.0
+            },
+            {
+              "name": "Direct evidence identification",
+              "description": "Evaluate direct evidence identification for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent direct evidence identification with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial direct evidence identification with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable direct evidence identification.",
+              "weight": 1.0
+            },
+            {
+              "name": "Supporting evidence coverage",
+              "description": "Evaluate supporting evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent supporting evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial supporting evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable supporting evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Opposing evidence coverage",
+              "description": "Evaluate opposing evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent opposing evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial opposing evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable opposing evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Conflict resolution",
+              "description": "Evaluate conflict resolution for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent conflict resolution with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial conflict resolution with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable conflict resolution.",
+              "weight": 1.0
+            },
+            {
+              "name": "Evidence recency",
+              "description": "Evaluate evidence recency for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent evidence recency with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial evidence recency with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable evidence recency.",
+              "weight": 1.0
+            },
+            {
+              "name": "Cutoff violation avoidance",
+              "description": "Evaluate cutoff violation avoidance for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent cutoff violation avoidance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial cutoff violation avoidance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable cutoff violation avoidance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Quantitative anchor use",
+              "description": "Evaluate quantitative anchor use for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent quantitative anchor use with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial quantitative anchor use with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable quantitative anchor use.",
+              "weight": 1.0
+            },
+            {
+              "name": "Probability calibration rationale",
+              "description": "Evaluate probability calibration rationale for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent probability calibration rationale with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial probability calibration rationale with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable probability calibration rationale.",
+              "weight": 1.0
+            },
+            {
+              "name": "Residual uncertainty allocation",
+              "description": "Evaluate residual uncertainty allocation for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent residual uncertainty allocation with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial residual uncertainty allocation with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable residual uncertainty allocation.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "generic_v0"
+        },
+        {
+          "rule_set_id": "round_1_candidate_2",
+          "domain": "finance",
+          "description": "Mock domain-adapted candidate 2 for finance.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: finance.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: finance.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.0
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: finance.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.0
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: finance.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: finance.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: finance.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            },
+            {
+              "name": "Settlement rule extraction",
+              "description": "Evaluate settlement rule extraction for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent settlement rule extraction with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial settlement rule extraction with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable settlement rule extraction.",
+              "weight": 1.0
+            },
+            {
+              "name": "Entity and option grounding",
+              "description": "Evaluate entity and option grounding for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent entity and option grounding with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial entity and option grounding with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable entity and option grounding.",
+              "weight": 1.0
+            },
+            {
+              "name": "Temporal boundary compliance",
+              "description": "Evaluate temporal boundary compliance for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent temporal boundary compliance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial temporal boundary compliance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable temporal boundary compliance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Official source prioritization",
+              "description": "Evaluate official source prioritization for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent official source prioritization with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial official source prioritization with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable official source prioritization.",
+              "weight": 1.0
+            },
+            {
+              "name": "Independent source diversity",
+              "description": "Evaluate independent source diversity for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent independent source diversity with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial independent source diversity with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable independent source diversity.",
+              "weight": 1.0
+            },
+            {
+              "name": "Direct evidence identification",
+              "description": "Evaluate direct evidence identification for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent direct evidence identification with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial direct evidence identification with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable direct evidence identification.",
+              "weight": 1.0
+            },
+            {
+              "name": "Supporting evidence coverage",
+              "description": "Evaluate supporting evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent supporting evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial supporting evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable supporting evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Opposing evidence coverage",
+              "description": "Evaluate opposing evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent opposing evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial opposing evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable opposing evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Conflict resolution",
+              "description": "Evaluate conflict resolution for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent conflict resolution with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial conflict resolution with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable conflict resolution.",
+              "weight": 1.0
+            },
+            {
+              "name": "Evidence recency",
+              "description": "Evaluate evidence recency for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent evidence recency with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial evidence recency with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable evidence recency.",
+              "weight": 1.0
+            },
+            {
+              "name": "Cutoff violation avoidance",
+              "description": "Evaluate cutoff violation avoidance for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent cutoff violation avoidance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial cutoff violation avoidance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable cutoff violation avoidance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Quantitative anchor use",
+              "description": "Evaluate quantitative anchor use for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent quantitative anchor use with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial quantitative anchor use with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable quantitative anchor use.",
+              "weight": 1.0
+            },
+            {
+              "name": "Probability calibration rationale",
+              "description": "Evaluate probability calibration rationale for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent probability calibration rationale with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial probability calibration rationale with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable probability calibration rationale.",
+              "weight": 1.0
+            },
+            {
+              "name": "Residual uncertainty allocation",
+              "description": "Evaluate residual uncertainty allocation for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent residual uncertainty allocation with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial residual uncertainty allocation with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable residual uncertainty allocation.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "generic_v0"
+        },
+        {
+          "rule_set_id": "round_1_candidate_3",
+          "domain": "finance",
+          "description": "Mock domain-adapted candidate 3 for finance.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: finance.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: finance.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.0
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: finance.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.0
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: finance.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: finance.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: finance.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            },
+            {
+              "name": "Settlement rule extraction",
+              "description": "Evaluate settlement rule extraction for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent settlement rule extraction with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial settlement rule extraction with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable settlement rule extraction.",
+              "weight": 1.0
+            },
+            {
+              "name": "Entity and option grounding",
+              "description": "Evaluate entity and option grounding for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent entity and option grounding with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial entity and option grounding with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable entity and option grounding.",
+              "weight": 1.0
+            },
+            {
+              "name": "Temporal boundary compliance",
+              "description": "Evaluate temporal boundary compliance for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent temporal boundary compliance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial temporal boundary compliance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable temporal boundary compliance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Official source prioritization",
+              "description": "Evaluate official source prioritization for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent official source prioritization with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial official source prioritization with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable official source prioritization.",
+              "weight": 1.0
+            },
+            {
+              "name": "Independent source diversity",
+              "description": "Evaluate independent source diversity for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent independent source diversity with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial independent source diversity with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable independent source diversity.",
+              "weight": 1.0
+            },
+            {
+              "name": "Direct evidence identification",
+              "description": "Evaluate direct evidence identification for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent direct evidence identification with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial direct evidence identification with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable direct evidence identification.",
+              "weight": 1.0
+            },
+            {
+              "name": "Supporting evidence coverage",
+              "description": "Evaluate supporting evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent supporting evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial supporting evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable supporting evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Opposing evidence coverage",
+              "description": "Evaluate opposing evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent opposing evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial opposing evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable opposing evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Conflict resolution",
+              "description": "Evaluate conflict resolution for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent conflict resolution with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial conflict resolution with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable conflict resolution.",
+              "weight": 1.0
+            },
+            {
+              "name": "Evidence recency",
+              "description": "Evaluate evidence recency for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent evidence recency with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial evidence recency with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable evidence recency.",
+              "weight": 1.0
+            },
+            {
+              "name": "Cutoff violation avoidance",
+              "description": "Evaluate cutoff violation avoidance for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent cutoff violation avoidance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial cutoff violation avoidance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable cutoff violation avoidance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Quantitative anchor use",
+              "description": "Evaluate quantitative anchor use for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent quantitative anchor use with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial quantitative anchor use with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable quantitative anchor use.",
+              "weight": 1.0
+            },
+            {
+              "name": "Probability calibration rationale",
+              "description": "Evaluate probability calibration rationale for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent probability calibration rationale with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial probability calibration rationale with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable probability calibration rationale.",
+              "weight": 1.0
+            },
+            {
+              "name": "Residual uncertainty allocation",
+              "description": "Evaluate residual uncertainty allocation for finance forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent residual uncertainty allocation with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial residual uncertainty allocation with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable residual uncertainty allocation.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "generic_v0"
+        }
+      ],
+      "validations": [
+        {
+          "rule_set_id": "round_1_candidate_1",
+          "validation_score": -0.8781,
+          "correlation_with_resolved_probability": -0.8092,
+          "correlation_with_brier": -0.9026,
+          "correlation_with_accuracy": -0.938,
+          "case_count": 5
+        },
+        {
+          "rule_set_id": "round_1_candidate_2",
+          "validation_score": -0.4628,
+          "correlation_with_resolved_probability": -0.3279,
+          "correlation_with_brier": -0.4982,
+          "correlation_with_accuracy": -0.655,
+          "case_count": 5
+        },
+        {
+          "rule_set_id": "round_1_candidate_3",
+          "validation_score": -0.721,
+          "correlation_with_resolved_probability": -0.6419,
+          "correlation_with_brier": -0.7448,
+          "correlation_with_accuracy": -0.8156,
+          "case_count": 5
+        }
+      ],
+      "best_rule_set_id": "round_1_candidate_2",
+      "feedback": "round_1_candidate_2 is currently best. Validation score=-0.4628, corr(resolved probability)=-0.3279, corr(-Brier)=-0.4982, corr(accuracy)=-0.655. Improve dimensions that better distinguish credible evidence, cutoff compliance, and probability calibration."
+    },
+    {
+      "round_index": 2,
+      "candidates": [
+        {
+          "rule_set_id": "round_2_candidate_1",
+          "domain": "finance",
+          "description": "Mock domain-adapted candidate 1 for finance.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.25
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.25
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            },
+            {
+              "name": "Settlement rule extraction",
+              "description": "Evaluate settlement rule extraction for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent settlement rule extraction with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial settlement rule extraction with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable settlement rule extraction.",
+              "weight": 1.0
+            },
+            {
+              "name": "Entity and option grounding",
+              "description": "Evaluate entity and option grounding for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent entity and option grounding with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial entity and option grounding with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable entity and option grounding.",
+              "weight": 1.0
+            },
+            {
+              "name": "Temporal boundary compliance",
+              "description": "Evaluate temporal boundary compliance for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent temporal boundary compliance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial temporal boundary compliance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable temporal boundary compliance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Official source prioritization",
+              "description": "Evaluate official source prioritization for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent official source prioritization with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial official source prioritization with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable official source prioritization.",
+              "weight": 1.25
+            },
+            {
+              "name": "Independent source diversity",
+              "description": "Evaluate independent source diversity for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent independent source diversity with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial independent source diversity with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable independent source diversity.",
+              "weight": 1.25
+            },
+            {
+              "name": "Direct evidence identification",
+              "description": "Evaluate direct evidence identification for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent direct evidence identification with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial direct evidence identification with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable direct evidence identification.",
+              "weight": 1.0
+            },
+            {
+              "name": "Supporting evidence coverage",
+              "description": "Evaluate supporting evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent supporting evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial supporting evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable supporting evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Opposing evidence coverage",
+              "description": "Evaluate opposing evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent opposing evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial opposing evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable opposing evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Conflict resolution",
+              "description": "Evaluate conflict resolution for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent conflict resolution with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial conflict resolution with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable conflict resolution.",
+              "weight": 1.0
+            },
+            {
+              "name": "Evidence recency",
+              "description": "Evaluate evidence recency for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent evidence recency with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial evidence recency with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable evidence recency.",
+              "weight": 1.0
+            },
+            {
+              "name": "Cutoff violation avoidance",
+              "description": "Evaluate cutoff violation avoidance for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent cutoff violation avoidance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial cutoff violation avoidance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable cutoff violation avoidance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Quantitative anchor use",
+              "description": "Evaluate quantitative anchor use for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent quantitative anchor use with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial quantitative anchor use with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable quantitative anchor use.",
+              "weight": 1.0
+            },
+            {
+              "name": "Probability calibration rationale",
+              "description": "Evaluate probability calibration rationale for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent probability calibration rationale with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial probability calibration rationale with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable probability calibration rationale.",
+              "weight": 1.0
+            },
+            {
+              "name": "Residual uncertainty allocation",
+              "description": "Evaluate residual uncertainty allocation for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent residual uncertainty allocation with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial residual uncertainty allocation with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable residual uncertainty allocation.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "round_1_candidate_2"
+        },
+        {
+          "rule_set_id": "round_2_candidate_2",
+          "domain": "finance",
+          "description": "Mock domain-adapted candidate 2 for finance.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.0
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.0
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            },
+            {
+              "name": "Settlement rule extraction",
+              "description": "Evaluate settlement rule extraction for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent settlement rule extraction with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial settlement rule extraction with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable settlement rule extraction.",
+              "weight": 1.0
+            },
+            {
+              "name": "Entity and option grounding",
+              "description": "Evaluate entity and option grounding for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent entity and option grounding with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial entity and option grounding with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable entity and option grounding.",
+              "weight": 1.0
+            },
+            {
+              "name": "Temporal boundary compliance",
+              "description": "Evaluate temporal boundary compliance for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent temporal boundary compliance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial temporal boundary compliance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable temporal boundary compliance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Official source prioritization",
+              "description": "Evaluate official source prioritization for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent official source prioritization with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial official source prioritization with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable official source prioritization.",
+              "weight": 1.0
+            },
+            {
+              "name": "Independent source diversity",
+              "description": "Evaluate independent source diversity for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent independent source diversity with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial independent source diversity with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable independent source diversity.",
+              "weight": 1.0
+            },
+            {
+              "name": "Direct evidence identification",
+              "description": "Evaluate direct evidence identification for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent direct evidence identification with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial direct evidence identification with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable direct evidence identification.",
+              "weight": 1.0
+            },
+            {
+              "name": "Supporting evidence coverage",
+              "description": "Evaluate supporting evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent supporting evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial supporting evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable supporting evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Opposing evidence coverage",
+              "description": "Evaluate opposing evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent opposing evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial opposing evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable opposing evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Conflict resolution",
+              "description": "Evaluate conflict resolution for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent conflict resolution with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial conflict resolution with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable conflict resolution.",
+              "weight": 1.0
+            },
+            {
+              "name": "Evidence recency",
+              "description": "Evaluate evidence recency for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent evidence recency with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial evidence recency with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable evidence recency.",
+              "weight": 1.0
+            },
+            {
+              "name": "Cutoff violation avoidance",
+              "description": "Evaluate cutoff violation avoidance for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent cutoff violation avoidance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial cutoff violation avoidance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable cutoff violation avoidance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Quantitative anchor use",
+              "description": "Evaluate quantitative anchor use for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent quantitative anchor use with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial quantitative anchor use with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable quantitative anchor use.",
+              "weight": 1.0
+            },
+            {
+              "name": "Probability calibration rationale",
+              "description": "Evaluate probability calibration rationale for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent probability calibration rationale with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial probability calibration rationale with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable probability calibration rationale.",
+              "weight": 1.0
+            },
+            {
+              "name": "Residual uncertainty allocation",
+              "description": "Evaluate residual uncertainty allocation for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent residual uncertainty allocation with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial residual uncertainty allocation with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable residual uncertainty allocation.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "round_1_candidate_2"
+        },
+        {
+          "rule_set_id": "round_2_candidate_3",
+          "domain": "finance",
+          "description": "Mock domain-adapted candidate 3 for finance.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.0
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.0
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: finance. Domain adaptation target: finance.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            },
+            {
+              "name": "Settlement rule extraction",
+              "description": "Evaluate settlement rule extraction for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent settlement rule extraction with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial settlement rule extraction with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable settlement rule extraction.",
+              "weight": 1.0
+            },
+            {
+              "name": "Entity and option grounding",
+              "description": "Evaluate entity and option grounding for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent entity and option grounding with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial entity and option grounding with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable entity and option grounding.",
+              "weight": 1.0
+            },
+            {
+              "name": "Temporal boundary compliance",
+              "description": "Evaluate temporal boundary compliance for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent temporal boundary compliance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial temporal boundary compliance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable temporal boundary compliance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Official source prioritization",
+              "description": "Evaluate official source prioritization for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent official source prioritization with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial official source prioritization with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable official source prioritization.",
+              "weight": 1.0
+            },
+            {
+              "name": "Independent source diversity",
+              "description": "Evaluate independent source diversity for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent independent source diversity with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial independent source diversity with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable independent source diversity.",
+              "weight": 1.0
+            },
+            {
+              "name": "Direct evidence identification",
+              "description": "Evaluate direct evidence identification for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent direct evidence identification with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial direct evidence identification with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable direct evidence identification.",
+              "weight": 1.0
+            },
+            {
+              "name": "Supporting evidence coverage",
+              "description": "Evaluate supporting evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent supporting evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial supporting evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable supporting evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Opposing evidence coverage",
+              "description": "Evaluate opposing evidence coverage for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent opposing evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial opposing evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable opposing evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Conflict resolution",
+              "description": "Evaluate conflict resolution for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent conflict resolution with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial conflict resolution with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable conflict resolution.",
+              "weight": 1.0
+            },
+            {
+              "name": "Evidence recency",
+              "description": "Evaluate evidence recency for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent evidence recency with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial evidence recency with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable evidence recency.",
+              "weight": 1.0
+            },
+            {
+              "name": "Cutoff violation avoidance",
+              "description": "Evaluate cutoff violation avoidance for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent cutoff violation avoidance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial cutoff violation avoidance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable cutoff violation avoidance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Quantitative anchor use",
+              "description": "Evaluate quantitative anchor use for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent quantitative anchor use with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial quantitative anchor use with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable quantitative anchor use.",
+              "weight": 1.0
+            },
+            {
+              "name": "Probability calibration rationale",
+              "description": "Evaluate probability calibration rationale for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent probability calibration rationale with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial probability calibration rationale with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable probability calibration rationale.",
+              "weight": 1.0
+            },
+            {
+              "name": "Residual uncertainty allocation",
+              "description": "Evaluate residual uncertainty allocation for finance forecast trajectories using only trajectory, evidence, and report artifacts. Domain adaptation target: finance.",
+              "score_5": "Excellent residual uncertainty allocation with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial residual uncertainty allocation with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable residual uncertainty allocation.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "round_1_candidate_2"
+        }
+      ],
+      "validations": [
+        {
+          "rule_set_id": "round_2_candidate_1",
+          "validation_score": -0.5012,
+          "correlation_with_resolved_probability": -0.3637,
+          "correlation_with_brier": -0.5378,
+          "correlation_with_accuracy": -0.6939,
+          "case_count": 5
+        },
+        {
+          "rule_set_id": "round_2_candidate_2",
+          "validation_score": -0.7816,
+          "correlation_with_resolved_probability": -0.673,
+          "correlation_with_brier": -0.8146,
+          "correlation_with_accuracy": -0.9098,
+          "case_count": 5
+        },
+        {
+          "rule_set_id": "round_2_candidate_3",
+          "validation_score": -0.7048,
+          "correlation_with_resolved_probability": -0.5948,
+          "correlation_with_brier": -0.7367,
+          "correlation_with_accuracy": -0.8438,
+          "case_count": 5
+        }
+      ],
+      "best_rule_set_id": "round_2_candidate_1",
+      "feedback": "round_2_candidate_1 is currently best. Validation score=-0.5012, corr(resolved probability)=-0.3637, corr(-Brier)=-0.5378, corr(accuracy)=-0.6939. Improve dimensions that better distinguish credible evidence, cutoff compliance, and probability calibration."
+    }
+  ],
+  "case_scores": [
+    {
+      "case_id": "bm_23f7c9f84615",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 1.68,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 3,
+          "rationale": "The agent correctly identifies the event subject (诚邦股份, stock 603316), time window (May 6-8, 2026), and the condition (cumulative closing price deviation >20%). However, it does not explicitly discuss ambiguity or edge cases (e.g., what index is used, treatment of non-trading days). The resolution rule agent attempts to clarify the calculation but fails to produce a concrete settlement rule. Score 3: broad understanding but missing boundary details.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "All four sub-agents perform web searches and fetches, but every search returns 0 cutoff-compliant results, and no pages are actually fetched (empty URL lists). The trajectory shows no successful retrieval of any source, let alone multiple independent or fresh sources. Score 1: sparse, irrelevant, or undocumented retrieval.",
+          "weight": 2.25
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "No sources are retrieved at all. The trajectory contains no evidence of prioritizing official, primary, or high-quality sources. The report states 'No cutoff-compliant evidence was available.' Score 1: reliance on no sources, which is worse than low-quality sources.",
+          "weight": 2.25
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 3,
+          "rationale": "The agent separates facts (e.g., stock code, dates, deviation formula) and acknowledges the lack of evidence. The reasoning steps are logical (search, fetch, reason). However, there is no actual evidence to link, no causal explanation, and no handling of counter-evidence. Score 3: plausible reasoning but weak evidence linkage.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 1,
+          "rationale": "The final probabilities remain at 0.5/0.5 with no update from initial values. The sub-agent conclusions all favor '是' with confidence 0.2, but this is not reflected in the final probability. There is no evidence-driven movement or magnitude justification. Score 1: probability appears arbitrary or unchanged despite weak evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 3,
+          "rationale": "The agent uses appropriate tools (websearch, webfetch, reason_over_evidence) and follows a ReAct pattern. However, all fetches are called with empty URL lists, making those steps redundant. The trajectory is complete but wasteful due to empty fetches. Score 3: right tools but redundant steps.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Settlement rule extraction",
+          "score": 3,
+          "rationale": "The resolution_rule_agent attempts to define the settlement rule (using Shanghai Stock Exchange closing prices and index, cumulative deviation >20%). However, the rule is not backed by any source, and the cutoff compliance is not demonstrated. Score 3: partial extraction with weak traceability.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Entity and option grounding",
+          "score": 3,
+          "rationale": "The agent correctly identifies the entity (诚邦股份, 603316) and the two options (是/否). The grounding is explicit in the question and search queries, but no source confirms the entity's existence or the options' relevance. Score 3: partial grounding with gaps.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Temporal boundary compliance",
+          "score": 3,
+          "rationale": "The agent consistently uses the cutoff date (2026-05-08) in search queries and reports. However, no evidence is actually retrieved to verify temporal compliance. Score 3: partial compliance with weak traceability.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Official source prioritization",
+          "score": 1,
+          "rationale": "The agent mentions official sources (Shanghai Stock Exchange, company announcements) in thoughts but never retrieves any. No official source is prioritized or used. Score 1: missing official source prioritization.",
+          "weight": 1.25
+        },
+        {
+          "dimension": "Independent source diversity",
+          "score": 1,
+          "rationale": "No sources are retrieved at all, so there is no diversity. All sub-agents return the same empty result. Score 1: missing independent source diversity.",
+          "weight": 1.25
+        },
+        {
+          "dimension": "Direct evidence identification",
+          "score": 1,
+          "rationale": "No direct evidence (e.g., closing prices, deviation calculations) is identified. The trajectory shows zero evidence items. Score 1: missing direct evidence identification.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Supporting evidence coverage",
+          "score": 1,
+          "rationale": "The supporting_evidence_agent finds no evidence. The report states 'No cutoff-compliant evidence retained.' Score 1: missing supporting evidence coverage.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Opposing evidence coverage",
+          "score": 1,
+          "rationale": "The opposing_evidence_agent finds no evidence. No opposing sources are identified. Score 1: missing opposing evidence coverage.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Conflict resolution",
+          "score": 1,
+          "rationale": "No evidence conflicts exist because no evidence was retrieved. The agent notes 'No cutoff-compliant opposing evidence was strong enough' but this is a default statement. Score 1: missing conflict resolution.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Evidence recency",
+          "score": 1,
+          "rationale": "No evidence is retrieved, so recency cannot be assessed. The cutoff date is used in queries, but no sources are fetched. Score 1: missing evidence recency.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Cutoff violation avoidance",
+          "score": 3,
+          "rationale": "The agent correctly applies the cutoff date in all search queries and reports. However, since no evidence is retrieved, there is no actual demonstration of avoiding violations. Score 3: partial compliance with weak traceability.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Quantitative anchor use",
+          "score": 1,
+          "rationale": "No quantitative anchors (e.g., specific closing prices, index values, deviation percentages) are used. The agent mentions the 20% threshold but does not anchor any calculation. Score 1: missing quantitative anchor use.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Probability calibration rationale",
+          "score": 1,
+          "rationale": "The final probabilities (0.5/0.5) are not calibrated from evidence. The report states 'Confidence: medium' but provides no rationale linking evidence to probability. Score 1: missing probability calibration rationale.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Residual uncertainty allocation",
+          "score": 1,
+          "rationale": "The agent does not allocate residual uncertainty beyond the default 0.5/0.5 split. No discussion of remaining uncertainty or alternative scenarios. Score 1: missing residual uncertainty allocation.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.5,
+        "resolved_option_probability": 0.5
+      }
+    },
+    {
+      "case_id": "bm_3327af9b8d0f",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.94,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.25
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.25
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Settlement rule extraction",
+          "score": 3,
+          "rationale": "Generic dimension receives a medium score from evidence depth and source quality.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Entity and option grounding",
+          "score": 3,
+          "rationale": "Generic dimension receives a medium score from evidence depth and source quality.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Temporal boundary compliance",
+          "score": 3,
+          "rationale": "Generic dimension receives a medium score from evidence depth and source quality.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Official source prioritization",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 1.25
+        },
+        {
+          "dimension": "Independent source diversity",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 1.25
+        },
+        {
+          "dimension": "Direct evidence identification",
+          "score": 3,
+          "rationale": "Generic dimension receives a medium score from evidence depth and source quality.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Supporting evidence coverage",
+          "score": 3,
+          "rationale": "Generic dimension receives a medium score from evidence depth and source quality.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Opposing evidence coverage",
+          "score": 3,
+          "rationale": "Generic dimension receives a medium score from evidence depth and source quality.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Conflict resolution",
+          "score": 3,
+          "rationale": "Generic dimension receives a medium score from evidence depth and source quality.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Evidence recency",
+          "score": 3,
+          "rationale": "Generic dimension receives a medium score from evidence depth and source quality.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Cutoff violation avoidance",
+          "score": 3,
+          "rationale": "Generic dimension receives a medium score from evidence depth and source quality.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Quantitative anchor use",
+          "score": 3,
+          "rationale": "Generic dimension receives a medium score from evidence depth and source quality.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Probability calibration rationale",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Residual uncertainty allocation",
+          "score": 3,
+          "rationale": "Generic dimension receives a medium score from evidence depth and source quality.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 1.988816,
+        "resolved_option_probability": 0.0028
+      }
+    },
+    {
+      "case_id": "bm_34cce18a789b",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 3.4,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The agent clearly identifies the event subject (Nasdaq Composite and S&P 500 indices), time (May 6, 2026), condition (both set all-time closing highs), and settlement criteria (official closing prices). The resolution_rule_agent explicitly defines the adjudication rule and cutoff, and the report states the direct answer with high confidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "The official_sources_agent performs a targeted search and fetches one relevant Sina Finance article. However, supporting_evidence_agent, opposing_evidence_agent, and resolution_rule_agent all return zero cutoff-compliant results, indicating a lack of diverse, independent sources. The retrieval is not broad enough to cover multiple independent sources.",
+          "weight": 2.25
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 3,
+          "rationale": "The primary source (Sina Finance) is a secondary news outlet, not an official exchange or primary data source. The agent does not prioritize official sources like Nasdaq.com or S&P Dow Jones Indices. The source is generally credible but lacks primary verification.",
+          "weight": 2.25
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 3,
+          "rationale": "The official_sources_agent provides a clear link from the source to the forecast, noting the time zone difference. However, other agents (supporting, opposing, resolution) produce reasoning that acknowledges information gaps but does not integrate evidence or handle conflicts. The overall chain is partially coherent but lacks depth in handling uncertainty.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probabilities move from 0.9995/0.0005 to 0.9655/0.0345 after round 1, showing some evidence-driven adjustment. However, the magnitude of the update is small and the rationale for the reduction is vague ('reducer lowered confidence for contested options'). The update is not fully explained in terms of evidence strength.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 3,
+          "rationale": "The agent uses appropriate search and fetch tools, but multiple sub-agents perform redundant searches that return zero results, wasting steps. The trajectory includes unnecessary reasoning steps without new evidence. Tool use is adequate but not optimally efficient.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Settlement rule extraction",
+          "score": 5,
+          "rationale": "The resolution_rule_agent explicitly defines the settlement rule: compare official closing prices on May 6, 2026, to all prior all-time highs. The report and evidence items reference this rule. The extraction is explicit and source-backed.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Entity and option grounding",
+          "score": 5,
+          "rationale": "The question's entities (纳斯达克综合指数, 标普500指数) and options (是, 否) are clearly identified and consistently used throughout the trajectory and report. The evidence directly references both indices by name and provides closing values.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Temporal boundary compliance",
+          "score": 5,
+          "rationale": "All sub-agents use the 'published_before' parameter set to 2026-05-06T00:00:00+00:00, and the evidence item's publication time (2026-05-05T22:24:46+00:00) is before the cutoff. The agent correctly handles the time zone difference between Eastern Time and the question's date.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Official source prioritization",
+          "score": 1,
+          "rationale": "The agent relies solely on a Sina Finance article, which is a secondary news source. No official exchange data (e.g., Nasdaq.com, S&P Dow Jones Indices) is fetched or cited. The resolution_rule_agent mentions official sources but fails to retrieve any.",
+          "weight": 1.25
+        },
+        {
+          "dimension": "Independent source diversity",
+          "score": 1,
+          "rationale": "Only one source (Sina Finance) is used across all sub-agents. No independent or diverse sources (e.g., Bloomberg, Reuters, official exchange data) are retrieved. The supporting and opposing agents return zero results, indicating no diversity.",
+          "weight": 1.25
+        },
+        {
+          "dimension": "Direct evidence identification",
+          "score": 5,
+          "rationale": "The official_sources_agent identifies a direct evidence item that explicitly states both indices set new all-time closing highs. The evidence role is marked as 'direct' and the rationale explains the time zone alignment.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Supporting evidence coverage",
+          "score": 3,
+          "rationale": "The supporting_evidence_agent attempts to find evidence but returns zero cutoff-compliant results. The only supporting evidence comes from the official_sources_agent. Coverage is partial and lacks multiple supporting sources.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Opposing evidence coverage",
+          "score": 1,
+          "rationale": "The opposing_evidence_agent returns zero cutoff-compliant results and produces only speculative reasoning without any sourced evidence. No opposing evidence is identified or documented.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Conflict resolution",
+          "score": 3,
+          "rationale": "The report notes 'No cutoff-compliant opposing evidence was strong enough to overturn the leading option,' but no actual conflicts are resolved because no opposing evidence was found. The agent does not demonstrate conflict resolution with sourced evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Evidence recency",
+          "score": 5,
+          "rationale": "The single evidence item is published on 2026-05-05T22:24:46+00:00, which is the same trading session as the question date (May 6, 2026 in some time zones). The recency_score is 1.0, indicating excellent recency.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Cutoff violation avoidance",
+          "score": 5,
+          "rationale": "All sub-agents enforce the cutoff date (2026-05-06T00:00:00+00:00) via the 'published_before' parameter. The only retained evidence is cutoff-compliant. No cutoff violations are observed.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Quantitative anchor use",
+          "score": 5,
+          "rationale": "The evidence provides specific closing values (Nasdaq 25326.13, S&P 500 7259.22), which serve as quantitative anchors for the forecast. The agent uses these numbers to support the conclusion.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Probability calibration rationale",
+          "score": 3,
+          "rationale": "The report states that probabilities are reduced from sub-agent evidence strength, but the rationale for the specific values (0.9655/0.0345) is not fully explained. The update from round 0 to round 1 lacks a detailed calibration justification.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Residual uncertainty allocation",
+          "score": 3,
+          "rationale": "The report mentions 'low' counterfactual fragility and a monitoring plan, but does not explicitly allocate residual uncertainty to specific factors (e.g., time zone ambiguity, lack of official source). The allocation is partial.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.00238,
+        "resolved_option_probability": 0.9655
+      }
+    },
+    {
+      "case_id": "bm_4a89df993cd0",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.86,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.25
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 2.25
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Settlement rule extraction",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Entity and option grounding",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Temporal boundary compliance",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Official source prioritization",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 1.25
+        },
+        {
+          "dimension": "Independent source diversity",
+          "score": 5,
+          "rationale": "Evidence mostly uses real URLs and includes direct evidence.",
+          "weight": 1.25
+        },
+        {
+          "dimension": "Direct evidence identification",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Supporting evidence coverage",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Opposing evidence coverage",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Conflict resolution",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Evidence recency",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Cutoff violation avoidance",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Quantitative anchor use",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Probability calibration rationale",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Residual uncertainty allocation",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 0.0,
+        "resolved_option_probability": 0.9995
+      }
+    },
+    {
+      "case_id": "bm_4dcc7f877916",
+      "rule_set_id": "round_2_candidate_1",
+      "trajectory_quality_score": 2.16,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 3,
+          "rationale": "Retrieval found relevant evidence but diversity or depth is limited.",
+          "weight": 2.25
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 2.25
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 1,
+          "rationale": "Reasoning is weakly connected to evidence or incomplete.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Settlement rule extraction",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Entity and option grounding",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Temporal boundary compliance",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Official source prioritization",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 1.25
+        },
+        {
+          "dimension": "Independent source diversity",
+          "score": 3,
+          "rationale": "Some real sources are present but direct/authoritative coverage is incomplete.",
+          "weight": 1.25
+        },
+        {
+          "dimension": "Direct evidence identification",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Supporting evidence coverage",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Opposing evidence coverage",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Conflict resolution",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Evidence recency",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Cutoff violation avoidance",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Quantitative anchor use",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Probability calibration rationale",
+          "score": 3,
+          "rationale": "Probability output exists but evidence support is limited.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Residual uncertainty allocation",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 1.0,
+        "brier_score": 9e-06,
+        "resolved_option_probability": 0.9979
+      }
+    }
+  ],
+  "validation_summary": {
+    "rule_set_id": "round_2_candidate_1",
+    "validation_score": -0.5012,
+    "correlation_with_resolved_probability": -0.3637,
+    "correlation_with_brier": -0.5378,
+    "correlation_with_accuracy": -0.6939,
+    "case_count": 5
+  }
+}

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import json
 from datetime import date
 from typing import Any
@@ -13,32 +14,58 @@ class EventExtractor:
     def __init__(
         self,
         llm: OpenAICompatibleLLMClient | None = None,
-        batch_size: int = 3,
+        batch_size: int = 10,
+        max_concurrent: int = 5,
         config: DomainConfig | None = None,
     ) -> None:
         self.llm = llm or OpenAICompatibleLLMClient()
         self.batch_size = batch_size
+        self.max_concurrent = max_concurrent
         self.config = config
 
     def extract(self, raw_items: list[RawNewsItem]) -> list[FutureEvent]:
-        events: list[FutureEvent] = []
         raw_by_id = {item.id: item for item in raw_items}
+
+        batches = []
         for dated_items in self._group_items_by_news_date(raw_items).values():
             for start in range(0, len(dated_items), self.batch_size):
                 batch = dated_items[start : start + self.batch_size]
-                response = self.llm.generate_json(
-                    system=(
-                        "你是新闻可问题化事件抽取器。只返回 JSON，不要 Markdown。"
-                        "抽取能被改写成明确、有限、可验证预测问题的事件。"
-                    ),
-                    user=self._build_prompt(batch),
+                batches.append(batch)
+
+        results = asyncio.run(self._extract_concurrent(batches, raw_by_id))
+        return results
+
+    async def _extract_concurrent(self, batches: list[list[RawNewsItem]], raw_by_id: dict[str, RawNewsItem]) -> list[FutureEvent]:
+        semaphore = asyncio.Semaphore(self.max_concurrent)
+
+        async def process_batch(batch: list[RawNewsItem]) -> list[FutureEvent]:
+            async with semaphore:
+                loop = asyncio.get_event_loop()
+                response = await loop.run_in_executor(
+                    None,
+                    lambda: self.llm.generate_json(
+                        system=(
+                            "你是新闻可问题化事件抽取器。只返回 JSON，不要 Markdown。"
+                            "抽取能被改写成明确、有限、可验证预测问题的事件。"
+                        ),
+                        user=self._build_prompt(batch),
+                    )
                 )
+                events = []
                 for raw_event in response.get("events", []):
                     if not isinstance(raw_event, dict):
                         continue
                     event = self._coerce_event(raw_event, raw_by_id)
                     if event is not None:
                         events.append(event)
+                return events
+
+        batch_tasks = [process_batch(batch) for batch in batches]
+        batch_results = await asyncio.gather(*batch_tasks)
+
+        events = []
+        for batch_events in batch_results:
+            events.extend(batch_events)
         return events
 
     def _group_items_by_news_date(self, raw_items: list[RawNewsItem]) -> dict[str, list[RawNewsItem]]:

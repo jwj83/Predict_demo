@@ -1,0 +1,40 @@
+[
+  {
+    "id": "bm_e885ca3b72b9",
+    "domain": "weather",
+    "source": "google_news_weather",
+    "source_url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE50ZFc1OUJaWUpSTGlZNDM3Z2U1ZHBzOVBhU2Y5N1J4ejhhb1BRb2QxVEJEQ3lkNF9GcGRfZUREQzVQNDB6dWNkZmF0TzlBUlFEbFRzSGxqMHZfUk02eEdKVE1zaUlFMUNTSzlWNjJwY1N1SmJQ?oc=5",
+    "question": "2026年5月14日重庆市是否因强降雨启动了防汛四级应急响应？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-14",
+    "resolution_rule": "以重庆市人民政府或重庆市应急管理局官方公告为准。若官方明确宣布因强降雨启动防汛四级应急响应，则答案为是；否则为否。",
+    "event_type": "rain_warning",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "重庆市人民政府于2026年5月14日发布公告，因强降雨天气启动防汛四级应急响应。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-16T03:25:43.407612+00:00"
+  },
+  {
+    "id": "bm_0724cb1382ab",
+    "domain": "weather",
+    "source": "google_news_weather",
+    "source_url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBITzlWckt2blNST1pqMzJ1c2k4VWxHOWY0bUk4MmpvUHFZUGxLTU1HbUdjMnR1TUF1dXNwMXlYNHFhN0tCWXJZMGQwQ3RMZXQ1aHRiUXZfTXhudHU2TG9NQzAzMWFiUVJibHc?oc=5",
+    "question": "2026年5月6日重庆市气象台是否发布了阵风可达7级以上的大风蓝色预警？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-06",
+    "resolution_rule": "以重庆市气象台官方发布信息为准。若官方于2026年5月6日发布大风蓝色预警且明确提及阵风可达7级以上，则答案为是；否则为否。",
+    "event_type": "rain_warning",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "重庆市人民政府官网于2026-05-06发布大风蓝色预警信息，预计阵风可达7级以上。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-16T03:25:43.407643+00:00"
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "id": "bm_4a89df993cd0",
+    "domain": "finance",
+    "source": "google_wsj_international",
+    "source_url": "https://news.google.com/rss/articles/CBMi7gJBVV95cUxQcjdpQjBRUWZBVDBQRENwdWxEOGVCYUUtSF81X3JrVV9ITWgzTkd5RmhkUklJaW51SnFCMXp1MlExUG9EVVJzN2JYbHU4U0lzTjJRaWFTLXBodVFNOEd3VElQVDdHME1Rb0FFcGdiMVVLRDdBWGlPZjFySDJnODJtUExxbG1hX1gzTmhucEhOMUstM3dDYWcxMGE4TFlhQTBDOVpNVUYtNmVTa0VQVFM3RFgxZTFZSG8wQlFfU1NSYWh4VE0wN2lfekVmdFdmRXNBREhscVhzd1V2U1hGZ2NLcUlFSlVRdnh1M29LVDVsU2NOajAwZnhBXzFRZ1lNVlRNTzc3SGtDazBQX2F6dV9VSWd0VU5QcDJ6T1pObF9JX0NScHhkX3EtSjdRaUk2aXgzZlYzVUhfUzRZMm56NHFuVkRndF8zSnRrbXd5cHpqSU4ycHVUWlZDY2gtNXNfV3hoZFI3Y0tTUTFZdmdfSUE?oc=5",
+    "question": "特朗普在2026年5月15日访华期间是否披露此前买入大量波音和英伟达股票？",
+    "options": [
+      "是",
+      "否"
+    ],
+    "resolution_date": "2026-05-15",
+    "resolution_rule": "以华尔街日报中文网2026年5月15日官方报道为准，若报道明确提及特朗普在访华期间披露买入大量波音和英伟达股票，则结算为“是”；否则为“否”。",
+    "event_type": "stock_move",
+    "event_status": "resolved",
+    "resolved_answer": "是",
+    "answer_evidence": "华尔街日报中文网2026年5月15日报道，特朗普在访华期间披露此前买入大量波音和英伟达股票。",
+    "quality_score": 90.0,
+    "created_at": "2026-05-16T03:22:50.236396+00:00"
+  }
+]

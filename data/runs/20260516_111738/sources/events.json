@@ -1,0 +1,997 @@
+[
+  {
+    "id": "evt_d785478f2c61",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "sohu_nba",
+    "source_url": "https://www.sohu.com/a/291867573_458722",
+    "raw_item_id": "raw_835684932f75",
+    "event_type": "match_winner",
+    "event_summary": "火箭队在对阵魔术队的比赛中获胜，哈登得到40分11篮板6助攻，保罗复出。",
+    "entities": [
+      "火箭队",
+      "魔术队",
+      "哈登",
+      "保罗"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "火箭队获胜",
+    "answer_evidence": "新闻标题'哈登40+11+6保罗王者归来 火箭擒魔术'明确报道火箭队获胜。",
+    "created_at": "2026-05-16T03:19:56.504172+00:00"
+  },
+  {
+    "id": "evt_54409fb9296e",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "sohu_nba",
+    "source_url": "https://www.sohu.com/a/295073155_458722",
+    "raw_item_id": "raw_e602d9c9b3b8",
+    "event_type": "match_winner",
+    "event_summary": "国际队与美国队的篮球比赛半场战报，国际队71-83落后美国队。",
+    "entities": [
+      "国际队",
+      "美国队",
+      "库兹马"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-16",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:19:56.504215+00:00"
+  },
+  {
+    "id": "evt_6c5c7951775e",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "sohu_nba",
+    "source_url": "https://www.sohu.com/a/295061110_458722",
+    "raw_item_id": "raw_e118be7fc535",
+    "event_type": "match_winner",
+    "event_summary": "名人赛中主队险胜，洛斯赢得MVP，雷阿伦24分绝杀未果。",
+    "entities": [
+      "主队",
+      "洛斯",
+      "雷阿伦"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "主队获胜",
+    "answer_evidence": "新闻标题'名人赛:主队险胜洛斯赢MVP 雷阿伦24分绝杀未果'明确报道主队获胜。",
+    "created_at": "2026-05-16T03:19:56.504240+00:00"
+  },
+  {
+    "id": "evt_47fb6a9a5f11",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "sohu_nba",
+    "source_url": "https://www.sohu.com/a/295047352_458722",
+    "raw_item_id": "raw_ad65b40dcd71",
+    "event_type": "award",
+    "event_summary": "2019年篮球名人堂最终候选人名单公布，韦伯和华莱士领衔。",
+    "entities": [
+      "韦伯",
+      "华莱士",
+      "篮球名人堂"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2019-09-07",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:19:56.504263+00:00"
+  },
+  {
+    "id": "evt_d5a3d6efa61a",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "sohu_nba",
+    "source_url": "https://www.sohu.com/a/295040078_458722",
+    "raw_item_id": "raw_6a5ecf856a2d",
+    "event_type": "coach_change",
+    "event_summary": "鹈鹕队解雇了总经理邓普斯。",
+    "entities": [
+      "鹈鹕队",
+      "邓普斯"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "邓普斯被解雇",
+    "answer_evidence": "新闻标题'16日早报:鹈鹕解雇经理邓普斯奥登参加BIG3联赛'明确报道鹈鹕解雇邓普斯。",
+    "created_at": "2026-05-16T03:19:56.504285+00:00"
+  },
+  {
+    "id": "evt_6a619b314313",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "sohu_yingchao",
+    "source_url": "https://www.sohu.com/a/291325126_461392",
+    "raw_item_id": "raw_15d3a879ab24",
+    "event_type": "match_winner",
+    "event_summary": "切尔西在2026年5月16日英格兰联赛杯半决赛点球6-4战胜热刺，晋级决赛对阵曼城",
+    "entities": [
+      "切尔西",
+      "热刺",
+      "曼城",
+      "英格兰联赛杯"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "切尔西",
+    "answer_evidence": "新闻标题：阿扎尔破门 切尔西点球6-4热刺决赛将战曼城",
+    "created_at": "2026-05-16T03:18:13.589801+00:00"
+  },
+  {
+    "id": "evt_8442cb85591a",
+    "domain": "international",
+    "secondary_domains": [
+      "politics",
+      "economy"
+    ],
+    "source": "bbc_zhongwen",
+    "source_url": "https://www.bbc.com/zhongwen/articles/cx21r0y12r8o/trad?at_medium=RSS&at_campaign=rss",
+    "raw_item_id": "raw_83ba48d8f941",
+    "event_type": "summit",
+    "event_summary": "特朗普于2026年5月15日访华，与习近平举行会晤。",
+    "entities": [
+      "特朗普",
+      "习近平"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-15",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:19:08.686338+00:00"
+  },
+  {
+    "id": "evt_e37102c71492",
+    "domain": "international",
+    "secondary_domains": [
+      "economy"
+    ],
+    "source": "bbc_zhongwen",
+    "source_url": "https://www.bbc.com/zhongwen/articles/c4gvjz5y847o/trad?at_medium=RSS&at_campaign=rss",
+    "raw_item_id": "raw_d6538cfcb8a6",
+    "event_type": "summit",
+    "event_summary": "特朗普与习近平在北京会晤期间，未取得全面的贸易突破。",
+    "entities": [
+      "特朗普",
+      "习近平"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-15",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:19:08.686379+00:00"
+  },
+  {
+    "id": "evt_e645021cbb32",
+    "domain": "international",
+    "secondary_domains": [
+      "politics"
+    ],
+    "source": "bbc_zhongwen",
+    "source_url": "https://www.bbc.com/zhongwen/articles/cq8peqvxxepo/trad?at_medium=RSS&at_campaign=rss",
+    "raw_item_id": "raw_5505270d94be",
+    "event_type": "sanction",
+    "event_summary": "一艘据称是阿曼湾“海上军火库”的船只被伊朗军方人员扣押。",
+    "entities": [
+      "伊朗"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-15",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:19:08.686406+00:00"
+  },
+  {
+    "id": "evt_3a4cf916d426",
+    "domain": "politics",
+    "secondary_domains": [],
+    "source": "google_news_politics",
+    "source_url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOQlRDWDF1bTNkYTRXUWZfbGtkYXdrMTdCWEptWEt6R2x6ZHNOTklKUXBLUjZIRXVvdTV0czRFdlZTZENhMDF0VFRIRC1vWHNmeDdtd2xQenNxNlJ0VXJhb0VOdEdUa0ZOaWhHRFVkcUg3VEZ3elQ0T2hBY2FyMVl4RDJYT29ZVlFGNGdmcDFJM25ZeENpTkQtaFVvbzVYSGJpWE9zWGFtTE1LWXNHQjQzdWFBZ05LM1ROVUFJZ2hxSEE5eGJCaDNuSjFB0gHMAUFVX3lxTE94YnAwODZ2c0NMeHVyRlAxcHVXQV9IWTBCS01VakJieEVna3ZTT2NNSUwtcEtvNDU5SWhUbWY5X0xvMVI2aEljSm1iekJkY29YNDBWMVV2WEpxV05keVBXUER1bm56Tm5Jbi0tZDBwRUU0ZWxLSnhpQXN1Y0duN3g2R0lfM041ekwwN2w4UFJPWlhjeEpRQ3VmVWdtZXpUUzN1WEt1YldKWnptNWE4enBPdmVFYTNVNHB4cUZxTHg4VGswXzlzaXVUNkhpbQ?oc=5",
+    "raw_item_id": "raw_58b9da04def3",
+    "event_type": "bill_passage",
+    "event_summary": "CECC听证会聚焦中国强摘器官，两党议员盼尽快推动法案。",
+    "entities": [
+      "CECC"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-15",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:19:08.686429+00:00"
+  },
+  {
+    "id": "evt_04d172e8423d",
+    "domain": "finance",
+    "secondary_domains": [
+      "politics"
+    ],
+    "source": "google_wsj_china",
+    "source_url": "https://news.google.com/rss/articles/CBMi7gJBVV95cUxQcjdpQjBRUWZBVDBQRENwdWxEOGVCYUUtSF81X3JrVV9ITWgzTkd5RmhkUklJaW51SnFCMXp1MlExUG9EVVJzN2JYbHU4U0lzTjJRaWFTLXBodVFNOEd3VElQVDdHME1Rb0FFcGdiMVVLRDdBWGlPZjFySDJnODJtUExxbG1hX1gzTmhucEhOMUstM3dDYWcxMGE4TFlhQTBDOVpNVUYtNmVTa0VQVFM3RFgxZTFZSG8wQlFfU1NSYWh4VE0wN2lfekVmdFdmRXNBREhscVhzd1V2U1hGZ2NLcUlFSlVRdnh1M29LVDVsU2NOajAwZnhBXzFRZ1lNVlRNTzc3SGtDazBQX2F6dV9VSWd0VU5QcDJ6T1pObF9JX0NScHhkX3EtSjdRaUk2aXgzZlYzVUhfUzRZMm56NHFuVkRndF8zSnRrbXd5cHpqSU4ycHVUWlZDY2gtNXNfV3hoZFI3Y0tTUTFZdmdfSUE?oc=5",
+    "raw_item_id": "raw_c4d77fbbbfa4",
+    "event_type": "stock_move",
+    "event_summary": "特朗普在访华期间披露此前买入大量波音和英伟达股票。",
+    "entities": [
+      "特朗普",
+      "波音",
+      "英伟达"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-15",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:19:08.686451+00:00"
+  },
+  {
+    "id": "evt_b30d5acf5382",
+    "domain": "international",
+    "secondary_domains": [
+      "politics"
+    ],
+    "source": "google_wsj_china",
+    "source_url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQTmx3OENrcHpzZGQta0FvekNXOXNIMW5ZZ25DYXd4RVFsVV96T19iRVdaaVBxRDU4dXBuT3J3VEI4R0daZ0ZCNGF1Z19IU2ttclMwTnVkQmRiUHlSUXg4S0tNLXo3ci02ZVZ5LVFlTVpyLTJZOXkxRTBCaDI0alBPM3I5VGNESjYzMTBWUGxta0VUaTNzemQ4Z1NtRHQxRUpPZmg5dlYtWEFHclVZWnB5d0lUNzNZMWY4VnV4aHd4Y1V5dFNpX0JGTjdWbVhaa3lETFE?oc=5",
+    "raw_item_id": "raw_52152ae7b733",
+    "event_type": "diplomatic_visit",
+    "event_summary": "普京将访华与习近平会晤。",
+    "entities": [
+      "普京",
+      "习近平"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-15",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:19:08.686473+00:00"
+  },
+  {
+    "id": "evt_666adb2c17fe",
+    "domain": "international",
+    "secondary_domains": [
+      "politics"
+    ],
+    "source": "google_wsj_international",
+    "source_url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQTmx3OENrcHpzZGQta0FvekNXOXNIMW5ZZ25DYXd4RVFsVV96T19iRVdaaVBxRDU4dXBuT3J3VEI4R0daZ0ZCNGF1Z19IU2ttclMwTnVkQmRiUHlSUXg4S0tNLXo3ci02ZVZ5LVFlTVpyLTJZOXkxRTBCaDI0alBPM3I5VGNESjYzMTBWUGxta0VUaTNzemQ4Z1NtRHQxRUpPZmg5dlYtWEFHclVZWnB5d0lUNzNZMWY4VnV4aHd4Y1V5dFNpX0JGTjdWbVhaa3lETFE?oc=5",
+    "raw_item_id": "raw_87076b8f8772",
+    "event_type": "diplomatic_visit",
+    "event_summary": "俄罗斯总统普京将于2026年5月15日后访华，与中国国家主席习近平会晤。",
+    "entities": [
+      "普京",
+      "习近平",
+      "俄罗斯",
+      "中国"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-12-31",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:18:39.498233+00:00"
+  },
+  {
+    "id": "evt_5711d1f72130",
+    "domain": "finance",
+    "secondary_domains": [
+      "politics"
+    ],
+    "source": "google_wsj_international",
+    "source_url": "https://news.google.com/rss/articles/CBMi7gJBVV95cUxQcjdpQjBRUWZBVDBQRENwdWxEOGVCYUUtSF81X3JrVV9ITWgzTkd5RmhkUklJaW51SnFCMXp1MlExUG9EVVJzN2JYbHU4U0lzTjJRaWFTLXBodVFNOEd3VElQVDdHME1Rb0FFcGdiMVVLRDdBWGlPZjFySDJnODJtUExxbG1hX1gzTmhucEhOMUstM3dDYWcxMGE4TFlhQTBDOVpNVUYtNmVTa0VQVFM3RFgxZTFZSG8wQlFfU1NSYWh4VE0wN2lfekVmdFdmRXNBREhscVhzd1V2U1hGZ2NLcUlFSlVRdnh1M29LVDVsU2NOajAwZnhBXzFRZ1lNVlRNTzc3SGtDazBQX2F6dV9VSWd0VU5QcDJ6T1pObF9JX0NScHhkX3EtSjdRaUk2aXgzZlYzVUhfUzRZMm56NHFuVkRndF8zSnRrbXd5cHpqSU4ycHVUWlZDY2gtNXNfV3hoZFI3Y0tTUTFZdmdfSUE?oc=5",
+    "raw_item_id": "raw_f68eaa09c62a",
+    "event_type": "stock_move",
+    "event_summary": "特朗普在2026年5月15日访华期间披露此前买入大量波音和英伟达股票。",
+    "entities": [
+      "特朗普",
+      "波音",
+      "英伟达"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "已披露",
+    "answer_evidence": "华尔街日报中文网2026年5月15日报道，特朗普在访华期间披露此前买入大量波音和英伟达股票。",
+    "created_at": "2026-05-16T03:18:39.498281+00:00"
+  },
+  {
+    "id": "evt_4a3d955656d9",
+    "domain": "international",
+    "secondary_domains": [
+      "politics",
+      "economy"
+    ],
+    "source": "bbc_zhongwen",
+    "source_url": "https://www.bbc.com/zhongwen/articles/ckgpdl5038ro/trad?at_medium=RSS&at_campaign=rss",
+    "raw_item_id": "raw_2a9418ed0fb7",
+    "event_type": "summit",
+    "event_summary": "特朗普于2026年5月14日在北京与习近平举行元首峰会，讨论AI芯片、关税、台湾与伊朗局势等议题。",
+    "entities": [
+      "特朗普",
+      "习近平",
+      "北京",
+      "AI芯片",
+      "关税",
+      "台湾",
+      "伊朗"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-14",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:18:55.562980+00:00"
+  },
+  {
+    "id": "evt_13130e92ed67",
+    "domain": "weather",
+    "secondary_domains": [],
+    "source": "google_news_weather",
+    "source_url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE50ZFc1OUJaWUpSTGlZNDM3Z2U1ZHBzOVBhU2Y5N1J4ejhhb1BRb2QxVEJEQ3lkNF9GcGRfZUREQzVQNDB6dWNkZmF0TzlBUlFEbFRzSGxqMHZfUk02eEdKVE1zaUlFMUNTSzlWNjJwY1N1SmJQ?oc=5",
+    "raw_item_id": "raw_69a31bf53f19",
+    "event_type": "rain_warning",
+    "event_summary": "重庆市于2026年5月14日因强降雨天气启动防汛四级应急响应。",
+    "entities": [
+      "重庆市",
+      "强降雨",
+      "防汛四级应急响应"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "是",
+    "answer_evidence": "重庆市人民政府于2026年5月14日发布公告，因强降雨天气启动防汛四级应急响应。",
+    "created_at": "2026-05-16T03:18:55.563022+00:00"
+  },
+  {
+    "id": "evt_9051b8c833cb",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "google_news_sports",
+    "source_url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQUlNWNHY5NVBnbGNRdFhTcHMtNEFDdlBmSFMyY1ZyRVVoVElid29MN0xwRjc0QzFHMERaSXY1VHZUeE4xcmo1b2I4TG1hSTRRbUttR1M2RG1fbEYtOVBDX1dqeVhNYURwNG42NF9KLUt2ZUZXaGR4TVhIajZCc201QQ?oc=5",
+    "raw_item_id": "raw_e85907f98821",
+    "event_type": "champion",
+    "event_summary": "吴宜泽在2026年世界斯诺克锦标赛中夺冠",
+    "entities": [
+      "吴宜泽",
+      "世界斯诺克锦标赛"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "是",
+    "answer_evidence": "新华网和BBC在2026-05-06报道吴宜泽为斯诺克世锦赛冠军",
+    "created_at": "2026-05-16T03:19:08.841164+00:00"
+  },
+  {
+    "id": "evt_e3611845cd59",
+    "domain": "weather",
+    "secondary_domains": [],
+    "source": "google_news_weather",
+    "source_url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBITzlWckt2blNST1pqMzJ1c2k4VWxHOWY0bUk4MmpvUHFZUGxLTU1HbUdjMnR1TUF1dXNwMXlYNHFhN0tCWXJZMGQwQ3RMZXQ1aHRiUXZfTXhudHU2TG9NQzAzMWFiUVJibHc?oc=5",
+    "raw_item_id": "raw_ee11d85bbdbf",
+    "event_type": "rain_warning",
+    "event_summary": "重庆市气象台于2026-05-06发布大风蓝色预警，预计阵风可达7级以上",
+    "entities": [
+      "重庆市",
+      "大风蓝色预警"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "是",
+    "answer_evidence": "重庆市人民政府官网于2026-05-06发布大风蓝色预警信息",
+    "created_at": "2026-05-16T03:19:08.841197+00:00"
+  },
+  {
+    "id": "evt_ed8e68fbabb3",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "google_news_sports",
+    "source_url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE55RFR5UlBKWWE1Q0djR2VISHhhWm1Sc2tzbzkxOXBkell3SjBXMTZFZ2ppeGh4aU5BR09ENlNSSzMxeHVleEFpUE5TclJRQ0lDOU5FX0t2ZnRrQkpRUGxLc2w4ZzM3RW4xZmRWTUFDNnFXUXpKVVE?oc=5",
+    "raw_item_id": "raw_2f8be6bd7005",
+    "event_type": "match_winner",
+    "event_summary": "2026年5月16日，2026赛季中超第12轮，重庆铜梁龙对阵山东泰山的比赛结果",
+    "entities": [
+      "重庆铜梁龙",
+      "山东泰山",
+      "2026赛季中超第12轮"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-16",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:19:27.635774+00:00"
+  },
+  {
+    "id": "evt_939535f54e46",
+    "domain": "international",
+    "secondary_domains": [
+      "politics"
+    ],
+    "source": "google_wsj_china",
+    "source_url": "https://news.google.com/rss/articles/CBMipwJBVV95cUxPVkdTOEdPcjk2dkNqdEUzZ0M3VlBzSkJnc1g4dUM2VXM1RHJHOGFGMGxwTWpZaXEwLTIwdy00b1RXdWo0bzdlV21NREFRdjlFdk40ZGllc3A1QTJDMFhIbXByWmo3dTIwbmRVSC1ZMUp5ZFVFX1VoNHo1S2NTbmxtRVdRbGJaMUlaYmFxMkxwVlFmVHJFR1FndjFEYUVGVzJ2d1BoeWU1VUZCdHRQZ3FXdXlBT3JkaWVCUkNyV1FXem4wWlB1UVJlRmxvYjUtbDVQMzk1aEpGSFVZNEgzbWIwTjlGdThKMEphZVJPQ3pUWVNKaU02ZUpBdldjeVhxeGxlUjBwSGY3dkxmZUk5TURMOGxNVDVmV0M3bnpNSVhZbl9oZGNseGxZ?oc=5",
+    "raw_item_id": "raw_84e03405c5ab",
+    "event_type": "diplomatic_visit",
+    "event_summary": "特朗普于2026年5月13日访华，与习近平举行峰会",
+    "entities": [
+      "特朗普",
+      "习近平",
+      "中国"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-13",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:19:27.635807+00:00"
+  },
+  {
+    "id": "evt_2c6f13061067",
+    "domain": "international",
+    "secondary_domains": [
+      "politics"
+    ],
+    "source": "google_wsj_international",
+    "source_url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE90VzJZemFwNWE1b1NjMGp4YXlpcWlLMWdBV1pfTWVDdkhCanExbFJnUzhVcjVVbEZoaS1rakt4QUNRRjNURC1nVkFZR0Y2UHRJZm0zdmtBRHNscjU4RFhrRjR6cnVoQTNTOC1BVWNXbjQ2a09CVXc?oc=5",
+    "raw_item_id": "raw_6788ebba5795",
+    "event_type": "diplomatic_visit",
+    "event_summary": "特朗普于2026年5月13日抵京，与习近平举行峰会",
+    "entities": [
+      "特朗普",
+      "习近平",
+      "北京"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-13",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:19:27.635827+00:00"
+  },
+  {
+    "id": "evt_6f66748fcb5c",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "google_news_sports",
+    "source_url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQQVNfNUVhYi1KRTd0UDI1djVWMER4cFNLX0kyLVhCUlhmNUVGYnhUUWhRVE9KLXgxX2dybkJhR1MyeDVxX05Xa2poTS1QZzVRdGlONk9CZ0NoOFJfbFFsWEdCZnpvUlNZd2gzcTZJdGVNNTh4Nld3RkQ3WWZ0ZWdpZnJn?oc=5",
+    "raw_item_id": "raw_80b401e1f4f0",
+    "event_type": "match_winner",
+    "event_summary": "成都蓉城在2026年5月11日中超联赛中取得八连胜",
+    "entities": [
+      "成都蓉城",
+      "中超"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "是",
+    "answer_evidence": "新华网报道标题为'中超综合：成都八连胜 国安平海港'，发布于2026-05-11，确认成都蓉城已取得八连胜。",
+    "created_at": "2026-05-16T03:21:04.469767+00:00"
+  },
+  {
+    "id": "evt_06543d305781",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "google_news_sports",
+    "source_url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9MTlNhaXptNFZ5WFV1cjloaVZ3QmpvXzF4SVp2OXZJWHVQb2JyU0MxSTBHRTZneExJSjhDZk55dGZpTTByaG9maXQ0UTNtbTdPejd2T1VmVzBYYW9HQ1RWcHZ3RG5CYVVWbzFTaHpVVjF0ZFFGYTBjUDBxQ1Q5TzQ?oc=5",
+    "raw_item_id": "raw_f7224834fd80",
+    "event_type": "match_winner",
+    "event_summary": "北京国安在2026年5月11日中超联赛中与上海海港战平",
+    "entities": [
+      "北京国安",
+      "上海海港",
+      "中超"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "平局",
+    "answer_evidence": "新华网报道标题为'中超：北京国安平上海海港'，发布于2026-05-11，确认比赛结果为平局。",
+    "created_at": "2026-05-16T03:21:04.469797+00:00"
+  },
+  {
+    "id": "evt_296d3b10109f",
+    "domain": "economy",
+    "secondary_domains": [
+      "finance"
+    ],
+    "source": "google_news_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5oX3lrZHVKX2RWR19wZzVmNHFyMmJqYlhKbzB2eXhwc1NocHhrdEtfMGxrM3ZrSjFfT2xyaTNwZVc3X25FLU13UWpwdGJFTnJ2WkxkWGVIR2tHMC1vVS1FcmZDWm90enhsWkNSQ2xYQQ?oc=5",
+    "raw_item_id": "raw_c619d4682c09",
+    "event_type": "cpi",
+    "event_summary": "2026年4月中国居民消费价格同比上涨1.2%",
+    "entities": [
+      "中国",
+      "居民消费价格"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "1.2%",
+    "answer_evidence": "国家统计局官网stats.gov.cn发布数据，标题为'2026年4月份居民消费价格同比上涨1.2%'，发布于2026-05-11。",
+    "created_at": "2026-05-16T03:21:04.469817+00:00"
+  },
+  {
+    "id": "evt_76a41a64f86a",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "google_news_sports",
+    "source_url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE8tNW0wbUo1ZWpUYTdkYlBPV2gtazVJajRZeXlwRWtNSDgxSVg1aDc2UVVKeEhWcUxlOTdjWTBKQWdkd1VRdS1PdUFkdmgycG8zclEwV0ZkUk5VVkUtcmltcnJrUy10NGtaOHJmNzdHUUlDMjRQMzhQVW4xTQ?oc=5",
+    "raw_item_id": "raw_ebce37fdcdb8",
+    "event_type": "match_winner",
+    "event_summary": "2026年5月9日NBA季后赛马刺对阵森林狼的比赛结果",
+    "entities": [
+      "马刺",
+      "森林狼",
+      "NBA"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-09",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:19:42.951062+00:00"
+  },
+  {
+    "id": "evt_63d678b77417",
+    "domain": "politics",
+    "secondary_domains": [],
+    "source": "google_news_politics",
+    "source_url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5UZ21XWWJTZVBlbVRHcVZyQ2ROYlNaYjZxd05zMHhwTXA1UTdOY3QzX2tlbnVCU3VkdGpDMHpEQU9sYlBwVzdpQ2swQ1EzdUI1Q0ZsTi1CbHg0R1pybzdyTjRMeFdNQdIBa0FVX3lxTE9FLUNYaEtTRkNiWld5T01fZlJkVUpXTjN6bDBLYjZTNGdPX2VGX3VvNTFYcW4tNnV4NEw5cXY4dW1GdkMyT19LMUJEbFVub0NWOTUyVjRqakxmaXdQM3dXUExPemo2Mk9LeHkw?oc=5",
+    "raw_item_id": "raw_8d4568f86b56",
+    "event_type": "election",
+    "event_summary": "2026年英国地方选举中工党是否获得多数席位",
+    "entities": [
+      "英国",
+      "工党",
+      "基尔·斯塔默"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "否",
+    "answer_evidence": "BBC报道称英国地方选举工党惨败，首相基尔·斯塔默受逼宫压力坚拒辞职",
+    "created_at": "2026-05-16T03:19:42.951098+00:00"
+  },
+  {
+    "id": "evt_3f444f3dc117",
+    "domain": "politics",
+    "secondary_domains": [],
+    "source": "google_news_politics",
+    "source_url": "https://news.google.com/rss/articles/CBMieEFVX3lxTFAzdm1rQnhsdXNEaUgzTjJ0d1M4dHRCS3YyNkVYVTFnYlVDWUhvalVYcjNmOE5QZTlyRjBhTk15M2pscnpGRktXYnJaWXhNdGp0eW9LSmNCUTNUR3h0UTNleFUxWmc5c3JEck5YYkZPd28tX1VNTFgwcw?oc=5",
+    "raw_item_id": "raw_fee9fc850a04",
+    "event_type": "election",
+    "event_summary": "2026年英国地方选举结果是否全部揭晓",
+    "entities": [
+      "英国"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "是",
+    "answer_evidence": "央视网报道称英国地方选举结果全部揭晓",
+    "created_at": "2026-05-16T03:19:42.951118+00:00"
+  },
+  {
+    "id": "evt_8d9585f236fc",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "google_news_sports",
+    "source_url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1xT0tJYWx0SWpqeHVsSEZfandsa0xJTzk1emhvVzl6Y3FXdWN2WEQzZkRxN3F5VWQ5QXdEa2VIeks4RXJ0UWZqeENxdlFpTDNzSnJlM003V1Nuemd2OUNhcEpYaXdSVm5CSExfVl85b1ZzLU5lVzEtemc3RmZTQUE?oc=5",
+    "raw_item_id": "raw_17653eb2bbb4",
+    "event_type": "match_winner",
+    "event_summary": "2026年5月4日中超联赛，成都蓉城对阵上海申花，成都蓉城获胜。",
+    "entities": [
+      "成都蓉城",
+      "上海申花",
+      "中超联赛"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "成都蓉城获胜",
+    "answer_evidence": "新闻标题明确报道成都'绝杀'申花，比赛结果已揭晓。",
+    "created_at": "2026-05-16T03:20:12.502153+00:00"
+  },
+  {
+    "id": "evt_178ff32eb263",
+    "domain": "politics",
+    "secondary_domains": [],
+    "source": "google_news_politics",
+    "source_url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9GTEFPRVpVUEEyaU9jOVRtd3FhWDAzTnJtb0N5SlF2ckNCRTlXb3ZrRHpLeVVKNmItbXVhWGY1VF9GUXFUMmZZb2psRlR6VDN2RExuWHNoSHpsdGRGc1FpZ2JJUThUd9IBa0FVX3lxTE02SXBEUjhUYWtvYXd6Ql9UanRrNlVqNUFzWGZTbWwwVHZJQlFxVUxNYTU2T2RHSUhzdV9SS0F1aEczOG4xVzVyNndFaGI0Vy1ZR3FNYjJnSDczelNUNHpkUDNXNHJrYUg5Y1JF?oc=5",
+    "raw_item_id": "raw_0780ed4ab6fd",
+    "event_type": "election",
+    "event_summary": "2026年美国中期选举，选民将以经济表现评判特朗普。",
+    "entities": [
+      "美国",
+      "特朗普",
+      "中期选举"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-11-03",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:20:12.502184+00:00"
+  },
+  {
+    "id": "evt_753427bac782",
+    "domain": "international",
+    "secondary_domains": [
+      "politics"
+    ],
+    "source": "google_news_international",
+    "source_url": "https://news.google.com/rss/articles/CBMiigJBVV95cUxNMTY0dTBxX2lRTE0tRWVsN1lRV09ER2Jldko4UU5RanFxVFhXLWhlcFAwVHNxS0R3X3I5REhFTkFQLUtmNmt4ZnRhRVl5YTlkQmZKOTd3MUZoOGpJa1Z2UW5ldHVSM2Nybi1hazg5V09aZjVGYlcyUFVCdVlFMkxJZXhFRkJJZnpjb2RTeDJqU1RpRXVjdEZ6QzUwaU9Gc3BoNXJXTkx4LWJ2cXNNbnBCNi04UVJsc3FCNVlnc0dpZ2FvbzVsaTJwbDlDdnp6OVUzZy15YVpDTl9uUW9GenNkSFdUSHladjJILXp4ZUV3aUtOd3pOdVV2QVRtUTluN21NRXdMVHlndHF1Z9IBigJBVV95cUxQaU9YY0FxTDJmSnZ5SFVSdnFkYjFlWTFxRE9ta3Q5NW53OUpaR01fSTBqNkhfM2xscEgya0xMV0hpVlVqakVoV2lOU3FfVUpFYjNhQmJHbFpjWFFCSkstNVVTQURSM2d5anFqSGwzRzVjbXBHNXlOVXAzVGs3Z2xwdFJqcG9ydElNX1N1YWFYMjZrZHhic1lOS1VVemZWUGFzdnd4ZGJiYVpzaE5jb0EwcHRCUkU1cDlxMUpoV3RQLUxVajBiT3hqYUFSR3hhNGFiRnh2QTA3Y20zMXBsTFZPSENwVDNCa3I1ZGRtNDFPNWpndndjUzdqMGZMMFpiT2NYTFlBMkZ1Nlhkdw?oc=5",
+    "raw_item_id": "raw_edb50eb06041",
+    "event_type": "sanction",
+    "event_summary": "美国对中国炼油厂实施制裁，中国称制裁非法。",
+    "entities": [
+      "美国",
+      "中国",
+      "炼油厂"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "美国已实施制裁",
+    "answer_evidence": "新闻标题明确报道美国制裁中国炼油厂，制裁已发生。",
+    "created_at": "2026-05-16T03:20:12.502206+00:00"
+  },
+  {
+    "id": "evt_0263d38273fd",
+    "domain": "international",
+    "secondary_domains": [
+      "politics"
+    ],
+    "source": "google_news_international",
+    "source_url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOaHBrYXlkdFE0QklrMDlyN3ZwaDZXdVJtUHVpSl9kQUZCSlFCMnEtOGpwSVBhZjgzRmhuR0FyWUJlLWVLc0RweEVVNG9tQVQ0TmkyUlVBNWk2aEtsMmViYXM3M3psV3VBQXNXQzV6TGJPUG85VllmT25nYy0yUTJESFFWcmU3OXgxZ3hR?oc=5",
+    "raw_item_id": "raw_e7a46c4c31e4",
+    "event_type": "sanction",
+    "event_summary": "中国发布阻断禁令以制衡美国制裁。",
+    "entities": [
+      "中国",
+      "美国",
+      "阻断禁令"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "中国已发布阻断禁令",
+    "answer_evidence": "新闻标题明确报道中国首发阻断禁令，禁令已发布。",
+    "created_at": "2026-05-16T03:20:12.502228+00:00"
+  },
+  {
+    "id": "evt_01fe857f08ca",
+    "domain": "economy",
+    "secondary_domains": [
+      "finance"
+    ],
+    "source": "google_wsj_finance_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMijwJBVV95cUxPeWE1bmduV3otbnhfekdJU2NqSmNVOGZlbm5CVzFQcWV1ajRZVGpqVzZnZ2N1QWdRM0ROczBxcEpNbzRHaUptVDhHZlYtejB5XzFmbzJVVzR5amREQVRrTjFwZ0N3cTZSbHRQV0NrNVpWem9PNU1VSWE0OGt0SHpUZjBNWjgxRzdaZnNvZk1SUURnYTF2NW5GTlNXN0FKdlh3Vzc4d2lnSW56ODJDMmpwcG5ibGZjNEhsWV9aaHJQcGFqd3U5aFhBSzhaSGZGRGUtdW9zbHVCZGlsNnRzZFBqMHUyV0pmdl91NXFIZlcwUXJOd0wyVWZLRmtvX1VoMEFycGFnSGp5d0stZk5qUTFF?oc=5",
+    "raw_item_id": "raw_685af3b31c7b",
+    "event_type": "gdp",
+    "event_summary": "能源冲击下，全球经济表现。",
+    "entities": [
+      "全球经济"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-07-01",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:20:12.502247+00:00"
+  },
+  {
+    "id": "evt_26bd2d1bc529",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "google_news_sports",
+    "source_url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOQ1N0ZnV2WURYWGtsZGZ3RmdCMjJXUDdUTjE3OGhKdnJac1B2akp6akJlakNIbUVfX1FJQmcydUZzdzdpd3dTYXFDS3M4Qm5GTzdWbmJLZDJ4di1xNUxfNU9xbUpIQlVPcXM5UXA1eTdITTJKamEybnNlY1ZWeFh0dg?oc=5",
+    "raw_item_id": "raw_4e8ddf50afb1",
+    "event_type": "match_winner",
+    "event_summary": "2026年5月2日中超联赛河南队对阵辽宁铁人队的比赛结果",
+    "entities": [
+      "河南队",
+      "辽宁铁人队",
+      "中超"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "河南队胜",
+    "answer_evidence": "新华网报道标题明确为'中超：河南队胜辽宁铁人队'，发表于2026-05-02，比赛结果已揭晓。",
+    "created_at": "2026-05-16T03:19:56.922876+00:00"
+  },
+  {
+    "id": "evt_d23a881f5f81",
+    "domain": "international",
+    "secondary_domains": [
+      "politics"
+    ],
+    "source": "google_news_international",
+    "source_url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFA1U3FfQ2RuVVowZ0VGakV3ZVJGSHJDZWYzSXJkSzZ5Nmxxb05tWUFpNzFzOFVZZWRzM2Y1YTZ3MlpWLUtsRy1oYVZZZDgwUG5xaU5Wai1xS2REak1Bc1o1YVJwM2w3ZzhJV1BWOVR3SXgxaGItWHc?oc=5",
+    "raw_item_id": "raw_079e68351e2d",
+    "event_type": "diplomatic_visit",
+    "event_summary": "中国担任联合国安理会2026年5月轮值主席",
+    "entities": [
+      "中国",
+      "联合国安理会"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-31",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:19:56.922915+00:00"
+  },
+  {
+    "id": "evt_7dfe20581b02",
+    "domain": "sports",
+    "secondary_domains": [],
+    "source": "google_news_sports",
+    "source_url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPMWowakFBVkVOUXVBZjdVczRvNUlKUDVPS3l4Q2tBOTBHX3V5WENpZVZ4elltT09Dbzg5V3FLTEx0dmcwZkxxY2wyTjY5MTItbHV1Y2N1YWdzVVh5eThYN2RxblRBeHpLNW5MWlhna1VTbktYelhsMnh4SDUzbmtIdA?oc=5",
+    "raw_item_id": "raw_aaa90f2715cc",
+    "event_type": "champion",
+    "event_summary": "吴宜泽赢得某项体育赛事冠军",
+    "entities": [
+      "吴宜泽"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "是",
+    "answer_evidence": "新华网报道标题为'他赢下冠军，他们付出一切——吴宜泽和他的父母'，发布于2026-05-05，确认吴宜泽已赢得冠军。",
+    "created_at": "2026-05-16T03:20:13.688142+00:00"
+  },
+  {
+    "id": "evt_90f4ca55555d",
+    "domain": "international",
+    "secondary_domains": [
+      "politics"
+    ],
+    "source": "google_news_international",
+    "source_url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNT1JlUkhUaVYzdm5RU1BreUVWcTZndWhZaVFCQUVZeDZlMURWQ2VrM3dhOHFSeVprNkhjcnJ4TWczckZzVlJhTmdUYmU4ZF9McUFvc2wtd29ZY0Z1eVg3YkF5NkFSa0t2TFhnYVUzeDMwTWJ1a2tuNU83bms5R1M3ay1xVUcxeGh4TDhvTkI5c0djSjZ5VUt0bzR3YjVTOEFMTWNpd3lxZ3RvSk9SYlpkUnA5ekl1b1FtaGQ2dHRn0gHAAUFVX3lxTE5CRFJfYVFFQmhuaHlnSHhpNWtyV3d2WUxZWHNTX1BNSzRBX3hVVkhuX001S1hWSkN2RkxfX2VYOTFSeEJPaFRmQjRPS3FrSEYxNTZrTml6QWJzRjBoR2JKcHdidTBpY1ZjZnRFQ214S0ZIZXhWUmZVdlM5SVREdUgxVnpRZmNTMXVDTXd6c2x0ekQ5QTFwTVVmWkFPWlZnMHpHMUxHbzBoYmo3THYtc255WDEzM3RTUDREdC1QeV9ucQ?oc=5",
+    "raw_item_id": "raw_a3e679522924",
+    "event_type": "sanction",
+    "event_summary": "中国发布禁令以阻止美国制裁",
+    "entities": [
+      "中国",
+      "美国"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-05",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:20:13.688186+00:00"
+  },
+  {
+    "id": "evt_bb26e975ff6e",
+    "domain": "economy",
+    "secondary_domains": [
+      "finance"
+    ],
+    "source": "google_news_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9jSUR4LXFsbEREcExNSFB1eTI1V2xONWc2REUtcWRONXJfcnBOU1JVcE43aVdpTER6dkgxRzB3RThBUGU3bTZ0d01IRjhXSGhGRkotTDRtZERXdW9GYjRvQUYzYnhBZm9JbmlFdkZB?oc=5",
+    "raw_item_id": "raw_5c4573a4219b",
+    "event_type": "gdp",
+    "event_summary": "31省份GDP数据变化",
+    "entities": [
+      "31省份"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "已发布",
+    "answer_evidence": "人民网报道标题为'31省份GDP数据变化传递哪些信号？'，发布于2026-05-05，表明GDP数据已公布。",
+    "created_at": "2026-05-16T03:20:13.688223+00:00"
+  },
+  {
+    "id": "evt_ec687e2ec31e",
+    "domain": "international",
+    "secondary_domains": [
+      "politics"
+    ],
+    "source": "google_news_international",
+    "source_url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5CLTc1cEZ0c2l0Q0JUN24xaHdaX05wczVYMVNLc2R6blJfMFdZbGpfZ3pFczQtYTl0WTI3ekxfZ1VpU2dMbXB6UUtKVW44TjNaeDYxSVlmUFZyaU9SQ1VOdDY5SUZNUdIBa0FVX3lxTFBoQlFiU0hrNXFjck1LaU15aUZIZURSWWc1SUIzeWFCNnJLYTJnbHJBVnlIc2k1TFRoTko2M1hqcU1EVEpuSi1pVXBUVDlMYzFYYjRPUjBDOUxOYndtUnZ4bUdHV2NCSkhaZndJ?oc=5",
+    "raw_item_id": "raw_eec4f1548fdc",
+    "event_type": "ceasefire",
+    "event_summary": "美国与伊朗是否在2026年5月7日之前达成终战协议",
+    "entities": [
+      "美国",
+      "伊朗"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-07",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:20:15.832655+00:00"
+  },
+  {
+    "id": "evt_aeb985a05586",
+    "domain": "international",
+    "secondary_domains": [
+      "politics"
+    ],
+    "source": "google_news_international",
+    "source_url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE41WUR0X1NuZ0dqZ1BDZkVoQzc0Z0ZnazRGLTRFWDBob2xfV0xKX3hYeG5xdXVEajFsV0p5UVVIUXJWem5lbXl5UldUV2c2anM2NlhELWowbUdZX2hfZkpuZFY4RTJCcEZ5R2xfaFktSUNaaV9ldWQ4SlpjekJ3bzA?oc=5",
+    "raw_item_id": "raw_a511da959e16",
+    "event_type": "diplomatic_visit",
+    "event_summary": "美国总统特朗普是否在2026年5月7日之前与伊朗达成协议",
+    "entities": [
+      "特朗普",
+      "美国",
+      "伊朗"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-07",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:20:15.832688+00:00"
+  },
+  {
+    "id": "evt_7382a7899937",
+    "domain": "economy",
+    "secondary_domains": [
+      "finance"
+    ],
+    "source": "google_news_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE8xYVh5bnFfMmdpR1lpZFBtaFRmcndodHoyQ3lMTXBrOFZwbHEydy1DalNMZ0lMR2JmMTV2Sm1YeXhRRVFfbE9uek1WbFhtRFVfRVB3LXVYLW4xc1FKQlNTRG1IYWhtQ2EyVlJ4YnZnRQ?oc=5",
+    "raw_item_id": "raw_a6d084f51971",
+    "event_type": "cpi",
+    "event_summary": "中山市2026年第一季度CPI同比变化率是否为-1.2%",
+    "entities": [
+      "中山市"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "是",
+    "answer_evidence": "中山网报道：中山首季CPI同比下降1.2%",
+    "created_at": "2026-05-16T03:20:15.832709+00:00"
+  },
+  {
+    "id": "evt_04d8970c16a3",
+    "domain": "politics",
+    "secondary_domains": [],
+    "source": "google_news_politics",
+    "source_url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNUnJYd056V2xMYXRUWXJxODczQ3FQU1VkTFRza05NZlg4bGNqRzBVS2pJdGFMR1RZRl9MZ1ktby1IRmRVemp6UlE5a29LY2x4R0M0elhYS3UzbkhWaG0zcjE5TUo2Y0tyTWR3VnU0VHdWb0FxdHZYQXFXam1zRlhiLWF5Vnl4ZzA2a2RoRg?oc=5",
+    "raw_item_id": "raw_44d248aff056",
+    "event_type": "diplomatic_visit",
+    "event_summary": "外交部条法司与香港特区政府律政司于2026年5月8日举行涉港外交条法工作年度磋商",
+    "entities": [
+      "外交部条法司",
+      "香港特区政府律政司"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "已举行",
+    "answer_evidence": "新闻标题和描述明确报道该磋商于2026年5月8日举行，来源为中华人民共和国外交部官网",
+    "created_at": "2026-05-16T03:20:38.470221+00:00"
+  },
+  {
+    "id": "evt_3913a28faa54",
+    "domain": "politics",
+    "secondary_domains": [],
+    "source": "google_news_politics",
+    "source_url": "https://news.google.com/rss/articles/CBMimANBVV95cUxONFZUcWpXTFZuckkybl9qYmFic01vRnJ1aUdYanhnd3MxSDhjQVgycWM0SGdZcldFWkUwTjRGYW1BOTFMeVo2YlBQMWdieVlISlNFR3B2VVZMc1BfT0dlM05qeC1oemdNRTN4Ul9SVlZFU1NUNFJ6UFZhMVJpaEdRSVdOWTUwaFlpTmlxYk5hMmR2d2hrMWJCallrRzc4TFlsclk0akZ3U1dHMjF1RDJXOFZ0UkNNR1BOUzJzRkNkM2Rhamh0ZjMwR3gwZ2REa1RHZVBSQVZTdnd4OGE1WWg4b21tYkQ4Qm8tMFM3LWxidnpYbzl4enBkU0ZFNmZwUWdlandGcjViT1YxeVgzZUFIWDc2dUF5c2VEXzlVaWRzVjc5bGNUTGJhQ3RTcW8xeU5YSGlNaE5LU2xfZkhLMWp6UWU5NUZJY0RwRzg4R1B3NGxfME9fMVI0cTJVU2NsSEVJSlpKalg3NjR6YmZOMWVwaGl4dmVvejk5b3ozbDY5VkdMcThvbGM2OF9yTXcwUlM4S3NJQjZSeTk?oc=5",
+    "raw_item_id": "raw_b9919db22feb",
+    "event_type": "election",
+    "event_summary": "2026年英国地方选举中工党遭遇惨败",
+    "entities": [
+      "英国工党",
+      "英国首相斯塔默"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "工党遭遇历史性惨败",
+    "answer_evidence": "新闻标题和描述明确报道英国地方选举结果，工党遭遇历史性惨败，首相斯塔默仍坚持执政，来源为RFI",
+    "created_at": "2026-05-16T03:20:38.470254+00:00"
+  },
+  {
+    "id": "evt_1d2d09cc8da7",
+    "domain": "economy",
+    "secondary_domains": [
+      "finance"
+    ],
+    "source": "google_news_finance",
+    "source_url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE12alk4SDh1bUNQMjl2RWJxSDlBU3NoZ2V1NWZXU2pkOTRrU193UHJ1TmtoNnhXODM5dlNOMzdNY29yZ3Q2dENtSXVkTnlCRVE3V1U0ODMyOGRxZURRd003UFZJbXpCc2ZGbEZrWkdMaGU?oc=5",
+    "raw_item_id": "raw_6338485f4309",
+    "event_type": "cpi",
+    "event_summary": "2026年重庆市金融支持经济高质量发展例行新闻发布会（第二场）于2026年5月8日举行",
+    "entities": [
+      "重庆市人民政府"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "已举行",
+    "answer_evidence": "新闻标题和描述明确报道该新闻发布会于2026年5月8日举行，来源为重庆市人民政府官网",
+    "created_at": "2026-05-16T03:20:38.470276+00:00"
+  },
+  {
+    "id": "evt_7bd9bd372a60",
+    "domain": "economy",
+    "secondary_domains": [
+      "finance"
+    ],
+    "source": "google_news_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNbmFTWkdkX1NLYWRPcXJsSnU0Y0pDR1lIWTNUWkt3S3doZDQzQUhnNUcyR3A1V1hTcTRzazRackVyVURmRDJfYnN2cEdiZnN4c2l4aG5xUXBHal9TV0xyYWhMVjhsQkFncmpsdkNxYnNRZW4xSjNYTnNuXzRrTTljYzZ5SWIzQ0dmNEVfbzJHZw?oc=5",
+    "raw_item_id": "raw_96d73ad7d95d",
+    "event_type": "cpi",
+    "event_summary": "美国2026年4月CPI同比涨幅",
+    "entities": [
+      "美国",
+      "2026年4月CPI"
+    ],
+    "deadline": null,
+    "event_status": "unresolved",
+    "resolution_date": "2026-05-12",
+    "resolved_answer": null,
+    "answer_evidence": null,
+    "created_at": "2026-05-16T03:20:26.741279+00:00"
+  },
+  {
+    "id": "evt_ee178d2df33c",
+    "domain": "economy",
+    "secondary_domains": [
+      "finance"
+    ],
+    "source": "google_news_economy",
+    "source_url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5LUms2RVBfcnpQbTJvNUNwSmNnNzVlekFpdnN1ZEQtUXhGNlRmWXNfaE5JY29LY096Z2QtVFFOaGM2NlRTaGtZamJNY3VlMGxXdDRN?oc=5",
+    "raw_item_id": "raw_e9b8ff03747e",
+    "event_type": "cpi",
+    "event_summary": "美国2026年4月CPI同比涨幅为3.8%，核心CPI同比涨幅为2.8%",
+    "entities": [
+      "美国",
+      "2026年4月CPI",
+      "3.8%",
+      "核心CPI",
+      "2.8%"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "美国2026年4月CPI同比涨幅为3.8%，核心CPI同比涨幅为2.8%",
+    "answer_evidence": "华尔街见闻报道：美国4月CPI同比3.8%创近三年新高，核心CPI涨幅扩大至2.8%",
+    "created_at": "2026-05-16T03:20:26.741312+00:00"
+  },
+  {
+    "id": "evt_eee63b49d49d",
+    "domain": "economy",
+    "secondary_domains": [
+      "international"
+    ],
+    "source": "google_wsj_china",
+    "source_url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQUFNHX3RSdG5pbjEyajdBQXhMS3JIN0pHdjV3WFZrSFNhMzZ2TEpFUENOcHBJRXVwdklfWXJickU1QmdtY0N6ZHZfVHh4em9mdFJnNkRUbWNLQ2NDZVBmNmhmc1FVRVRfTE5ydVluYjhuLUt6cnZLdUxMdkFtMFdKSU1Ycw?oc=5",
+    "raw_item_id": "raw_2e881bedc085",
+    "event_type": "trade_data",
+    "event_summary": "中国2026年4月出口同比增长率",
+    "entities": [
+      "中国",
+      "2026年4月",
+      "出口"
+    ],
+    "deadline": null,
+    "event_status": "resolved",
+    "resolution_date": null,
+    "resolved_answer": "加快",
+    "answer_evidence": "华尔街日报中文网报道中国4月份出口增长加快",
+    "created_at": "2026-05-16T03:20:21.618235+00:00"
+  }
+]
