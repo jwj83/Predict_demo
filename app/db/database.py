@@ -146,19 +146,21 @@ class Database:
         resolution_date: str,
         timezone_name: str,
         candidate_options: list[str],
+        as_of_date: str | None = None,
     ) -> str:
         question_id = str(uuid.uuid4())
         with self._lock, self.connect() as conn:
             conn.execute(
                 """
-                INSERT INTO questions (id, category, question_text, resolution_date, timezone, candidate_options, status, created_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO questions (id, category, question_text, resolution_date, as_of_date, timezone, candidate_options, status, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     question_id,
                     category,
                     question_text,
                     resolution_date,
+                    as_of_date,
                     timezone_name,
                     json.dumps(candidate_options, ensure_ascii=False),
                     "draft",
@@ -221,6 +223,25 @@ class Database:
         with self.connect() as conn:
             rows = conn.execute("SELECT * FROM questions ORDER BY created_at DESC").fetchall()
         return [self._row_to_question(row) for row in rows]
+
+    def list_questions_page(self, page: int, page_size: int) -> dict[str, Any]:
+        page = max(page, 1)
+        page_size = min(max(page_size, 1), 100)
+        offset = (page - 1) * page_size
+        with self.connect() as conn:
+            total = conn.execute("SELECT COUNT(*) AS total FROM questions").fetchone()["total"]
+            rows = conn.execute(
+                "SELECT * FROM questions ORDER BY created_at DESC LIMIT ? OFFSET ?",
+                (page_size, offset),
+            ).fetchall()
+        total_pages = max(1, (total + page_size - 1) // page_size)
+        return {
+            "items": [self._row_to_question(row) for row in rows],
+            "total": total,
+            "page": page,
+            "page_size": page_size,
+            "total_pages": total_pages,
+        }
 
     def update_question_status(self, question_id: str, status: str) -> None:
         with self._lock, self.connect() as conn:

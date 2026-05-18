@@ -43,6 +43,7 @@ class CreateQuestionRequest(BaseModel):
     category: str = Field(min_length=1)
     question: str = Field(min_length=10)
     resolution_date: date
+    resolution_time: str = Field(default="00:00", pattern=r"^\d{2}:\d{2}$")
     timezone: str = Field(min_length=1)
     candidate_options: list[str] = Field(min_length=2)
 
@@ -293,9 +294,29 @@ class RuleSearchJobResponse(BaseModel):
 class QuestionListItem(BaseModel):
     id: str
     category: str
+    domain: str
+    source_url: str = ""
     question_text: str
     resolution_date: date
+    resolution_rule: str = ""
+    event_type: str = ""
+    as_of_date: datetime | None = None
     timezone: str
     candidate_options: list[str]
     status: str
     created_at: datetime
+
+
+class QuestionHistoryResponse(BaseModel):
+    items: list[QuestionListItem]
+    total: int
+    page: int
+    page_size: int
+    total_pages: int
+
+
+class QuestionDetailResponse(BaseModel):
+    question: QuestionListItem
+    latest_run: RunStatusResponse | None = None
+    latest_result: ForecastResultResponse | None = None
+    evaluation: EvaluationResponse | None = None

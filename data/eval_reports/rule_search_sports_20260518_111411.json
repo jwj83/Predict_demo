@@ -1,0 +1,556 @@
+{
+  "domain": "sports",
+  "seed_rule_set": {
+    "rule_set_id": "generic_v0",
+    "domain": "sports",
+    "description": "Generic forecast trajectory rubric. It evaluates whether a ReAct forecasting agent understands a resolvable event, retrieves reliable evidence, reasons faithfully, updates probabilities, and uses tools efficiently.",
+    "dimensions": [
+      {
+        "name": "Question understanding and resolvability",
+        "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria.",
+        "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+        "score_3": "Understands the broad event but misses some boundary or settlement details.",
+        "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+        "weight": 1.5
+      },
+      {
+        "name": "Information retrieval quality",
+        "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources.",
+        "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+        "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+        "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+        "weight": 2.0
+      },
+      {
+        "name": "Source credibility and news quality",
+        "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources.",
+        "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+        "score_3": "Uses generally credible secondary sources but limited primary verification.",
+        "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+        "weight": 2.0
+      },
+      {
+        "name": "Reasoning chain quality",
+        "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty.",
+        "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+        "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+        "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+        "weight": 2.0
+      },
+      {
+        "name": "Probability update quality",
+        "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty.",
+        "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+        "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+        "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+        "weight": 1.5
+      },
+      {
+        "name": "Tool use and execution efficiency",
+        "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps.",
+        "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+        "score_3": "Uses the right tools but has some redundant or shallow steps.",
+        "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+        "weight": 1.0
+      }
+    ],
+    "parent_id": null
+  },
+  "best_rule_set": {
+    "rule_set_id": "round_1_candidate_1",
+    "domain": "sports",
+    "description": "Mock domain-adapted candidate 1 for sports.",
+    "dimensions": [
+      {
+        "name": "Question understanding and resolvability",
+        "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: sports.",
+        "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+        "score_3": "Understands the broad event but misses some boundary or settlement details.",
+        "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+        "weight": 1.5
+      },
+      {
+        "name": "Information retrieval quality",
+        "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: sports.",
+        "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+        "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+        "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+        "weight": 2.25
+      },
+      {
+        "name": "Source credibility and news quality",
+        "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: sports.",
+        "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+        "score_3": "Uses generally credible secondary sources but limited primary verification.",
+        "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+        "weight": 2.25
+      },
+      {
+        "name": "Reasoning chain quality",
+        "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: sports.",
+        "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+        "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+        "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+        "weight": 2.0
+      },
+      {
+        "name": "Probability update quality",
+        "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: sports.",
+        "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+        "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+        "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+        "weight": 1.5
+      },
+      {
+        "name": "Tool use and execution efficiency",
+        "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: sports.",
+        "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+        "score_3": "Uses the right tools but has some redundant or shallow steps.",
+        "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+        "weight": 1.0
+      },
+      {
+        "name": "Settlement rule extraction",
+        "description": "Evaluate settlement rule extraction for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent settlement rule extraction with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial settlement rule extraction with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable settlement rule extraction.",
+        "weight": 1.0
+      },
+      {
+        "name": "Entity and option grounding",
+        "description": "Evaluate entity and option grounding for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent entity and option grounding with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial entity and option grounding with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable entity and option grounding.",
+        "weight": 1.0
+      },
+      {
+        "name": "Temporal boundary compliance",
+        "description": "Evaluate temporal boundary compliance for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent temporal boundary compliance with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial temporal boundary compliance with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable temporal boundary compliance.",
+        "weight": 1.0
+      },
+      {
+        "name": "Official source prioritization",
+        "description": "Evaluate official source prioritization for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent official source prioritization with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial official source prioritization with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable official source prioritization.",
+        "weight": 1.0
+      },
+      {
+        "name": "Independent source diversity",
+        "description": "Evaluate independent source diversity for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent independent source diversity with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial independent source diversity with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable independent source diversity.",
+        "weight": 1.0
+      },
+      {
+        "name": "Direct evidence identification",
+        "description": "Evaluate direct evidence identification for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent direct evidence identification with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial direct evidence identification with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable direct evidence identification.",
+        "weight": 1.0
+      },
+      {
+        "name": "Supporting evidence coverage",
+        "description": "Evaluate supporting evidence coverage for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent supporting evidence coverage with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial supporting evidence coverage with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable supporting evidence coverage.",
+        "weight": 1.0
+      },
+      {
+        "name": "Opposing evidence coverage",
+        "description": "Evaluate opposing evidence coverage for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent opposing evidence coverage with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial opposing evidence coverage with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable opposing evidence coverage.",
+        "weight": 1.0
+      },
+      {
+        "name": "Conflict resolution",
+        "description": "Evaluate conflict resolution for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent conflict resolution with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial conflict resolution with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable conflict resolution.",
+        "weight": 1.0
+      },
+      {
+        "name": "Evidence recency",
+        "description": "Evaluate evidence recency for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent evidence recency with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial evidence recency with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable evidence recency.",
+        "weight": 1.0
+      },
+      {
+        "name": "Cutoff violation avoidance",
+        "description": "Evaluate cutoff violation avoidance for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent cutoff violation avoidance with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial cutoff violation avoidance with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable cutoff violation avoidance.",
+        "weight": 1.0
+      },
+      {
+        "name": "Quantitative anchor use",
+        "description": "Evaluate quantitative anchor use for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent quantitative anchor use with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial quantitative anchor use with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable quantitative anchor use.",
+        "weight": 1.0
+      },
+      {
+        "name": "Probability calibration rationale",
+        "description": "Evaluate probability calibration rationale for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent probability calibration rationale with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial probability calibration rationale with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable probability calibration rationale.",
+        "weight": 1.0
+      },
+      {
+        "name": "Residual uncertainty allocation",
+        "description": "Evaluate residual uncertainty allocation for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+        "score_5": "Excellent residual uncertainty allocation with explicit, source-backed, cutoff-compliant support.",
+        "score_3": "Partial residual uncertainty allocation with some gaps or weak traceability.",
+        "score_1": "Missing or unreliable residual uncertainty allocation.",
+        "weight": 1.0
+      }
+    ],
+    "parent_id": "generic_v0"
+  },
+  "rounds": [
+    {
+      "round_index": 1,
+      "candidates": [
+        {
+          "rule_set_id": "round_1_candidate_1",
+          "domain": "sports",
+          "description": "Mock domain-adapted candidate 1 for sports.",
+          "dimensions": [
+            {
+              "name": "Question understanding and resolvability",
+              "description": "Whether the agent identifies event subject, time, place, conditions, and settlement criteria. Domain adaptation target: sports.",
+              "score_5": "Clearly extracts event subject, deadline, options, settlement rule, ambiguity, and edge cases.",
+              "score_3": "Understands the broad event but misses some boundary or settlement details.",
+              "score_1": "Treats an open-ended or non-resolvable prompt as directly forecastable.",
+              "weight": 1.5
+            },
+            {
+              "name": "Information retrieval quality",
+              "description": "Whether retrieval covers multiple relevant, independent, fresh, and documented sources. Domain adaptation target: sports.",
+              "score_5": "Uses multiple independent, relevant sources and records search/fetch paths.",
+              "score_3": "Uses relevant sources but lacks diversity, freshness, or trace detail.",
+              "score_1": "Uses sparse, irrelevant, duplicate, or undocumented retrieval.",
+              "weight": 2.25
+            },
+            {
+              "name": "Source credibility and news quality",
+              "description": "Whether evidence comes from authoritative, transparent, accurate, and independent sources. Domain adaptation target: sports.",
+              "score_5": "Prioritizes primary/official/high-quality sources and distinguishes source independence.",
+              "score_3": "Uses generally credible secondary sources but limited primary verification.",
+              "score_1": "Relies on low-quality, unclear, promotional, or duplicated sources.",
+              "weight": 2.25
+            },
+            {
+              "name": "Reasoning chain quality",
+              "description": "Whether the agent links evidence to forecast-relevant variables and uncertainty. Domain adaptation target: sports.",
+              "score_5": "Separates facts, assumptions, counter-evidence, causal links, and uncertainty clearly.",
+              "score_3": "Provides plausible reasoning but weak conflict handling or causal explanation.",
+              "score_1": "Stacks news snippets without auditable evidence-to-forecast rationale.",
+              "weight": 2.0
+            },
+            {
+              "name": "Probability update quality",
+              "description": "Whether probabilities are updated from evidence with calibrated magnitude and residual uncertainty. Domain adaptation target: sports.",
+              "score_5": "Shows evidence-driven probability movement, reasonable magnitude, and remaining uncertainty.",
+              "score_3": "Probability is connected to evidence but update magnitude is underspecified.",
+              "score_1": "Probability appears arbitrary or jumps to extremes from weak evidence.",
+              "weight": 1.5
+            },
+            {
+              "name": "Tool use and execution efficiency",
+              "description": "Whether the agent uses necessary tools without wasteful or irrelevant steps. Domain adaptation target: sports.",
+              "score_5": "Uses appropriate search/fetch/reasoning steps with complete ReAct trajectories and controlled cost.",
+              "score_3": "Uses the right tools but has some redundant or shallow steps.",
+              "score_1": "Misses necessary tools or performs mostly irrelevant tool calls.",
+              "weight": 1.0
+            },
+            {
+              "name": "Settlement rule extraction",
+              "description": "Evaluate settlement rule extraction for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent settlement rule extraction with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial settlement rule extraction with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable settlement rule extraction.",
+              "weight": 1.0
+            },
+            {
+              "name": "Entity and option grounding",
+              "description": "Evaluate entity and option grounding for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent entity and option grounding with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial entity and option grounding with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable entity and option grounding.",
+              "weight": 1.0
+            },
+            {
+              "name": "Temporal boundary compliance",
+              "description": "Evaluate temporal boundary compliance for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent temporal boundary compliance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial temporal boundary compliance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable temporal boundary compliance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Official source prioritization",
+              "description": "Evaluate official source prioritization for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent official source prioritization with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial official source prioritization with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable official source prioritization.",
+              "weight": 1.0
+            },
+            {
+              "name": "Independent source diversity",
+              "description": "Evaluate independent source diversity for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent independent source diversity with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial independent source diversity with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable independent source diversity.",
+              "weight": 1.0
+            },
+            {
+              "name": "Direct evidence identification",
+              "description": "Evaluate direct evidence identification for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent direct evidence identification with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial direct evidence identification with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable direct evidence identification.",
+              "weight": 1.0
+            },
+            {
+              "name": "Supporting evidence coverage",
+              "description": "Evaluate supporting evidence coverage for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent supporting evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial supporting evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable supporting evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Opposing evidence coverage",
+              "description": "Evaluate opposing evidence coverage for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent opposing evidence coverage with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial opposing evidence coverage with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable opposing evidence coverage.",
+              "weight": 1.0
+            },
+            {
+              "name": "Conflict resolution",
+              "description": "Evaluate conflict resolution for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent conflict resolution with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial conflict resolution with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable conflict resolution.",
+              "weight": 1.0
+            },
+            {
+              "name": "Evidence recency",
+              "description": "Evaluate evidence recency for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent evidence recency with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial evidence recency with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable evidence recency.",
+              "weight": 1.0
+            },
+            {
+              "name": "Cutoff violation avoidance",
+              "description": "Evaluate cutoff violation avoidance for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent cutoff violation avoidance with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial cutoff violation avoidance with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable cutoff violation avoidance.",
+              "weight": 1.0
+            },
+            {
+              "name": "Quantitative anchor use",
+              "description": "Evaluate quantitative anchor use for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent quantitative anchor use with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial quantitative anchor use with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable quantitative anchor use.",
+              "weight": 1.0
+            },
+            {
+              "name": "Probability calibration rationale",
+              "description": "Evaluate probability calibration rationale for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent probability calibration rationale with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial probability calibration rationale with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable probability calibration rationale.",
+              "weight": 1.0
+            },
+            {
+              "name": "Residual uncertainty allocation",
+              "description": "Evaluate residual uncertainty allocation for sports forecast trajectories using only trajectory, evidence, and report artifacts.",
+              "score_5": "Excellent residual uncertainty allocation with explicit, source-backed, cutoff-compliant support.",
+              "score_3": "Partial residual uncertainty allocation with some gaps or weak traceability.",
+              "score_1": "Missing or unreliable residual uncertainty allocation.",
+              "weight": 1.0
+            }
+          ],
+          "parent_id": "generic_v0"
+        }
+      ],
+      "validations": [
+        {
+          "rule_set_id": "round_1_candidate_1",
+          "validation_score": 0.0,
+          "correlation_with_resolved_probability": 0.0,
+          "correlation_with_brier": 0.0,
+          "correlation_with_accuracy": 0.0,
+          "case_count": 1
+        }
+      ],
+      "best_rule_set_id": "round_1_candidate_1",
+      "feedback": "round_1_candidate_1 is currently best. Validation score=0.0, corr(resolved probability)=0.0, corr(-Brier)=0.0, corr(accuracy)=0.0. Improve dimensions that better distinguish credible evidence, cutoff compliance, and probability calibration."
+    }
+  ],
+  "case_scores": [
+    {
+      "case_id": "bm_test_resolved",
+      "rule_set_id": "round_1_candidate_1",
+      "trajectory_quality_score": 2.1429,
+      "dimension_scores": [
+        {
+          "dimension": "Question understanding and resolvability",
+          "score": 5,
+          "rationale": "The trajectory has a complete ReAct record and explicit probability output.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Information retrieval quality",
+          "score": 1,
+          "rationale": "Retrieval is sparse or low-diversity.",
+          "weight": 2.25
+        },
+        {
+          "dimension": "Source credibility and news quality",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 2.25
+        },
+        {
+          "dimension": "Reasoning chain quality",
+          "score": 5,
+          "rationale": "The trajectory combines direct evidence, opposing evidence, and complete ReAct reasoning.",
+          "weight": 2.0
+        },
+        {
+          "dimension": "Probability update quality",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.5
+        },
+        {
+          "dimension": "Tool use and execution efficiency",
+          "score": 5,
+          "rationale": "Expected sub-agents and tool actions are complete.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Settlement rule extraction",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Entity and option grounding",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Temporal boundary compliance",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Official source prioritization",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Independent source diversity",
+          "score": 1,
+          "rationale": "Sources are mostly synthetic, missing, or unverifiable.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Direct evidence identification",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Supporting evidence coverage",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Opposing evidence coverage",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Conflict resolution",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Evidence recency",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Cutoff violation avoidance",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Quantitative anchor use",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Probability calibration rationale",
+          "score": 5,
+          "rationale": "The probability output is supported by enough cutoff-compliant evidence.",
+          "weight": 1.0
+        },
+        {
+          "dimension": "Residual uncertainty allocation",
+          "score": 1,
+          "rationale": "Generic dimension lacks enough matching evidence.",
+          "weight": 1.0
+        }
+      ],
+      "target_metrics": {
+        "accuracy": 0.0,
+        "brier_score": 0.878343,
+        "resolved_option_probability": 0.3373
+      }
+    }
+  ],
+  "validation_summary": {
+    "rule_set_id": "round_1_candidate_1",
+    "validation_score": 0.0,
+    "correlation_with_resolved_probability": 0.0,
+    "correlation_with_brier": 0.0,
+    "correlation_with_accuracy": 0.0,
+    "case_count": 1
+  }
+}

@@ -85,6 +85,47 @@ def test_create_question_requires_multiple_options(tmp_path: Path) -> None:
     assert response.status_code == 422
 
 
+def test_create_question_accepts_precise_cutoff_time(tmp_path: Path) -> None:
+    client = build_client(tmp_path)
+    response = client.post(
+        "/api/questions",
+        json={
+            "category": "test",
+            "question": "Will the precise cutoff test event happen by the deadline?",
+            "resolution_date": "2026-05-20",
+            "resolution_time": "18:30",
+            "timezone": "Asia/Shanghai",
+            "candidate_options": ["yes", "no"],
+        },
+    )
+
+    assert response.status_code == 200, response.text
+    from app.db.database import db
+
+    question = db.get_question(response.json()["question_id"])
+    assert question["as_of_date"] == "2026-05-20T10:30:00+00:00"
+
+
+def test_create_question_defaults_cutoff_time_to_midnight(tmp_path: Path) -> None:
+    client = build_client(tmp_path)
+    response = client.post(
+        "/api/questions",
+        json={
+            "category": "test",
+            "question": "Will the default cutoff test event happen by the deadline?",
+            "resolution_date": "2026-05-20",
+            "timezone": "UTC",
+            "candidate_options": ["yes", "no"],
+        },
+    )
+
+    assert response.status_code == 200, response.text
+    from app.db.database import db
+
+    question = db.get_question(response.json()["question_id"])
+    assert question["as_of_date"] == "2026-05-20T00:00:00+00:00"
+
+
 def test_forecast_flow_and_result_shape(tmp_path: Path) -> None:
     client = build_client(tmp_path)
     question_id = create_question(client)
@@ -106,6 +147,41 @@ def test_forecast_flow_and_result_shape(tmp_path: Path) -> None:
     assert result_payload["direct_answer"] == winner
     assert result_payload["confidence_level"] in {"low", "medium", "high"}
     assert result_payload["conflict_summary"]
+
+
+def test_question_history_paginates_and_detail_handles_empty_result(tmp_path: Path) -> None:
+    client = build_client(tmp_path)
+    ids = []
+    for index in range(12):
+        response = client.post(
+            "/api/questions",
+            json={
+                "category": "history",
+                "question": f"Will history pagination event {index} happen by the deadline?",
+                "resolution_date": "2026-05-20",
+                "timezone": "UTC",
+                "candidate_options": ["yes", "no"],
+            },
+        )
+        assert response.status_code == 200
+        ids.append(response.json()["question_id"])
+
+    page_one = client.get("/api/questions/history?page=1&page_size=10")
+    assert page_one.status_code == 200
+    payload = page_one.json()
+    assert payload["total"] == 12
+    assert payload["page"] == 1
+    assert payload["page_size"] == 10
+    assert payload["total_pages"] == 2
+    assert len(payload["items"]) == 10
+
+    detail = client.get(f"/api/questions/{ids[0]}/detail")
+    assert detail.status_code == 200
+    detail_payload = detail.json()
+    assert detail_payload["question"]["id"] == ids[0]
+    assert detail_payload["latest_run"] is None
+    assert detail_payload["latest_result"] is None
+    assert detail_payload["evaluation"] is None
 
 
 def test_native_forecast_api_creates_prediction_and_returns_report(tmp_path: Path) -> None:
@@ -352,7 +428,9 @@ def test_forecast_report_contains_required_structured_fields(tmp_path: Path) -> 
     assert result["report_quality_notes"]["evidence_detail"]
     assert 4 <= len(result["evidence_items"]) <= 6
     assert result["markdown_report"]
-    assert "Forecast Report" in result["markdown_report"]
+    assert "预测报告" in result["markdown_report"]
+    assert "概率" in result["report_quality_notes"]["probability_rigor"]
+    assert "反事实" in result["report_quality_notes"]["counterfactual_completeness"]
 
 
 def test_api_report_returns_formal_prediction_template(tmp_path: Path) -> None:

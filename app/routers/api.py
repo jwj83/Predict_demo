@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import time as clock
 from datetime import datetime, time, timezone
+from zoneinfo import ZoneInfo
 
 from fastapi import APIRouter, HTTPException
 
@@ -21,6 +22,8 @@ from app.schemas import (
     ImportBenchmarkEventResponse,
     NativeForecastRequest,
     NativeForecastResponse,
+    QuestionDetailResponse,
+    QuestionHistoryResponse,
     QuestionListItem,
     RuleSearchCaseListResponse,
     RuleSearchJobResponse,
@@ -50,9 +53,24 @@ def _prediction_cutoff_iso(payload: BenchmarkEventInput) -> str:
     return cutoff.isoformat()
 
 
+def _question_cutoff_iso(payload: CreateQuestionRequest) -> str:
+    try:
+        hour_text, minute_text = payload.resolution_time.split(":", 1)
+        local_time = time(hour=int(hour_text), minute=int(minute_text))
+        local_datetime = datetime.combine(payload.resolution_date, local_time, tzinfo=ZoneInfo(payload.timezone))
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail="揭晓时间或时区格式无效。") from exc
+    return local_datetime.astimezone(timezone.utc).isoformat()
+
+
 @router.get("/questions", response_model=list[QuestionListItem])
 def list_questions() -> list[QuestionListItem]:
     return db.list_questions()
+
+
+@router.get("/questions/history", response_model=QuestionHistoryResponse)
+def list_question_history(page: int = 1, page_size: int = 10) -> QuestionHistoryResponse:
+    return QuestionHistoryResponse(**db.list_questions_page(page=page, page_size=page_size))
 
 
 @router.post("/questions", response_model=CreateQuestionResponse)
@@ -63,6 +81,7 @@ def create_question(payload: CreateQuestionRequest) -> CreateQuestionResponse:
         resolution_date=payload.resolution_date.isoformat(),
         timezone_name=payload.timezone,
         candidate_options=payload.candidate_options,
+        as_of_date=_question_cutoff_iso(payload),
     )
     return CreateQuestionResponse(question_id=question_id)
 
@@ -75,6 +94,7 @@ def forecast_and_return_report(payload: NativeForecastRequest) -> NativeForecast
         resolution_date=payload.resolution_date.isoformat(),
         timezone_name=payload.timezone,
         candidate_options=payload.candidate_options,
+        as_of_date=_question_cutoff_iso(payload),
     )
     run_id = forecast_service.start_forecast(question_id)
     deadline = clock.monotonic() + payload.wait_timeout_seconds
@@ -158,6 +178,51 @@ def get_result(question_id: str) -> ForecastResultResponse:
         report_quality_notes=result["report_quality_notes"],
         sub_agent_results=result["sub_agent_results"],
         markdown_report=result["markdown_report"],
+    )
+
+
+@router.get("/questions/{question_id}/detail", response_model=QuestionDetailResponse)
+def get_question_detail(question_id: str) -> QuestionDetailResponse:
+    question = db.get_question(question_id)
+    if not question:
+        raise HTTPException(status_code=404, detail="问题不存在。")
+    runs = db.list_runs_for_question(question_id)
+    latest_run = RunStatusResponse(**runs[0]) if runs else None
+    latest_result = None
+    raw_result = db.get_latest_result(question_id)
+    if raw_result:
+        latest_result = ForecastResultResponse(
+            prediction_date=datetime.fromisoformat(raw_result["prediction_date"]),
+            question=raw_result["question"],
+            direct_answer=raw_result["direct_answer"],
+            confidence_level=raw_result["confidence_level"],
+            confidence_rationale=raw_result["confidence_rationale"],
+            evidence_basis=raw_result["evidence_basis"],
+            candidate_probabilities=raw_result["candidate_probabilities"],
+            counterfactual_fragility=raw_result["counterfactual_fragility"],
+            conflict_summary=raw_result["conflict_summary"],
+            evidence_items=raw_result["evidence_items"],
+            round_snapshots=raw_result["round_snapshots"],
+            monitoring_items=raw_result["monitoring_items"],
+            report_quality_notes=raw_result["report_quality_notes"],
+            sub_agent_results=raw_result["sub_agent_results"],
+            markdown_report=raw_result["markdown_report"],
+        )
+    evaluation = None
+    resolution = db.get_resolution(question_id)
+    if resolution:
+        evaluation = EvaluationResponse(
+            question_id=question_id,
+            resolved_answer=resolution["resolved_answer"],
+            resolved_at=datetime.fromisoformat(resolution["resolved_at"]),
+            selected_run_id=resolution["selected_run_id"],
+            scoring_metrics=resolution["scoring_metrics"],
+        )
+    return QuestionDetailResponse(
+        question=QuestionListItem(**question),
+        latest_run=latest_run,
+        latest_result=latest_result,
+        evaluation=evaluation,
     )
 
 

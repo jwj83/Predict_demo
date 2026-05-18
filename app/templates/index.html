@@ -37,6 +37,9 @@
             <label>揭晓日期
               <input type="date" name="resolution_date" required>
             </label>
+            <label>揭晓时间
+              <input type="time" name="resolution_time" value="00:00" required>
+            </label>
             <label>时区
               <input name="timezone" value="America/New_York" required>
             </label>
@@ -139,10 +142,20 @@ Alphabet</textarea>
 
     <section class="panel">
       <div class="panel-header">
-        <h2>已创建问题</h2>
-        <p>可查看问题状态、最新结果与已结算评分。</p>
+        <div>
+          <h2>已创建问题</h2>
+          <p>可查看问题状态、最新结果与已结算评分。</p>
+        </div>
+        <button id="history-toggle" type="button" class="secondary-button history-toggle">展开</button>
       </div>
-      <div id="question-list" class="question-list"></div>
+      <div id="history-panel" class="history-panel hidden">
+        <div id="question-list" class="question-list"></div>
+        <div class="pager">
+          <button id="history-prev" type="button" class="secondary-button">上一页</button>
+          <span id="history-page-info" class="muted">第 1 / 1 页</span>
+          <button id="history-next" type="button" class="secondary-button">下一页</button>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -165,6 +178,11 @@ Alphabet</textarea>
     const traceList = document.getElementById("trace-list");
     const resultPreview = document.getElementById("result-preview");
     const questionList = document.getElementById("question-list");
+    const historyToggle = document.getElementById("history-toggle");
+    const historyPanel = document.getElementById("history-panel");
+    const historyPrev = document.getElementById("history-prev");
+    const historyNext = document.getElementById("history-next");
+    const historyPageInfo = document.getElementById("history-page-info");
     let activeRunId = null;
     let activeQuestionId = null;
     let pollHandle = null;
@@ -174,6 +192,10 @@ Alphabet</textarea>
     let batchRuns = [];
     let selectedBatchIndex = null;
     let ruleCases = [];
+    let historyExpanded = false;
+    let historyPage = 1;
+    let historyTotalPages = 1;
+    let expandedQuestionId = null;
 
     function escapeHtml(value) {
       return String(value)
@@ -196,18 +218,118 @@ Alphabet</textarea>
       return response.json();
     }
 
+    const agentRoles = {
+      planner: "拆解预测问题，分配本轮 Map 子任务。",
+      official_sources_agent: "查找官方/权威来源，优先确认直接裁定证据。",
+      supporting_evidence_agent: "查找支持各候选项的正向证据。",
+      opposing_evidence_agent: "查找反方证据、冲突信息和不确定性。",
+      resolution_rule_agent: "理解结算规则、时间边界和判定标准。",
+      reducer: "聚合各子智能体证据，更新全局概率分布。",
+      judge: "检查证据覆盖度、冲突度和概率稳定性。"
+    };
+
+    const actionLabels = {
+      websearch: "网页搜索",
+      webfetch: "网页读取",
+      reason_over_evidence: "局部推理",
+      plan_sub_agent_missions: "任务规划",
+      aggregate_sub_agent_results: "证据聚合",
+      check_stop_condition: "停止判断"
+    };
+
+    function parseTraceAction(action) {
+      if (!action) return {};
+      if (typeof action === "object") return action;
+      try {
+        return JSON.parse(action);
+      } catch (error) {
+        return { type: String(action) };
+      }
+    }
+
+    function shortText(value, maxLength = 260) {
+      const text = String(value || "").replace(/\s+/g, " ").trim();
+      if (text.length <= maxLength) return text;
+      return `${text.slice(0, maxLength)}...`;
+    }
+
+    function splitTopItems(text) {
+      const normalized = String(text || "");
+      const afterMarker = normalized.includes("Top titles:") ? normalized.split("Top titles:").pop() : normalized;
+      return afterMarker
+        .split(/;|\n/)
+        .map(item => item.trim())
+        .filter(Boolean)
+        .slice(0, 5);
+    }
+
+    function isSyntheticTrace(item, action) {
+      const blob = `${item.thought_summary || ""} ${item.observation_summary || ""} ${JSON.stringify(action)}`.toLowerCase();
+      return blob.includes("synthetic source") || blob.includes("example.com");
+    }
+
+    function renderTraceCard(item) {
+      const action = parseTraceAction(item.action);
+      const actionType = action.type || item.action || "record";
+      const actionLabel = actionLabels[actionType] || actionType;
+      const synthetic = isSyntheticTrace(item, action);
+      const topItems = splitTopItems(item.observation_summary);
+      const urls = Array.isArray(action.urls) ? action.urls.filter(Boolean).slice(0, 4) : [];
+      const publishedBefore = action.published_before || "";
+      const query = action.query || "";
+      return `
+        <div class="trace-item investigation-card ${synthetic ? "synthetic-trace" : ""}">
+          <div class="trace-card-head">
+            <div>
+              <div class="trace-meta">第 ${item.round_index + 1} 轮 · ${escapeHtml(item.role)}</div>
+              <div class="agent-role">${escapeHtml(agentRoles[item.role] || "记录本轮智能体动作与观察结果。")}</div>
+            </div>
+            <span class="trace-action-pill">${escapeHtml(actionLabel)}</span>
+          </div>
+          ${synthetic ? `<div class="trace-warning">占位搜索结果：当前轨迹来自 synthetic/mock provider，不是真实网页证据。</div>` : ""}
+          <div class="trace-section">
+            <span>本步目的</span>
+            <p>${escapeHtml(shortText(item.thought_summary, 360))}</p>
+          </div>
+          ${publishedBefore || query || urls.length ? `
+            <div class="trace-facts">
+              ${publishedBefore ? `<div><strong>时间边界</strong><span>${escapeHtml(publishedBefore)}</span></div>` : ""}
+              ${query ? `<div><strong>查询目标</strong><span>${escapeHtml(shortText(query, 160))}</span></div>` : ""}
+              ${urls.length ? `<div><strong>读取页面</strong><span>${urls.map(url => escapeHtml(shortText(url, 96))).join("<br>")}</span></div>` : ""}
+            </div>
+          ` : ""}
+          ${topItems.length ? `
+            <div class="trace-section">
+              <span>${actionType === "webfetch" ? "页面摘要" : actionType === "reason_over_evidence" ? "局部结论" : "观察结果"}</span>
+              <ol class="trace-source-list">
+                ${topItems.map(title => `<li>${escapeHtml(shortText(title, 180))}</li>`).join("")}
+              </ol>
+            </div>
+          ` : `
+            <div class="trace-section">
+              <span>观察结果</span>
+              <p>${escapeHtml(shortText(item.observation_summary, 360))}</p>
+            </div>
+          `}
+          <details class="trace-raw">
+            <summary>查看原始记录</summary>
+            <pre>${escapeHtml(JSON.stringify({
+              thought: item.thought_summary,
+              action,
+              observation: item.observation_summary
+            }, null, 2))}</pre>
+          </details>
+        </div>
+      `;
+    }
+
+    function renderTraceHtml(trace) {
+      if (!trace || !trace.length) return "<p class='muted'>暂无轨迹。</p>";
+      return trace.map(renderTraceCard).join("");
+    }
+
     function renderTrace(trace) {
-      traceList.innerHTML = "";
-      trace.forEach(item => {
-        const el = document.createElement("div");
-        el.className = "trace-item";
-        el.innerHTML = `
-          <div class="trace-meta">第 ${item.round_index + 1} 轮 · ${escapeHtml(item.role)}</div>
-          <div class="trace-thought">${escapeHtml(item.thought_summary)}</div>
-          <div class="trace-obs">${escapeHtml(item.observation_summary)}</div>
-        `;
-        traceList.appendChild(el);
-      });
+      traceList.innerHTML = renderTraceHtml(trace);
     }
 
     function renderProbabilities(probabilities) {
@@ -234,7 +356,189 @@ Alphabet</textarea>
       if (!markdown) {
         return "<p class='muted'>这条预测还没有生成完整报告。</p>";
       }
-      return `<div class="markdown-report">${escapeHtml(markdown)}</div>`;
+      return `<div class="markdown-report">${renderMarkdownLite(markdown)}</div>`;
+    }
+
+    function renderMarkdownLite(markdown) {
+      const escaped = escapeHtml(markdown);
+      return escaped
+        .replace(/^# (.*)$/gm, "<h3>$1</h3>")
+        .replace(/^## (.*)$/gm, "<h4>$1</h4>")
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+        .replace(/\n/g, "<br>");
+    }
+
+    function renderEvidenceBasis(value) {
+      if (!value) return "<p class='muted'>暂无证据依据。</p>";
+      const text = String(value).trim();
+      const markdownLines = text.split(/\n+/).filter(Boolean);
+      if (markdownLines.some(line => line.includes("]("))) {
+        return `<div class="evidence-basis">${markdownLines.map(line => `<div>${renderMarkdownLite(line.replace(/^- /, ""))}</div>`).join("")}</div>`;
+      }
+      const legacyMatches = [...text.matchAll(/\[([^\]]+)\]\s*([^()]+?)\s*\((https?:\/\/[^)]+)\)\.?/g)];
+      if (legacyMatches.length) {
+        return `
+          <div class="evidence-basis">
+            ${legacyMatches.map(match => `
+              <div><strong>[${escapeHtml(match[1])}]</strong> <a href="${escapeHtml(match[3])}" target="_blank" rel="noopener noreferrer">${escapeHtml(match[2].trim())}</a></div>
+            `).join("")}
+          </div>
+        `;
+      }
+      return `<div class="evidence-basis">${renderMarkdownLite(text)}</div>`;
+    }
+
+    function qualityValue(notes, key) {
+      return notes && notes[key] ? notes[key] : "暂无质量说明。";
+    }
+
+    function isGenericQualityText(value) {
+      const text = String(value || "");
+      return !text
+        || text.includes("Probabilities are reduced from sub-agent evidence strength")
+        || text.includes("Fragility reflects the probability margin")
+        || text.includes("Monitoring items convert unresolved evidence gaps");
+    }
+
+    function sortedProbabilities(result) {
+      return [...(result.candidate_probabilities || [])].sort((a, b) => b.probability - a.probability);
+    }
+
+    function optionEvidenceSummary(result, option) {
+      const evidence = result.evidence_items || [];
+      const support = evidence.filter(item => item.supports_option === option && item.stance === "support");
+      const oppose = evidence.filter(item => item.supports_option === option && item.stance === "oppose");
+      const direct = support.filter(item => item.evidence_role === "direct").length;
+      const avgStrength = support.length
+        ? support.reduce((sum, item) => sum + Number(item.strength || 0), 0) / support.length
+        : 0;
+      return `${option}：支持证据 ${support.length} 条，直接证据 ${direct} 条，平均强度 ${avgStrength.toFixed(2)}，反向证据 ${oppose.length} 条`;
+    }
+
+    function fallbackProbabilityRigor(result) {
+      const probabilities = sortedProbabilities(result);
+      const top = probabilities[0] || { option: result.direct_answer, probability: 0 };
+      const second = probabilities[1] || { option: "其他候选项", probability: 0 };
+      const margin = Number(top.probability || 0) - Number(second.probability || 0);
+      const details = probabilities.map(item => optionEvidenceSummary(result, item.option)).join("；");
+      return `概率计算方式：先给每个候选项均匀先验，再按证据强度、发布时间新近度、证据角色权重进行加权；direct 证据权重最高，supporting 次之，opposing 会降低对应候选项并把部分概率质量转移给其他候选项，最后归一化为总和 1。当前 ${top.option} 为 ${Number(top.probability || 0).toFixed(4)}，相对 ${second.option} 的差距为 ${margin.toFixed(4)}。各项分解：${details || "暂无可分解证据"}`;
+    }
+
+    function fallbackCounterfactual(result, question) {
+      const probabilities = sortedProbabilities(result);
+      const top = probabilities[0] || { option: result.direct_answer, probability: 0 };
+      const second = probabilities[1] || { option: "另一候选项", probability: 0 };
+      const rule = question?.resolution_rule || "当前题目给定的结算规则";
+      return `结算规则：${rule}。当前预测选项是 ${top.option}。如果在 cutoff 合规范围内出现官方或一手来源直接支持 ${second.option}，或者当前支持 ${top.option} 的关键证据被证明只是背景信息、发布时间越界、来源不可核验、与结算规则不匹配，那么 ${second.option} 的概率需要上调，当前预测可能被逆转。当前冲突情况：${result.conflict_summary || "暂无明确冲突说明"}`;
+    }
+
+    function fallbackMonitoringItems(result, question) {
+      const probabilities = sortedProbabilities(result);
+      const top = probabilities[0] || { option: result.direct_answer, probability: 0 };
+      const second = probabilities[1] || { option: "另一候选项", probability: 0 };
+      const rule = question?.resolution_rule || "结算规则指定的官方来源";
+      const cutoff = question?.as_of_date || question?.resolution_date || result.prediction_date || "结算日前后";
+      return [
+        `${cutoff} 前后复查：${rule}；如果出现直接支持 ${second.option} 的正式公告或权威报道，就重新下调 ${top.option} 的概率。`,
+        `检查当前证据来源的发布时间、原文标题和正文语义；如果发现证据时间越过 cutoff，或只是规则解释而非事件事实，就降低对应证据权重。`,
+        `继续盯住官方/一手来源与主流媒体的后续确认；如果新增 direct 证据与当前预测一致，可提高置信度；如果新增 opposing 证据更强，则重新运行预测。`,
+      ];
+    }
+
+    function qualityText(result, question, key) {
+      const notes = result.report_quality_notes || {};
+      const value = qualityValue(notes, key);
+      if (key === "probability_rigor" && isGenericQualityText(value)) return fallbackProbabilityRigor(result);
+      if (key === "counterfactual_completeness" && isGenericQualityText(value)) return fallbackCounterfactual(result, question);
+      if (key === "monitoring_plan" && isGenericQualityText(value)) {
+        return "接下来应该盯住哪些具体信号，如果发生什么变化就要调整预测。";
+      }
+      return value;
+    }
+
+    function monitoringItemsForDisplay(result, question) {
+      const notes = result.report_quality_notes || {};
+      if (isGenericQualityText(notes.monitoring_plan)) return fallbackMonitoringItems(result, question);
+      return result.monitoring_items || [];
+    }
+
+    function renderForecastReport(result, question = null) {
+      const notes = result.report_quality_notes || {};
+      return `
+        <details class="forecast-report" open>
+          <summary>报告质量评估</summary>
+          <div class="report-section">
+            <h4>① 证据依据</h4>
+            <p>${escapeHtml(qualityValue(notes, "evidence_detail"))}</p>
+            ${renderEvidenceBasis(result.evidence_basis)}
+          </div>
+          <div class="report-section">
+            <h4>② 严谨性</h4>
+            <p>${escapeHtml(qualityText(result, question, "probability_rigor"))}</p>
+            <div class="prob-list compact">${renderProbabilities(result.candidate_probabilities)}</div>
+          </div>
+          <div class="report-section">
+            <h4>③ 反事实完整性</h4>
+            <p>${escapeHtml(qualityText(result, question, "counterfactual_completeness"))}</p>
+            <p><strong>脆弱性：</strong>${escapeHtml(result.counterfactual_fragility)}；${escapeHtml(result.conflict_summary)}</p>
+          </div>
+          <div class="report-section">
+            <h4>④ 可执行监控</h4>
+            <p>${escapeHtml(qualityText(result, question, "monitoring_plan"))}</p>
+            <ul class="report-list">
+              ${monitoringItemsForDisplay(result, question).map(item => `<li>${escapeHtml(item)}</li>`).join("")}
+            </ul>
+          </div>
+        </details>
+      `;
+    }
+
+    function renderEvaluationScore(evaluation) {
+      if (!evaluation) return "";
+      return `
+        <div class="score-card">
+          <p><strong>结算评分：</strong></p>
+          <div class="score-metrics">
+            <div class="score-metric">
+              <span>真实答案</span>
+              <strong>${escapeHtml(evaluation.resolved_answer)}</strong>
+            </div>
+            <div class="score-metric">
+              <span>Accuracy</span>
+              <strong>${evaluation.scoring_metrics.accuracy}</strong>
+            </div>
+            <div class="score-metric">
+              <span>Brier Score</span>
+              <strong>${evaluation.scoring_metrics.brier_score}</strong>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderHistoryDetail(detail) {
+      const run = detail.latest_run;
+      const result = detail.latest_result;
+      const evaluation = detail.evaluation;
+      const question = detail.question;
+      return `
+        <div class="history-detail">
+          ${result ? `
+            <p><strong>预测结果：</strong>${escapeHtml(result.direct_answer)} <span class="pill">${escapeHtml(result.confidence_level)}</span></p>
+            <div class="prob-list compact">${renderProbabilities(result.candidate_probabilities)}</div>
+            ${renderEvaluationScore(evaluation)}
+            ${renderForecastReport(result, question)}
+          ` : "<p class='muted'>暂无预测结果。</p>"}
+          ${!result ? renderEvaluationScore(evaluation) : ""}
+          ${run ? `
+            <details class="forecast-report trace-report">
+              <summary>预测轨迹</summary>
+              <div class="trace-list compact-trace">${renderTraceHtml(run.trace_summary || [])}</div>
+            </details>
+          ` : "<p class='muted'>暂无运行轨迹。</p>"}
+        </div>
+      `;
     }
 
     function batchDisplayStatus(item) {
@@ -308,7 +612,7 @@ Alphabet</textarea>
           </div>
           ${selected.result ? `
             <div class="prob-list compact">${renderProbabilities(selected.result.candidate_probabilities)}</div>
-            ${renderReportMarkdown(selected.result.markdown_report)}
+            ${renderForecastReport(selected.result)}
           ` : selected.error ? `
             <p class="muted error-text">${escapeHtml(selected.error)}</p>
           ` : `
@@ -481,12 +785,10 @@ Alphabet</textarea>
       try {
         const result = await api(`/api/questions/${questionId}/result`);
         resultPreview.innerHTML = `
-          <div class="result-head">${escapeHtml(result.direct_answer)} <span class="pill">${escapeHtml(result.confidence_level)}</span></div>
+          <div class="result-head">预测结果：${escapeHtml(result.direct_answer)} <span class="pill">${escapeHtml(result.confidence_level)}</span></div>
           <p>${escapeHtml(result.confidence_rationale)}</p>
-          <p><strong>证据依据：</strong>${escapeHtml(result.evidence_basis)}</p>
-          <p><strong>反事实脆弱性：</strong>${escapeHtml(result.counterfactual_fragility)}</p>
-          <p><strong>冲突说明：</strong>${escapeHtml(result.conflict_summary)}</p>
           <div class="prob-list">${renderProbabilities(result.candidate_probabilities)}</div>
+          ${renderForecastReport(result)}
         `;
       } catch (error) {
         resultPreview.innerHTML = `<p class="muted">${escapeHtml(error.message)}</p>`;
@@ -500,7 +802,7 @@ Alphabet</textarea>
       renderTrace(run.trace_summary);
       if (run.latest_probabilities.length) {
         resultPreview.innerHTML = `
-          <p><strong>阶段证据摘要：</strong>${escapeHtml(run.latest_evidence_summary || "聚合中")}</p>
+          <div><strong>阶段证据摘要：</strong>${renderEvidenceBasis(run.latest_evidence_summary || "聚合中")}</div>
           <div class="prob-list">${renderProbabilities(run.latest_probabilities)}</div>
         `;
       }
@@ -569,45 +871,48 @@ Alphabet</textarea>
     }
 
     async function loadQuestions() {
-      const questions = await api("/api/questions");
+      if (!historyExpanded) return;
+      const page = await api(`/api/questions/history?page=${historyPage}&page_size=10`);
+      const questions = page.items;
+      historyTotalPages = page.total_pages;
+      historyPage = page.page;
+      historyPageInfo.textContent = `第 ${page.page} / ${page.total_pages} 页，共 ${page.total} 条`;
+      historyPrev.disabled = page.page <= 1;
+      historyNext.disabled = page.page >= page.total_pages;
       questionList.innerHTML = "";
       for (const question of questions) {
-        let resultHtml = `<p class="muted">暂无结果。</p>`;
-        try {
-          const result = await api(`/api/questions/${question.id}/result`);
-          resultHtml = `
-            <p><strong>最新预测：</strong>${escapeHtml(result.direct_answer)} <span class="pill">${escapeHtml(result.confidence_level)}</span></p>
-            <div class="prob-list compact">${renderProbabilities(result.candidate_probabilities)}</div>
-          `;
-        } catch (error) {
-          void error;
-        }
-
-        let evaluationHtml = "";
-        try {
-          const evaluation = await api(`/api/questions/${question.id}/evaluation`);
-          evaluationHtml = `
-            <p><strong>真实答案：</strong>${escapeHtml(evaluation.resolved_answer)}</p>
-            <p><strong>Accuracy：</strong>${evaluation.scoring_metrics.accuracy}</p>
-            <p><strong>Brier Score：</strong>${evaluation.scoring_metrics.brier_score}</p>
-          `;
-        } catch (error) {
-          void error;
-        }
-
         const card = document.createElement("article");
         card.className = "question-card";
         card.innerHTML = `
-          <div class="question-card-head">
+          <button type="button" class="question-card-button" data-question-id="${escapeHtml(question.id)}">
             <h3>${escapeHtml(question.question_text)}</h3>
             <span class="pill">${escapeHtml(question.status)}</span>
-          </div>
-          <p>${escapeHtml(question.category)} · 揭晓日期 ${escapeHtml(question.resolution_date)}</p>
+          </button>
+          <p>${escapeHtml(question.category)} · 揭晓日期 ${escapeHtml(question.resolution_date)} · 截止 ${escapeHtml(question.as_of_date || "00:00")}</p>
           <p class="muted">候选项：${escapeHtml(question.candidate_options.join(" / "))}</p>
-          ${resultHtml}
-          ${evaluationHtml}
+          <div class="question-detail-slot" data-detail-for="${escapeHtml(question.id)}"></div>
         `;
         questionList.appendChild(card);
+        if (expandedQuestionId === question.id) {
+          await expandQuestionDetail(question.id);
+        }
+      }
+    }
+
+    async function expandQuestionDetail(questionId) {
+      expandedQuestionId = expandedQuestionId === questionId ? null : questionId;
+      document.querySelectorAll(".question-detail-slot").forEach(slot => {
+        if (slot.dataset.detailFor !== expandedQuestionId) slot.innerHTML = "";
+      });
+      if (!expandedQuestionId) return;
+      const slot = document.querySelector(`[data-detail-for="${CSS.escape(questionId)}"]`);
+      if (!slot) return;
+      slot.innerHTML = "<p class='muted'>正在加载轨迹和报告。</p>";
+      try {
+        const detail = await api(`/api/questions/${questionId}/detail`);
+        slot.innerHTML = renderHistoryDetail(detail);
+      } catch (error) {
+        slot.innerHTML = `<p class="muted">${escapeHtml(error.message)}</p>`;
       }
     }
 
@@ -616,6 +921,7 @@ Alphabet</textarea>
         category: formData.get("category"),
         question: formData.get("question"),
         resolution_date: formData.get("resolution_date"),
+        resolution_time: formData.get("resolution_time") || "00:00",
         timezone: formData.get("timezone"),
         candidate_options: formData.get("candidate_options").split("\n").map(v => v.trim()).filter(Boolean)
       };
@@ -722,6 +1028,33 @@ Alphabet</textarea>
       const row = event.target.closest("[data-batch-index]");
       if (!row) return;
       selectBatchRun(Number(row.dataset.batchIndex));
+    });
+
+    historyToggle.addEventListener("click", async () => {
+      historyExpanded = !historyExpanded;
+      historyPanel.classList.toggle("hidden", !historyExpanded);
+      historyToggle.textContent = historyExpanded ? "收起" : "展开";
+      if (historyExpanded) await loadQuestions();
+    });
+
+    historyPrev.addEventListener("click", async () => {
+      if (historyPage <= 1) return;
+      historyPage -= 1;
+      expandedQuestionId = null;
+      await loadQuestions();
+    });
+
+    historyNext.addEventListener("click", async () => {
+      if (historyPage >= historyTotalPages) return;
+      historyPage += 1;
+      expandedQuestionId = null;
+      await loadQuestions();
+    });
+
+    questionList.addEventListener("click", async (event) => {
+      const button = event.target.closest("[data-question-id]");
+      if (!button) return;
+      await expandQuestionDetail(button.dataset.questionId);
     });
 
     document.getElementById("evaluation-domains").addEventListener("change", async (event) => {

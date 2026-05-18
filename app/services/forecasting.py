@@ -7,6 +7,7 @@ import threading
 from dataclasses import dataclass
 from datetime import datetime, time, timezone
 from typing import Any
+from urllib.parse import urlparse
 
 from app.core.config import MAX_MAP_ROUNDS, STOP_DELTA_THRESHOLD
 from app.db.database import db
@@ -500,10 +501,21 @@ class Reducer:
     def _format_evidence_basis(self, evidence_items: list[dict[str, Any]]) -> str:
         if not evidence_items:
             return "No cutoff-compliant evidence was available."
-        return " ".join(
-            f"[{item.get('evidence_role', 'supporting')}] {item['claim']} ({item['source_url']})."
-            for item in evidence_items
-        )
+        lines = []
+        for item in evidence_items:
+            url = item.get("source_url", "")
+            title = item.get("source_title") or self._source_label(url)
+            role = item.get("evidence_role", "supporting")
+            claim = item.get("claim", "")
+            lines.append(f"- **[{role}]** [{title}]({url})：{claim}")
+        return "\n".join(lines)
+
+    @staticmethod
+    def _source_label(url: str) -> str:
+        if not url:
+            return "来源"
+        host = urlparse(url).netloc
+        return host or "来源"
 
 
 class Judge:
@@ -673,16 +685,8 @@ class ForecastService:
         reduced: dict[str, Any],
         round_snapshots: list[dict[str, Any]],
     ) -> None:
-        monitoring_items = [
-            f"Monitor authoritative updates for {forecast_input.event_type or forecast_input.domain} before {forecast_input.prediction_cutoff}.",
-            "Re-run if direct official evidence or a strong opposing source appears.",
-        ]
-        report_quality_notes = {
-            "evidence_detail": "Each retained item is linked to a source URL, role, stance, strength, and cutoff timestamp.",
-            "probability_rigor": "Probabilities are reduced from sub-agent evidence strength, source role, recency, and opposition signals.",
-            "counterfactual_completeness": "Fragility reflects the probability margin and whether opposing evidence survives cutoff filtering.",
-            "monitoring_plan": "Monitoring items convert unresolved evidence gaps into concrete re-run triggers.",
-        }
+        monitoring_items = self._build_monitoring_items(forecast_input, reduced)
+        report_quality_notes = self._build_report_quality_notes(forecast_input, reduced, monitoring_items)
         payload = {
             "prediction_date": datetime.now(timezone.utc).isoformat(),
             "question": forecast_input.question_text,
@@ -715,6 +719,135 @@ class ForecastService:
         else:
             db.update_question_status(forecast_input.question_id, "awaiting_resolution")
 
+    def _build_monitoring_items(self, forecast_input: ForecastInput, reduced: dict[str, Any]) -> list[str]:
+        probabilities = sorted(reduced["probabilities"], key=lambda item: item["probability"], reverse=True)
+        top = probabilities[0] if probabilities else {"option": reduced["predicted_winner"], "probability": 0.0}
+        second = probabilities[1] if len(probabilities) > 1 else {"option": "其他候选项", "probability": 0.0}
+        evidence_titles = [
+            item.get("source_title") or Reducer._source_label(item.get("source_url", ""))
+            for item in reduced["evidence_items"][:4]
+        ]
+        prompt = (
+            "请为一个事件预测报告生成 2-4 条可执行监控项。每条必须说明：接下来盯住什么具体信号、"
+            "如果出现什么变化就要调整预测。不要使用真实答案。\n"
+            f"问题：{forecast_input.question_text}\n"
+            f"结算规则：{forecast_input.resolution_rule or '未提供明确结算规则'}\n"
+            f"预测截止时间：{forecast_input.prediction_cutoff}\n"
+            f"当前预测选项：{top['option']} ({float(top['probability']):.4f})\n"
+            f"主要反向选项：{second['option']} ({float(second['probability']):.4f})\n"
+            f"已有来源：{'; '.join(evidence_titles) or '暂无'}"
+        )
+        schema = {"monitoring_items": ["string"]}
+        try:
+            response = self.llm.generate_structured("forecast_monitoring", prompt, schema)
+            items = response.get("monitoring_items")
+            if isinstance(items, list):
+                cleaned = [str(item).strip() for item in items if str(item).strip()]
+                if cleaned:
+                    return cleaned[:4]
+        except Exception:
+            pass
+
+        target_source = forecast_input.resolution_rule or "结算规则指定的官方来源/权威媒体"
+        return [
+            f"在 {forecast_input.prediction_cutoff} 前后复查 {target_source}，确认是否出现直接支持 {top['option']} 的正式裁定或公告。",
+            f"重点监控是否出现直接支持 {second['option']} 的官方证据；若该证据来源权威且时间不越界，应重新下调 {top['option']} 的概率。",
+            f"复核当前引用来源的发布时间和原文语义；若发现时间越过 cutoff 或只是在解释规则而非报道事件，应降低对应证据权重。",
+        ]
+
+    def _build_report_quality_notes(
+        self,
+        forecast_input: ForecastInput,
+        reduced: dict[str, Any],
+        monitoring_items: list[str],
+    ) -> dict[str, str]:
+        evidence_items = reduced["evidence_items"]
+        probabilities = sorted(reduced["probabilities"], key=lambda item: item["probability"], reverse=True)
+        top = probabilities[0] if probabilities else {"option": reduced["predicted_winner"], "probability": 0.0}
+        second = probabilities[1] if len(probabilities) > 1 else {"option": "其他候选项", "probability": 0.0}
+        margin = float(top["probability"]) - float(second["probability"])
+        role_counts: dict[str, int] = {}
+        for item in evidence_items:
+            role = item.get("evidence_role", "supporting")
+            role_counts[role] = role_counts.get(role, 0) + 1
+        probability_details = []
+        for item in probabilities:
+            option = item["option"]
+            support_items = [
+                evidence for evidence in evidence_items
+                if evidence.get("supports_option") == option and evidence.get("stance") == "support"
+            ]
+            oppose_items = [
+                evidence for evidence in evidence_items
+                if evidence.get("supports_option") == option and evidence.get("stance") == "oppose"
+            ]
+            direct_count = sum(1 for evidence in support_items if evidence.get("evidence_role") == "direct")
+            avg_strength = (
+                sum(float(evidence.get("strength", 0.0)) for evidence in support_items) / len(support_items)
+                if support_items
+                else 0.0
+            )
+            probability_details.append(
+                f"{option}={float(item['probability']):.4f}，支持证据 {len(support_items)} 条"
+                f"（直接证据 {direct_count} 条，平均强度 {avg_strength:.2f}），反向证据 {len(oppose_items)} 条"
+            )
+        evidence_sentence = (
+            f"本报告保留 {len(evidence_items)} 条 cutoff 合规证据，"
+            f"其中 direct {role_counts.get('direct', 0)} 条、supporting {role_counts.get('supporting', 0)} 条、"
+            f"opposing {role_counts.get('opposing', 0)} 条；每条证据均保留来源链接、角色、立场、强度和重要性说明。"
+        )
+        probability_sentence = (
+            f"概率计算方式：先给每个候选项均匀先验，再按 evidence_strength × recency_score × role_weight "
+            f"累计证据分；direct 权重最高，supporting 次之，opposing 会扣减对应候选并把少量质量转移给其他候选，"
+            f"最后归一化为总和 1。当前最高候选项 {top['option']} 为 {float(top['probability']):.4f}，"
+            f"相对 {second['option']} 的差距为 {margin:.4f}。各项分解：{'；'.join(probability_details)}。"
+        )
+        counterfactual_sentence = self._build_counterfactual_note(forecast_input, reduced, top, second)
+        monitoring_sentence = (
+            "监控项来自当前证据缺口和反事实场景："
+            + "；".join(monitoring_items)
+        )
+        return {
+            "evidence_detail": evidence_sentence,
+            "probability_rigor": probability_sentence,
+            "counterfactual_completeness": counterfactual_sentence,
+            "monitoring_plan": monitoring_sentence,
+        }
+
+    def _build_counterfactual_note(
+        self,
+        forecast_input: ForecastInput,
+        reduced: dict[str, Any],
+        top: dict[str, Any],
+        second: dict[str, Any],
+    ) -> str:
+        prompt = (
+            "请为事件预测报告写一段结构化反事实说明。必须包含：结算规则是什么、当前预测选项是什么、"
+            "哪些小概率但具体的事件会让另一个候选项成立、哪些证据条件会触发概率调整。"
+            "不要使用真实答案，不要泛泛而谈。\n"
+            f"问题：{forecast_input.question_text}\n"
+            f"候选项：{', '.join(forecast_input.candidate_options)}\n"
+            f"结算规则：{forecast_input.resolution_rule or '未提供明确结算规则'}\n"
+            f"当前预测：{top['option']} ({float(top['probability']):.4f})\n"
+            f"第二候选：{second['option']} ({float(second['probability']):.4f})\n"
+            f"冲突摘要：{reduced['conflict_summary']}\n"
+            f"证据：{reduced['evidence_basis']}"
+        )
+        schema = {"counterfactual_completeness": "string"}
+        try:
+            response = self.llm.generate_structured("forecast_counterfactual", prompt, schema)
+            value = str(response.get("counterfactual_completeness", "")).strip()
+            if value:
+                return value
+        except Exception:
+            pass
+        return (
+            f"结算规则要求依据“{forecast_input.resolution_rule or '指定权威来源'}”判断。当前预测为 {top['option']}，"
+            f"但如果在 cutoff 合规范围内出现官方直接证据支持 {second['option']}，或现有支持 {top['option']} 的证据被证明"
+            f"只是背景信息、发布时间越界、来源不可核验，则 {second['option']} 的概率应明显上调。"
+            f"当前反事实脆弱性为 {reduced['counterfactual_fragility']}；{reduced['conflict_summary']}"
+        )
+
     def _render_markdown_report(
         self,
         forecast_input: ForecastInput,
@@ -733,16 +866,16 @@ class ForecastService:
         monitoring_rows = "\n".join(f"- {item}" for item in monitoring_items)
         quality_rows = "\n".join(f"- **{key}**: {value}" for key, value in report_quality_notes.items())
         return (
-            f"# Forecast Report\n\n"
-            f"Prediction date: {datetime.now(timezone.utc).date().isoformat()}\n\n"
-            f"Question: {forecast_input.question_text}\n\n"
-            f"Direct answer: **{reduced['predicted_winner']}** | Confidence: **{reduced['confidence_level']}**\n\n"
-            f"| Candidate | Probability |\n| --- | ---: |\n{probability_rows}\n\n"
-            f"## Confidence Basis\n\n{reduced['evidence_basis']}\n\n"
-            f"## Evidence\n\n{evidence_rows or '- No cutoff-compliant evidence retained.'}\n\n"
-            f"## Counterfactual Fragility\n\n{reduced['counterfactual_fragility']}: {reduced['conflict_summary']}\n\n"
-            f"## Monitoring\n\n{monitoring_rows}\n\n"
-            f"## Report Quality\n\n{quality_rows}\n"
+            f"# 预测报告\n\n"
+            f"预测日期：{datetime.now(timezone.utc).date().isoformat()}\n\n"
+            f"问题：{forecast_input.question_text}\n\n"
+            f"直接回答：**{reduced['predicted_winner']}** | 置信度：**{reduced['confidence_level']}**\n\n"
+            f"| 候选项 | 概率 |\n| --- | ---: |\n{probability_rows}\n\n"
+            f"## 置信依据\n\n{reduced['evidence_basis']}\n\n"
+            f"## 证据明细\n\n{evidence_rows or '- 未保留 cutoff 合规证据。'}\n\n"
+            f"## 反事实脆弱性\n\n{reduced['counterfactual_fragility']}：{reduced['conflict_summary']}\n\n"
+            f"## 可执行监控\n\n{monitoring_rows}\n\n"
+            f"## 报告质量评估\n\n{quality_rows}\n"
         )
 
 
